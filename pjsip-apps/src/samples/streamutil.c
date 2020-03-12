@@ -399,7 +399,8 @@ int main(int argc, char *argv[])
     pj_sockaddr_in mcast_addr;
     pj_uint16_t local_port = 4000;
     char *codec_id = NULL;
-    char *rec_file = NULL;
+	//char *rec_file = "testcx.wav";
+	char *rec_file = NULL;
     char *play_file = NULL;
     int mcast = 0;
 
@@ -620,7 +621,7 @@ int main(int argc, char *argv[])
     status = init_codecs(med_endpt);
     PJ_ASSERT_RETURN(status == PJ_SUCCESS, 1);
 
-
+	codec_id = "PCMU";
     /* Find which codec to use. */
     if (codec_id) {
 	unsigned count = 1;
@@ -668,6 +669,37 @@ int main(int argc, char *argv[])
     status = pjmedia_stream_get_port( stream, &stream_port);
     PJ_ASSERT_RETURN(status == PJ_SUCCESS, 1);
 
+	
+	
+//	pjmedia_stream *stream1 = NULL;
+//	pjmedia_port *stream_port1;
+//
+//	pj_str_t ip = pj_str("192.168.10.138");
+//	pj_uint16_t port = 4006;
+//
+//	status = pj_sockaddr_in_init(&remote_addr, &ip, port);
+//	if (status != PJ_SUCCESS) {
+//		app_perror(THIS_FILE, "Invalid remote address", status);
+//		return 1;
+//	}
+//
+//	/* Create stream based on program arguments */
+//	status = create_stream(pool, med_endpt, codec_info, PJMEDIA_DIR_ENCODING, 4004,
+//		&remote_addr, mcast, &mcast_addr,
+//#if defined(PJMEDIA_HAS_SRTP) && (PJMEDIA_HAS_SRTP != 0)
+//		use_srtp, &srtp_crypto_suite,
+//		&srtp_tx_key, &srtp_rx_key,
+//		is_dtls_client, is_dtls_server,
+//#endif
+//		&stream1);
+//	if (status != PJ_SUCCESS)
+//		goto on_exit;
+//
+//
+//	/* Get the port interface of the stream */
+//	status = pjmedia_stream_get_port(stream1, &stream_port1);
+//	PJ_ASSERT_RETURN(status == PJ_SUCCESS, 1);
+
 
     if (play_file) {
 	unsigned wav_ptime;
@@ -708,8 +740,8 @@ int main(int argc, char *argv[])
 	    goto on_exit;
 	}
 
-	status = pjmedia_master_port_create(pool, stream_port, rec_file_port, 
-					    0, &master_port);
+	//status = pjmedia_master_port_create(pool, stream_port, stream_port1,
+	//				    0, &master_port);
 	if (status != PJ_SUCCESS) {
 	    app_perror(THIS_FILE, "Unable to create master port", status);
 	    goto on_exit;
@@ -762,6 +794,8 @@ int main(int argc, char *argv[])
 
     /* Start streaming */
     pjmedia_stream_start(stream);
+	//pjmedia_stream_start(stream1);
+
 
 
     /* Done */
