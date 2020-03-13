@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ae2e5c9a-f3d3-4b21-aedf-0c95928f45c4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://192.168.124.138:6971/MutilUserPUCService" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MutilUserPUCService.xsd" MetadataType="Schema" ID="d360b9b9-0ee7-4070-b3e2-d894e2c87032" SourceId="1" SourceUrl="http://192.168.124.138:6971/MutilUserPUCService?xsd=xsd1" />
+    <MetadataFile FileName="MutilUserPUCService1.xsd" MetadataType="Schema" ID="2255f672-c109-4d02-929b-6ffc91f03d5d" SourceId="1" SourceUrl="http://192.168.124.138:6971/MutilUserPUCService?xsd=xsd0" />
+    <MetadataFile FileName="PUCService.wsdl" MetadataType="Wsdl" ID="016f60ee-38dc-45ba-aaac-f67c6ee65bc8" SourceId="1" SourceUrl="http://192.168.124.138:6971/MutilUserPUCService" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

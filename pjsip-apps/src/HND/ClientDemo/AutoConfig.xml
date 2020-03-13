@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Globalization>
+  <LoginName>test1</LoginName>
+  <Password>123456</Password>
+  <LocolSipIP>10.110.12.89</LocolSipIP>
+  <LocolSipPort>6000</LocolSipPort>
+  <ServerSipIP>10.110.12.90</ServerSipIP>
+  <ServerSipPort>6060</ServerSipPort>
+  <ServerIP>10.110.12.90</ServerIP>
+  <ServerPort>12000</ServerPort>
+</Globalization>
