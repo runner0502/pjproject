@@ -84,40 +84,15 @@
     <Compile Include="AddGroupWindow.xaml.cs">
       <DependentUpon>AddGroupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AnalysisData\AnalysisXml.cs" />
-    <Compile Include="BusinessCenter.cs" />
-    <Compile Include="CallBusiness\CallManager.cs" />
-    <Compile Include="CallBusiness\CC.cs" />
-    <Compile Include="CallBusiness\Media.cs" />
-    <Compile Include="callparam.cs" />
-    <Compile Include="CommonData.cs" />
-    <Compile Include="DeviceEntry.cs" />
-    <Compile Include="GlobalCommandName.cs" />
-    <Compile Include="GroupEntry.cs" />
     <Compile Include="GroupWindow.xaml.cs">
       <DependentUpon>GroupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="hytera.cs" />
-    <Compile Include="LoginPara.cs" />
     <Compile Include="MainWindow2.xaml.cs">
       <DependentUpon>MainWindow2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MediaManager.cs" />
-    <Compile Include="model\DeviceEntity.cs" />
-    <Compile Include="model\SapEntity.cs" />
-    <Compile Include="model\SystemEntity.cs" />
-    <Compile Include="Monitor\Monitor.cs" />
-    <Compile Include="Monitor\MonitorCenter.cs" />
-    <Compile Include="paramclass.cs" />
-    <Compile Include="PUCApiAdapter.cs" />
-    <Compile Include="SapEntity.cs" />
-    <Compile Include="SDSParam.cs" />
     <Compile Include="TransferCallWin.xaml.cs">
       <DependentUpon>TransferCallWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\DEC.cs" />
-    <Compile Include="Util\MemoryControl.cs" />
-    <Compile Include="XMLHelper.cs" />
     <Page Include="AddGroupMemberWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -189,6 +164,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\HNDModule\HNDModule.csproj">
+      <Project>{41fbd009-4521-4b07-87ea-d3456127e0f0}</Project>
+      <Name>HNDModule</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

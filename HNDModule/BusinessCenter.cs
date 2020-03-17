@@ -176,7 +176,7 @@ namespace ClientDemo
 
 
                 string xml = Serialize(fengclass);
-                (Application.Current.MainWindow as MainWindow2).update(xml);
+                //(Application.Current.MainWindow as MainWindow2).update(xml);
                 IntPtr xmlPtr = Marshal.StringToHGlobalUni(xml);
                 PUCApiAdapter.PUCAPI_ProcessRequest(xmlPtr);
             }
@@ -195,7 +195,7 @@ namespace ClientDemo
                     string password = EncryptDES(pc.user_password.Trim());
 
                     string xml = ("<hytera><product_name>PUC</product_name><version>10</version><cmd_name>puc_login</cmd_name><cmd_guid>" + cmdguid + "</cmd_guid><login_type>Dispatcher</login_type><user_name>" + name2 + "</user_name><password>" + password + "</password></hytera>").Trim();
-                    (Application.Current.MainWindow as MainWindow2).update(xml);
+                    //(Application.Current.MainWindow as MainWindow2).update(xml);
                     IntPtr xmlPtr = Marshal.StringToHGlobalUni(xml);
                     PUCApiAdapter.PUCAPI_ProcessRequest(xmlPtr);
                     Islogin = true;
@@ -542,6 +542,21 @@ namespace ClientDemo
             PUCApiAdapter.PUCAPI_ProcessRequest(xmlPtr);
         }
 
+        public void group_list_request(string puc_id)
+        {
+            string guid = Guid.NewGuid().ToString("B");
+            string xml1 = "<hytera><product_name>PUC</product_name><version>10</version><cmd_name>group_list_request</cmd_name><cmd_guid>" + guid + "</cmd_guid><puc_id>" + puc_id + "</puc_id></hytera>";
+            IntPtr xmlPtr = Marshal.StringToHGlobalUni(xml1);
+            PUCApiAdapter.PUCAPI_ProcessRequest(xmlPtr);
+        }
+
+        public void organization_list_request(string puc_id)
+        {
+            string guid = Guid.NewGuid().ToString("B");
+            string xml1 = "<hytera><product_name>PUC</product_name><version>10</version><cmd_name>organization_list_request</cmd_name><cmd_guid>" + guid + "</cmd_guid><puc_id>" + puc_id + "</puc_id></hytera>";
+            IntPtr xmlPtr = Marshal.StringToHGlobalUni(xml1);
+            PUCApiAdapter.PUCAPI_ProcessRequest(xmlPtr);
+        }
         /// <summary>
         /// 加载设备列表
         /// </summary>

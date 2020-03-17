@@ -10,6 +10,7 @@ namespace ClientDemo.CallBusiness
 {
     public class CallManager
     {
+        public static string _localSipIP;
         private static CallManager _manager;
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace ClientDemo.CallBusiness
         {
             CC session = new CC();
             session.pictrueboxHandle = cp.pictrueboxHandle;
-            session.LocalIp = MainWindow2.GetLocalParam()._localSipIP;
+            session.LocalIp = _localSipIP;
             session.IsDuplex = cp.IsDuplex == "1" ? true : false;
             session.CallID = cp.cmd_guid;
             if (cp.CallMode == "Voice")

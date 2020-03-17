@@ -90,6 +90,7 @@ namespace ClientDemo
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
             pc.user_name = txt1.Text.ToString();
             pc.user_password = psword.Password.ToString();
            // pc.user_password = "NlGrPtPl";
@@ -105,6 +106,9 @@ namespace ClientDemo
             pc.ServerSipPort = serverSipPort.Text.ToString();
             pc.BOverNat1 = (bool)BOverNat1.IsChecked;
             pc.BOverNat2 = (bool)BOverNat2.IsChecked;
+
+            CallManager._localSipIP = pc._localSipIP;
+
 
             LoginSubmitEvent();
 
@@ -242,6 +246,14 @@ namespace ClientDemo
             else if (s.Contains("device_list_request_ack"))
             {
                 Hytera.Commom.Log.Logger.Debug("device_list_request_ack : " + str);
+
+                Dispatcher.Invoke(new Action(delegate ()
+                {
+                    btnRevcCall.IsEnabled = true;
+                    btnTransferCall.IsEnabled = true;
+                    txt.Text += Environment.NewLine + str;
+                    txt.ScrollToEnd();
+                }));
 
                 if (devicelist == null)
                     devicelist = new List<DeviceEntry>();
@@ -1392,5 +1404,9 @@ namespace ClientDemo
         }
         #endregion
 
+        private void btnGetGroups_Click(object sender, RoutedEventArgs e)
+        {
+            BusinessCenter.Instance.organization_list_request(txtPUC_ID.Text.Trim());
+        }
     }
 }

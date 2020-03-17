@@ -31,21 +31,21 @@
                     <Label Content="用户名：" HorizontalAlignment="Left" Margin="84,16,0,0" VerticalAlignment="Top"  Grid.Column="0"/>
                     <Label Content="密码：" HorizontalAlignment="Left" Margin="96,51,0,0" VerticalAlignment="Top" Grid.Column="0"/>
                     <Label Content="PUC__ID：" HorizontalAlignment="Left" Margin="78,83,0,0" VerticalAlignment="Top" Grid.Column="0"/>
-                    <TextBox x:Name="txt1" HorizontalAlignment="Left" Height="23" Margin="154,16,0,0" TextWrapping="Wrap" TabIndex="1" Text="qu" VerticalAlignment="Top" Width="155" Grid.Column="0"/>
+                    <TextBox x:Name="txt1" HorizontalAlignment="Left" Height="23" Margin="154,16,0,0" TextWrapping="Wrap" TabIndex="1" Text="anzheng" VerticalAlignment="Top" Width="155" Grid.Column="0"/>
                     <TextBox x:Name="txtPUC_ID" HorizontalAlignment="Left" Height="23" Margin="154,87,0,0" TextWrapping="Wrap" TabIndex="1" Text="00001" VerticalAlignment="Top" Width="155"/>
                     <Label Content="本地Sip IP：" HorizontalAlignment="Left" Margin="64,119,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.425,0.5"/>
-                    <TextBox x:Name="localSipIP" HorizontalAlignment="Left" Height="23" Margin="154,120,0,0" TextWrapping="Wrap" TabIndex="3" Text="192.168.72.8" VerticalAlignment="Top" Width="155"/>
+                    <TextBox x:Name="localSipIP" HorizontalAlignment="Left" Height="23" Margin="154,120,0,0" TextWrapping="Wrap" TabIndex="3" Text="20.0.0.99" VerticalAlignment="Top" Width="155"/>
                     <Label Content="端口：" HorizontalAlignment="Left" Margin="340,120,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="localSipPort" HorizontalAlignment="Left" Height="23" Margin="393,122,0,0" TextWrapping="Wrap"  TabIndex="4" Text="5080" VerticalAlignment="Top" Width="64"/>
                     <Label Content="主服务器IP：" HorizontalAlignment="Left" Margin="62,193,0,0" VerticalAlignment="Top" Width="77"/>
-                    <TextBox x:Name="serverIP" HorizontalAlignment="Left" Height="23" Margin="153,193,0,0" TextWrapping="Wrap"  TabIndex="5" Text="192.168.72.182" VerticalAlignment="Top" Width="155"/>
+                    <TextBox x:Name="serverIP" HorizontalAlignment="Left" Height="23" Margin="153,193,0,0" TextWrapping="Wrap"  TabIndex="5" Text="20.0.0.11" VerticalAlignment="Top" Width="155"/>
                     <Label Content="端口：" HorizontalAlignment="Left" Margin="340,190,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="serverPort" HorizontalAlignment="Left" Height="23" Margin="392,193,0,0" TextWrapping="Wrap"  TabIndex="6" Text="12000" VerticalAlignment="Top" Width="64"/>
                     <Label Content="主服务器sipIP：" HorizontalAlignment="Left" Margin="46,157,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="serverSipIP"  HorizontalAlignment="Left" Height="23" Margin="154,157,0,0" TextWrapping="Wrap"  TabIndex="9" Text="192.168.72.182" VerticalAlignment="Top" Width="155"/>
+                    <TextBox x:Name="serverSipIP"  HorizontalAlignment="Left" Height="23" Margin="154,157,0,0" TextWrapping="Wrap"  TabIndex="9" Text="20.0.0.11" VerticalAlignment="Top" Width="155"/>
                     <Label Content="端口：" HorizontalAlignment="Left" Margin="340,155,0,0" VerticalAlignment="Top" RenderTransformOrigin="6.848,0.769"/>
-                    <TextBox x:Name="serverSipPort" HorizontalAlignment="Left" Height="23" Margin="392,159,0,0" TextWrapping="Wrap"  TabIndex="10" Text="6060 " VerticalAlignment="Top" Width="64"/>
-                    <PasswordBox HorizontalAlignment="Left" Margin="154,51,0,0" VerticalAlignment="Top" Width="155" Height="26" TabIndex="2" x:Name="psword" Password="1212" PasswordChar="*"/>
+                    <TextBox x:Name="serverSipPort" HorizontalAlignment="Left" Height="23" Margin="392,159,0,0" TextWrapping="Wrap"  TabIndex="10" Text="7060 " VerticalAlignment="Top" Width="64"/>
+                    <PasswordBox HorizontalAlignment="Left" Margin="154,51,0,0" VerticalAlignment="Top" Width="155" Height="26" TabIndex="2" x:Name="psword" Password="123456" PasswordChar="*"/>
                     <Button Content="登陆" HorizontalAlignment="Left" Margin="150,340,0,0" VerticalAlignment="Top" Width="75"  TabIndex="11" Click="Button_Click"/>
                     <Button Content="退出" HorizontalAlignment="Left" Margin="251,340,0,0" VerticalAlignment="Top" Width="75"  TabIndex="12" Click="Exit_Click" RenderTransformOrigin="2.107,2.182"/>
                     <Label Content="备serverIP：" HorizontalAlignment="Left" Margin="63,224,0,0" VerticalAlignment="Top" Width="77"/>
@@ -150,6 +150,9 @@
                     </ComboBox>
                     <Button HorizontalAlignment="Left" VerticalAlignment="Top" Name="btnMonitor" Content="监听" Margin="123,161,0,0" Click="btnMonitor_Click" Width="80" Height="30"/>
                     <Button HorizontalAlignment="Left" VerticalAlignment="Top"  Name="btnCancelMonitor" Content="取消监听" Margin="221,161,0,0" Click="btnCancelMonitor_Click" Width="80" Height="30"/>
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,200,0,0">
+                        <Button Name="btnGetGroups" Click="btnGetGroups_Click">获取组</Button>
+                    </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="短信模块" >
