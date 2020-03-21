@@ -42,12 +42,14 @@ namespace ClientDemo.CallBusiness
             session.LocalIp = _localSipIP;
             session.IsDuplex = cp.IsDuplex == "1" ? true : false;
             session.CallID = cp.cmd_guid;
-            if (cp.CallMode == "Voice")
-                session.CallMode = "0";
-            if (cp.CallMode == "Vedio")
-                session.CallMode = "1";
-            if (cp.CallMode == "Vedio+Voice")
-                session.CallMode = "2";
+            session.CallMode = cp.CallMode;
+
+            //if (cp.CallMode == GlobalCommandName.CallMode.Audio)
+            //    session.CallMode = "0";
+            //if (cp.CallMode == GlobalCommandName.CallMode.video)
+            //    session.CallMode = "1";
+            //if (cp.CallMode == GlobalCommandName.CallMode.AudioAndVideo)
+            //    session.CallMode = "2";
 
 
             if (session.LocalIp != null)
@@ -56,7 +58,7 @@ namespace ClientDemo.CallBusiness
                 {
                     switch (cp.CallMode)
                     {
-                        case "Vedio":
+                        case GlobalCommandName.CallMode.video:
                             {
                                 session.VideoPtrRecv = MediaManager.GetInstance().GetVedioPtrRecvBycmdGuid(session.LocalIp, cmdGuid);
                                 IntPtr ptr = MediaManager.MediaTerm_GetHndPara(session.VideoPtrRecv);
@@ -76,7 +78,7 @@ namespace ClientDemo.CallBusiness
                                 }
                             }
                           
-                        case "Voice":
+                        case GlobalCommandName.CallMode.Audio:
                             {
                                 session.VoicePtrRecv = MediaManager.GetInstance().GetVoicePtrRecvBycmdGuid(session.LocalIp, cmdGuid);
                                 IntPtr ptr = MediaManager.MediaTerm_GetHndPara(session.VoicePtrRecv);
@@ -95,7 +97,7 @@ namespace ClientDemo.CallBusiness
                                     return null;
                                 }
                             }
-                        case "Vedio+Voice":
+                        case GlobalCommandName.CallMode.AudioAndVideo:
                             {
                                 session.VideoPtrRecv = MediaManager.GetInstance().GetVedioPtrRecvBycmdGuid(session.LocalIp, cmdGuid);
                                 IntPtr ptr1 = MediaManager.MediaTerm_GetHndPara(session.VideoPtrRecv);

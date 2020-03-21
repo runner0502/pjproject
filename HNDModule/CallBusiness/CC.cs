@@ -19,12 +19,16 @@ namespace ClientDemo.CallBusiness
 
         public bool IsDuplex { get;set; }
 
-        public string CallMode { get; set; }
+        public GlobalCommandName.CallMode CallMode { get; set; }
 
         /// <summary>
         /// 接收句柄
         /// </summary>
         public int VoicePtrRecv { get; set; }
+
+        public int VoicePtrSendSip { get; set; }
+
+        public int VoiceSendSipPort { get; set; }
 
         /// <summary>
         /// 播放句柄

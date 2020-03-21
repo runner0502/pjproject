@@ -1396,18 +1396,24 @@ namespace ClientDemo
         #endregion
 
         #region CallMode
-        /// <summary>
-        /// "0"：音频呼叫
-        /// </summary>
-        public const string CallMode_Audio = "0";
-        /// <summary>
-        /// "1"：视频呼叫
-        /// </summary>
-        public const string CallMode_Video = "1";
-        /// <summary>
-        /// "2"：音视频呼叫
-        /// </summary>
-        public const string CallMode_AudioAndVideo = "2";
+        ///// <summary>
+        ///// "0"：音频呼叫
+        ///// </summary>
+        //public const string CallMode_Audio = "0";
+        ///// <summary>
+        ///// "1"：视频呼叫
+        ///// </summary>
+        //public const string CallMode_Video = "1";
+        ///// <summary>
+        ///// "2"：音视频呼叫
+        ///// </summary>
+        //public const string CallMode_AudioAndVideo = "2";
+
+        public enum CallMode
+        {
+            Audio, video, AudioAndVideo
+        }
+
         #endregion
 
         #region VideoCall_Type

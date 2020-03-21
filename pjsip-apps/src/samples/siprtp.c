@@ -83,6 +83,8 @@ static const char *USAGE =
 
 #include "util.h"
 
+#include "HNDWrap.h"
+
 /* Uncomment these to disable threads.
  * NOTE:
  *   when threading is disabled, siprtp won't transmit any
@@ -281,10 +283,10 @@ static pjsip_module mod_siprtp =
 /* Codec constants */
 struct codec audio_codecs[] = 
 {
-    { 0,  "PCMU", 8000, 64000, 20, "G.711 ULaw" },
+	{ 8,  "PCMA", 8000, 64000, 20, "G.711 ALaw" },    
     { 3,  "GSM",  8000, 13200, 20, "GSM" },
     { 4,  "G723", 8000, 6400,  30, "G.723.1" },
-    { 8,  "PCMA", 8000, 64000, 20, "G.711 ALaw" },
+	{ 0,  "PCMU", 8000, 64000, 20, "G.711 ULaw" },
     { 18, "G729", 8000, 8000,  20, "G.729" },
 };
 
@@ -392,6 +394,16 @@ static pj_status_t init_sip()
     return PJ_SUCCESS;
 }
 
+void HNDDataCallback(char *xml)
+{
+	//PJ_LOG(3, (THIS_FILE, "HNDDataCallback %s ", xml ));
+}
+
+static int init_hnd()
+{
+	setDataCallback( &HNDDataCallback );
+	return HNDInit();
+}
 
 /*
  * Destroy SIP
@@ -656,6 +668,7 @@ static void process_incoming_call(pjsip_rx_data *rdata)
 				       NULL, NULL);
 	return;
     }
+
 
     /* Create SDP */
     create_sdp( dlg->pool, call, &sdp);
@@ -1062,7 +1075,13 @@ static pj_status_t create_sdp( pj_pool_t *pool,
     /* Standard media info: */
     m->desc.media = pj_str("audio");
 	//m->desc.port = pj_ntohs(tpinfo.sock_info.rtp_addr_name.ipv4.sin_port);
+
+	HNDMakeCall("80020202");
+	int HNDlocalPort = HNDGetLocalPort();
+
 	m->desc.port = RTP_START_PORT;
+	//m->desc.port = HNDlocalPort;
+
     m->desc.port_count = 1;
     m->desc.transport = pj_str("RTP/AVP");
 
@@ -1440,7 +1459,9 @@ static void call_on_media_update( pjsip_inv_session *inv,
 	return;
     }
 
-	revAndSend(RTP_START_PORT, audio->si.rem_addr);
+	HNDSetRemoteSipPort( remote_sdp->media[0]->desc.port );
+
+	//revAndSend(RTP_START_PORT, audio->si.rem_addr);
 
 	return;
 
@@ -2116,6 +2137,8 @@ int main(int argc, char *argv[])
 
     /* Init SIP etc */
     status = init_sip();
+
+	init_hnd();
     if (status != PJ_SUCCESS) {
 	app_perror(THIS_FILE, "Initialization has failed", status);
 	destroy_sip();
@@ -2189,6 +2212,8 @@ int main(int argc, char *argv[])
     /* Shutting down... */
     destroy_sip();
     destroy_media();
+
+	HNDDispose();
 
     if (app.pool) {
 	pj_pool_release(app.pool);
@@ -2657,7 +2682,7 @@ int revAndSend(int recLocalPort, pj_sockaddr rem_addr1)
 	/*status = init_codecs(med_endpt);
 	PJ_ASSERT_RETURN(status == PJ_SUCCESS, 1);*/
 
-	codec_id = "PCMU";
+	codec_id = "PCMA";
 	/* Find which codec to use. */
 	if (codec_id) {
 		unsigned count = 1;
@@ -2712,7 +2737,8 @@ int revAndSend(int recLocalPort, pj_sockaddr rem_addr1)
 	pjmedia_stream *stream1 = NULL;
 	pjmedia_port *stream_port1;
 
-	pj_str_t ip = pj_str("192.168.10.138");
+	//pj_str_t ip = pj_str("192.168.10.138");
+	pj_str_t ip = pj_str("20.0.0.99");
 	pj_uint16_t port = 6008;
 
 	status = pj_sockaddr_in_init(&remote_addr, &ip, port);

@@ -118,8 +118,8 @@ namespace ClientDemo
                 this._IsEncryption = value;
             }
         }
-        public string _CallMode;
-        public string CallMode
+        public GlobalCommandName.CallMode _CallMode;
+        public GlobalCommandName.CallMode CallMode
         {
             get
             {

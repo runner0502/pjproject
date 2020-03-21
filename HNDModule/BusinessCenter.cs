@@ -331,9 +331,8 @@ namespace ClientDemo
             sap_guid = "<sap_guid>" + sapguid + "</sap_guid>";
 
             string medie = string.Empty;
-            string CallMode=string.Empty;
             string calltype=string.Empty;
-            if (cp.CallMode == "Vedio")
+            if (cp.CallMode == GlobalCommandName.CallMode.video)
             {
                 StringBuilder vedioxml = new StringBuilder();
                 vedioxml.Append("<media><video>");
@@ -348,7 +347,6 @@ namespace ClientDemo
                 vedioxml.Append("</video></media>");
 
                 medie = vedioxml.ToString();
-                CallMode=GlobalCommandName.CallMode_Video;
                 if (cp.callednumberstyle == "0")
                 {
                     calltype = GlobalCommandName.CallType_Individual_Video;
@@ -358,7 +356,7 @@ namespace ClientDemo
                     calltype = GlobalCommandName.CallType_Group_Video;
                 }
             }
-            else if (cp.CallMode == "Voice")
+            else if (cp.CallMode == GlobalCommandName.CallMode.Audio)
             {
                 StringBuilder vedioxml = new StringBuilder();
                 vedioxml.Append("<media><audio>");
@@ -369,7 +367,6 @@ namespace ClientDemo
                 vedioxml.Append("<FrameRate>25</FrameRate>");
                 vedioxml.Append("<FrameSize>3</FrameSize>");
                 medie = vedioxml.ToString();
-                 CallMode=GlobalCommandName.CallMode_Audio;
                  if (cp.callednumberstyle == "0")
                  {
                      calltype = GlobalCommandName.CallType_Individual;
@@ -379,7 +376,7 @@ namespace ClientDemo
                      calltype = GlobalCommandName.CallType_Group;
                  }
             }
-            else if (cp.CallMode == "Vedio+Voice")
+            else if (cp.CallMode == GlobalCommandName.CallMode.AudioAndVideo)
             {
                 StringBuilder vedioxml = new StringBuilder();
                 vedioxml.Append("<media><audio>");
@@ -402,7 +399,6 @@ namespace ClientDemo
                 vedioxml.Append("<cameratype>0</cameratype>");
                 vedioxml.Append("<videocall_type>0</videocall_type>");
                 medie = vedioxml.ToString();
-                 CallMode=GlobalCommandName.CallMode_AudioAndVideo;
                  if (cp.callednumberstyle == "0")
                  {
                      calltype = GlobalCommandName.CallType_Individual_VideoAndVoc;
@@ -439,15 +435,19 @@ namespace ClientDemo
 	<number_type>{12}</number_type>
 </called>
 </hytera>
-", cmd_guid, puc_id, system_id, name2, session.LocalIp, session.LocalPort, sap_type, calltype, duplex, callernumber, caller_type, callednumber, calledtype, sapguid, medie, CallMode);
+", cmd_guid, puc_id, system_id, name2, session.LocalIp, session.LocalPort, sap_type, calltype, duplex, callernumber, caller_type, callednumber, calledtype, sapguid, medie, cp.CallMode.GetHashCode());
                     break;
                     }
             }
-                #endregion
+            #endregion
 
-            txtMessage.Text += "\n发起呼叫 send xml：\n";
-            txtMessage.Text += FormatXml(xml);
-            txtMessage.ScrollToEnd();
+            if (txtMessage != null)
+            {
+                txtMessage.Text += "\n发起呼叫 send xml：\n";
+                txtMessage.Text += FormatXml(xml);
+                txtMessage.ScrollToEnd();
+
+            }
             IntPtr xmlPtr = Marshal.StringToHGlobalUni(xml);
             CallManager.GetInstance().CCSession.Add(cmd_guid, session);//添加到呼叫管理集合中，cc_connected_evt 会带有对端port信息，到时再进行Send句柄的申请与link
             PUCApiAdapter.PUCAPI_ProcessRequest(xmlPtr);
@@ -1056,6 +1056,10 @@ namespace ClientDemo
             sapguid = feng.sap_guid;
             saptype = feng.sap_type;
             AnalysisXml.GetInstance().ReciveData(pXmlData);
+            Console.Write(pXmlData);
+
+            if (OnDataback != null)
+                OnDataback(pXmlData22);
 
             if (pXmlData.Contains("cc_connected_evt"))//接通后要打开语音
             {
@@ -1104,14 +1108,20 @@ namespace ClientDemo
                     //if (transfercmdguid == null && cmdguid != null)
                     if (transfercmdguid == null)
                     {
-                        if (cc.CallMode == GlobalCommandName.CallMode_Audio || cc.CallMode == GlobalCommandName.CallMode_AudioAndVideo)
+                        if (cc.CallMode == GlobalCommandName.CallMode.Audio || cc.CallMode == GlobalCommandName.CallMode.AudioAndVideo)
                         {
                             if (cc.VoicePtrLinkPlay > 0)
                                 MediaManager.GetInstance().StopLinkByPtrLink(cc.VoicePtrLinkPlay);
                             cc.VoicePtrPlay = MediaManager.GetInstance().GetAudioPlayPtr();//播放语音
-                            cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrPlay);//链接语音  接收-->播放
+                            if (cc.VoiceSendSipPort > 0)
+                            {
+                                cc.VoicePtrSendSip = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, "20.0.0.105", cc.VoiceSendSipPort, 2);//发送语音
+                                cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrSendSip);//链接语音  接收-->播放
+                                //cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrPlay);//链接语音  接收-->播放
+                            }
+                            //cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrPlay);//链接语音  接收-->播放
                         }
-                        if (cc.CallMode == GlobalCommandName.CallMode_Video || cc.CallMode == GlobalCommandName.CallMode_AudioAndVideo)
+                        if (cc.CallMode == GlobalCommandName.CallMode.video || cc.CallMode == GlobalCommandName.CallMode.AudioAndVideo)
                         {
                             if (cc.VideoPtrLinkPlay > 0)
                                 MediaManager.GetInstance().StopLinkByPtrLink(cc.VideoPtrLinkLocalPlay);
@@ -1229,7 +1239,7 @@ namespace ClientDemo
                 string sap_type = xml.ChildNodes[0].SelectSingleNode("sap_type").InnerText;
                 string sap_guid = xml.ChildNodes[0].SelectSingleNode("sap_guid").InnerText;
                 callparam cp=new callparam();
-                cp.CallMode="Voice";
+                cp.CallMode= GlobalCommandName.CallMode.Audio;
                 CC session = CallManager.GetInstance().CreateCCSession(cp, cmd_guid);
                 string sendXML = string.Format(@"<hytera>
   <product_name>PUC</product_name>
@@ -1583,9 +1593,8 @@ namespace ClientDemo
                         sap_guid = "<sap_guid>" + sapguid + "</sap_guid>";
 
                         string medie = string.Empty;
-                        string CallMode = string.Empty;
                         string calltype = string.Empty;
-                        if (cp.CallMode == "Vedio")
+                        if (cp.CallMode == GlobalCommandName.CallMode.video)
                         {
                             StringBuilder vedioxml = new StringBuilder();
                             vedioxml.Append("<media><video>");
@@ -1603,7 +1612,6 @@ namespace ClientDemo
                             vedioxml.Append("<FrameRate>25</FrameRate>");
                             vedioxml.Append("<FrameSize>3</FrameSize>");
                             medie = vedioxml.ToString();
-                            CallMode = GlobalCommandName.CallMode_AudioAndVideo;
                             if (cp.callednumberstyle == "0")
                             {
                                 calltype = GlobalCommandName.CallType_PushVedioCall;//视频转发都是22;GlobalCommandName.CallType_PushVedioCall
@@ -1613,7 +1621,7 @@ namespace ClientDemo
                                 calltype = GlobalCommandName.CallType_PushVedioCall;
                             }
                         }
-                        else if (cp.CallMode == "Voice")
+                        else if (cp.CallMode == GlobalCommandName.CallMode.Audio)
                         {
                             StringBuilder vedioxml = new StringBuilder();
                             vedioxml.Append("<media><audio>");
@@ -1624,7 +1632,6 @@ namespace ClientDemo
                             vedioxml.Append("<FrameRate>25</FrameRate>");
                             vedioxml.Append("<FrameSize>3</FrameSize>");
                             medie = vedioxml.ToString();
-                            CallMode = GlobalCommandName.CallMode_AudioAndVideo;
                             if (cp.callednumberstyle == "0")
                             {
                                 calltype = GlobalCommandName.CallType_PushVedioCall;
@@ -1634,7 +1641,7 @@ namespace ClientDemo
                                 calltype = GlobalCommandName.CallType_PushVedioCall;
                             }
                         }
-                        else if (cp.CallMode == "Vedio+Voice")
+                        else if (cp.CallMode == GlobalCommandName.CallMode.AudioAndVideo)
                         {
                             StringBuilder vedioxml = new StringBuilder();
                             vedioxml.Append("<media><audio>");
@@ -1657,7 +1664,6 @@ namespace ClientDemo
                             vedioxml.Append("<videocall_type>2</videocall_type>");
                             vedioxml.Append("<videosource_type>2</videosource_type>");
                             medie = vedioxml.ToString();
-                            CallMode = GlobalCommandName.CallMode_AudioAndVideo;
                             if (cp.callednumberstyle == "0")
                             {
                                 calltype = GlobalCommandName.CallType_PushVedioCall;
@@ -1694,7 +1700,7 @@ namespace ClientDemo
 	<number_type>{12}</number_type>
 </called>
 </hytera>
-", cmd_guid, puc_id, system_id, name2, session.LocalIp, session.LocalPort, sap_type, calltype, duplex, callernumber, caller_type, callednumber, calledtype, sapguid, medie, CallMode);
+", cmd_guid, puc_id, system_id, name2, session.LocalIp, session.LocalPort, sap_type, calltype, duplex, callernumber, caller_type, callednumber, calledtype, sapguid, medie, cp.CallMode.GetHashCode());
                         break;
                     }
             }

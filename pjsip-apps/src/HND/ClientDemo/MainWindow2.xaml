@@ -70,7 +70,7 @@
                     <GroupBox Header="转发" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,435,0,0" Height="113" Width="480"  />
 
                     <Label Content="被叫号码：" HorizontalAlignment="Left" Margin="90,91,0,0" VerticalAlignment="Top"/>
-                    <TextBox HorizontalAlignment="Left" x:Name="callednum" Height="23" Margin="167,93,0,0" TextWrapping="Wrap" Text="33020205" VerticalAlignment="Top" Width="140"/>
+                    <TextBox HorizontalAlignment="Left" x:Name="callednum" Height="23" Margin="167,93,0,0" TextWrapping="Wrap" Text="80020202" VerticalAlignment="Top" Width="140"/>
                     <Label Content="号码类型：" HorizontalAlignment="Left" Margin="90,126,0,0" VerticalAlignment="Top"/>
                     <!--<TextBox HorizontalAlignment="Left" x:Name="calledstyle" Height="23" Margin="501,124,0,0" TextWrapping="Wrap" Text="个号" VerticalAlignment="Top" Width="86"/>-->
                     <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="calledstyle" Margin="165,127,0,0" Height="25" Width="140"  >
@@ -105,10 +105,10 @@
                     <Button Content="呼叫调度台" x:Name="CallDispach" HorizontalAlignment="Left" Margin="104,435,0,0" VerticalAlignment="Top" Width="91" Height="24" Click="CallDispach_Click"  Visibility="Collapsed"/>
                     <Button Content="接听" x:Name="btnRevcCall" HorizontalAlignment="Left" Margin="204,435,0,0" VerticalAlignment="Top" Width="91" Height="24" Click="btnRevcCall_Click" IsEnabled="False" Visibility="Collapsed"/>
                     <Button Content="转接" x:Name="btnTransferCall" HorizontalAlignment="Left" Margin="304,435,0,0" VerticalAlignment="Top" Width="91" Height="24" Click="btnTransferCall_Click" IsEnabled="False" Visibility="Collapsed"/>
-                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="callMode" Margin="167,230,0,0" Height="25" Width="140"  >
-                        <ComboBoxItem Content="Vedio"/>
+                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="cmbCallMode" Margin="167,230,0,0" Height="25" Width="140"  >
+                        <!--<ComboBoxItem Content="Vedio"/>
                         <ComboBoxItem Content="Voice"  Selector.IsSelected="True"/>
-                        <ComboBoxItem Content="Vedio+Voice"/>
+                        <ComboBoxItem Content="Vedio+Voice"/>-->
                     </ComboBox>
                     <Label Content="呼叫模式：" HorizontalAlignment="Left" Margin="92,230,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.425,0.154"/>
                     <Label Content="转发号码：&#xD;&#xA;" HorizontalAlignment="Left" Margin="92,454,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.425,0.154" Height="26"/>

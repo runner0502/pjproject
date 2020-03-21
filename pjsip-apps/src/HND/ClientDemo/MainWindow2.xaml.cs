@@ -30,15 +30,16 @@ namespace ClientDemo
     /// </summary>
     public partial class MainWindow2 : Window
     {
-        static paramclass pc;
-        callparam  cp;
-        SDSParam sds;
-        List<GroupEntry> categories;     //声明动态分组对象
-        private List<DeviceEntry> devicelist;
-        List<SapEntity> SapEntityList;
+        static paramclass s_pc;
+        callparam  _cp;
+        SDSParam _sds;
+        List<GroupEntry> _categories;     //声明动态分组对象
+        private List<DeviceEntry> _devicelist;
+        List<SapEntity> _SapEntityList;
         string CallGuid = string.Empty;
         string CallSapType = string.Empty;
-        private const string fileName = "config/AutoConfig.xml";
+        private const string _fileName = "config/AutoConfig.xml";
+        HNDModule.Client _client = HNDModule.Client.GetInstance();
         /// <summary>
         /// 设置目标窗体大小，位置
         /// </summary>
@@ -53,22 +54,31 @@ namespace ClientDemo
         public static extern int MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool BRePaint);
         public static paramclass GetLocalParam()
         {
-            return pc;
+            return s_pc;
         }
 
         public MainWindow2()
         {
             InitializeComponent();
-            pc = new paramclass();
-            cp = new callparam();
-            sds = new SDSParam();
+
+            //HNDModule.Client.GetInstance().Init();
+            //return;
+
+            cmbCallMode.ItemsSource = Enum.GetValues(typeof(GlobalCommandName.CallMode));
+            cmbCallMode.SelectedIndex = 0;
+
             BusinessCenter.Instance.OnDataback += update;
             BusinessCenter.Instance.showDialog += showdialog;
-            Hytera.Commom.Log.Logger.configLogger();
-            //string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            //Directory.SetCurrentDirectory(path);
-            MediaManager.GetInstance().InitMediaTerm();
 
+             _client.Init();
+
+            s_pc = HNDModule.Client.pc;
+            _cp = _client.Cp;
+            _sds = _client.Sds;
+            _categories = _client.Categories;
+            _SapEntityList = _client.SapEntityList1;
+            _devicelist = _client.Devicelist;
+ 
             InitLoginpara();
             //SetMoveWindow(pictureBox.Handle, 0, 0, panelBox.Width, panelBox.Height, true);
         }
@@ -78,7 +88,8 @@ namespace ClientDemo
         }
         private void InitLoginpara()
         {
-            LoginPara loginpara = XMLHelper.DeSerializeFromFile<LoginPara>(fileName);
+            //LoginPara loginpara = XMLHelper.DeSerializeFromFile<LoginPara>(_fileName);
+            LoginPara loginpara = _client.Loginpara;
             txt1.Text = loginpara.LoginName;
             psword.Password = loginpara.Password;
             localSipIP.Text = loginpara.LocolSipIP;
@@ -90,30 +101,32 @@ namespace ClientDemo
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            pc.user_name = txt1.Text.ToString();
-            pc.user_password = psword.Password.ToString();
+            s_pc.user_name = txt1.Text.ToString();
+            s_pc.user_password = psword.Password.ToString();
            // pc.user_password = "NlGrPtPl";
-            pc.PUC_ID = txtPUC_ID.Text.Trim().ToString();
-            pc.LocalSipIP = localSipIP.Text.ToString();
-            pc.ServerIP = serverIP.Text.ToString();
-            pc.IP3 = IP3.Text.ToString();
-            pc.ServerSipIP = serverSipIP.Text.ToString();
+            s_pc.PUC_ID = txtPUC_ID.Text.Trim().ToString();
+            s_pc.LocalSipIP = localSipIP.Text.ToString();
+            s_pc.ServerIP = serverIP.Text.ToString();
+            //pc.IP3 = IP3.Text.ToString();
+            s_pc.IP3 = "";
+            s_pc.ID3 = "1";
+            s_pc.ServerSipIP = serverSipIP.Text.ToString();
 
-            pc.LocalSipPort = localSipPort.Text.ToString();
-            pc.ServerPort = serverPort.Text.ToString();
-            pc.ID3 = ID3.Text.ToString();
-            pc.ServerSipPort = serverSipPort.Text.ToString();
-            pc.BOverNat1 = (bool)BOverNat1.IsChecked;
-            pc.BOverNat2 = (bool)BOverNat2.IsChecked;
+            s_pc.LocalSipPort = localSipPort.Text.ToString();
+            s_pc.ServerPort = serverPort.Text.ToString();
+            s_pc.ServerSipPort = serverSipPort.Text.ToString();
+            //pc.BOverNat1 = (bool)BOverNat1.IsChecked;
+            //pc.BOverNat2 = (bool)BOverNat2.IsChecked;
 
-            CallManager._localSipIP = pc._localSipIP;
+            _client.Login();
+
+            //CallManager._localSipIP = s_pc._localSipIP;
 
 
-            LoginSubmitEvent();
+            //LoginSubmitEvent();
 
-            Hytera.Commom.Log.Logger.Debug("Login Start");
-            bool flag = BusinessCenter.Instance.login(pc);
+            //Hytera.Commom.Log.Logger.Debug("Login Start");
+            //bool flag = BusinessCenter.Instance.login(s_pc);
 
             //update(flag ? "登录成功" : "登录失败");
             
@@ -136,29 +149,35 @@ namespace ClientDemo
             //BusinessCenter.Instance.device_list_request(txtPUC_ID.Text.Trim());
 
             
-            Hytera.Commom.Log.Logger.Debug("Login End");
+            //Hytera.Commom.Log.Logger.Debug("Login End");
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            pc.user_name = txt1.Text.ToString();
-            pc.user_password = psword.Password.ToString();
-            pc.LocalSipIP = localSipIP.Text.ToString();
-            pc.ServerIP =serverIP.Text.ToString();
-            pc.IP3 = IP3.Text.ToString();
-            pc.ServerSipIP = serverSipIP.Text.ToString();
+            //DBModule.Class1 db= new DBModule.Class1();
+            //db.getsome();
+            //return;
 
-            pc.LocalSipPort = localSipPort.Text.ToString();
-            pc.ServerPort = serverPort.Text.ToString();
-            pc.ID3 = ID3.Text.ToString();
-            pc.ServerSipPort = serverSipPort.Text.ToString();
+            s_pc.user_name = txt1.Text.ToString();
+            s_pc.user_password = psword.Password.ToString();
+            s_pc.LocalSipIP = localSipIP.Text.ToString();
+            s_pc.ServerIP =serverIP.Text.ToString();
+            s_pc.IP3 = IP3.Text.ToString();
+            s_pc.ServerSipIP = serverSipIP.Text.ToString();
+
+            s_pc.LocalSipPort = localSipPort.Text.ToString();
+            s_pc.ServerPort = serverPort.Text.ToString();
+            s_pc.ID3 = ID3.Text.ToString();
+            s_pc.ServerSipPort = serverSipPort.Text.ToString();
+
+            _client.Logout();
+
 
             //LoginSubmitEvent();
             Dispatcher.Invoke(new Action(delegate()
             {
                 txt.Text = "";
             }));
-            BusinessCenter.Instance.loginout(pc);
 
         }
 
@@ -175,15 +194,13 @@ namespace ClientDemo
 
         public void LoginSubmitEvent()
         {
-            BusinessCenter.Instance.InitPucApi(pc);
+            BusinessCenter.Instance.InitPucApi(s_pc);
             //BusinessCenter.Instance.login(pc);
         }
-
 
         private void mawin_Loaded(object sender, RoutedEventArgs e)
         {
         }
-
 
         protected virtual void Dispose(bool disposing)
         {
@@ -207,7 +224,7 @@ namespace ClientDemo
 
             if (str.Contains(CommonData.GetInstance().puc_login_ack) && str.Contains(CommonData.GetInstance().successResult))//登陆成功
             {
-                CommonData.GetInstance().CurrDispatch = pc.user_name;
+                CommonData.GetInstance().CurrDispatch = s_pc.user_name;
                 Thread.Sleep(2000);
                 Dispatcher.Invoke(new Action(() =>
                 {
@@ -223,8 +240,8 @@ namespace ClientDemo
             {
                 Hytera.Commom.Log.Logger.Debug("dgna_request_ack : " + str);
 
-                if (categories == null)
-                    categories = new List<GroupEntry>();
+                if (_categories == null)
+                    _categories = new List<GroupEntry>();
                 Stream stream = new MemoryStream(ASCIIEncoding.UTF8.GetBytes(s));
                 XDocument categoriesXML = XDocument.Load(stream);
                 XElement element = categoriesXML.Element("hytera");
@@ -233,13 +250,13 @@ namespace ClientDemo
                 {
                     Dispatcher.Invoke(new Action(delegate()
                     {
-                        cmbGroup.ItemsSource = categories;
+                        cmbGroup.ItemsSource = _categories;
                         cmbGroup.Items.Refresh();
                     }));
                 }
                 else
                 {
-                    categories.AddRange(this.GetCategories(element.Element("dgna_list")));
+                    _categories.AddRange(this.GetCategories(element.Element("dgna_list")));
                 }
                 
             }
@@ -255,8 +272,8 @@ namespace ClientDemo
                     txt.ScrollToEnd();
                 }));
 
-                if (devicelist == null)
-                    devicelist = new List<DeviceEntry>();
+                if (_devicelist == null)
+                    _devicelist = new List<DeviceEntry>();
                 Stream stream = new MemoryStream(ASCIIEncoding.UTF8.GetBytes(s));
 
                 XDocument categoriesXML = XDocument.Load(stream);
@@ -265,7 +282,7 @@ namespace ClientDemo
                 this.GetDeviceList(element.Element("device_list"));
                 Dispatcher.Invoke(new Action(delegate()
                 {
-                    cmbDevice.ItemsSource = devicelist;
+                    cmbDevice.ItemsSource = _devicelist;
                     cmbDevice.Items.Refresh();
                 }));
 
@@ -274,14 +291,14 @@ namespace ClientDemo
             {
                 Hytera.Commom.Log.Logger.Debug("sap_list_request_ack : " + str);
 
-                if (SapEntityList == null)
-                    SapEntityList = new List<SapEntity>();
+                if (_SapEntityList == null)
+                    _SapEntityList = new List<SapEntity>();
                 Stream stream = new MemoryStream(ASCIIEncoding.UTF8.GetBytes(s));
 
                 XDocument categoriesXML = XDocument.Load(stream);
                 XElement element = categoriesXML.Element("hytera");
 
-                SapEntityList.AddRange(this.GetSapEntity(element.Element("sap_list")));
+                _SapEntityList.AddRange(this.GetSapEntity(element.Element("sap_list")));
                 //Dispatcher.Invoke(new Action(delegate()
                 //{
                 //    cmbDevice.ItemsSource = devicelist;
@@ -322,7 +339,7 @@ namespace ClientDemo
                 string result = xml.ChildNodes[0].SelectSingleNode("result").InnerText;
                 if (!string.IsNullOrEmpty(result) && result == "0")
                 {
-                    categories.Clear();
+                    _categories.Clear();
                     Dispatcher.Invoke(new Action(() =>
                     {
                         BusinessCenter.Instance.dgna_request(txtPUC_ID.Text.Trim());
@@ -395,7 +412,7 @@ namespace ClientDemo
         string sendcmdguid = null;
 
         private string _cmdguid = null;
-        string cmdguid
+        string Cmdguid
         {
             get
             {
@@ -410,7 +427,7 @@ namespace ClientDemo
 
 
         private string _transfercmdguid = null;
-        string transfercmdguid
+        string Transfercmdguid
         {
             get
             {
@@ -426,76 +443,81 @@ namespace ClientDemo
         {
             try
             {
-                if (cmdguid != null || transfercmdguid != null)
+                if (Cmdguid != null || Transfercmdguid != null)
                 {
                     // BusinessCenter.Instance.RemoveFromCallList(cmdguid);
                     MessageBox.Show("请先挂断，请勿重复发起呼叫", "警告！");
                     return;
                 }
-                string callcmdguid = BusinessCenter.GUID;
-                cmdguid = callcmdguid;
-                cp.cmd_guid = callcmdguid;
-                cp.callernumber = callnum.Text.ToString();
-                if (numstyle.Text.ToString() == "Dispatcher")
-                {
-                    cp.callernumberstyle = "7";
-                }
 
-                cp.callednumber = callednum.Text.ToString();
-                if (calledstyle.Text.ToString() == "个号")
-                {
-                    cp.callednumberstyle = "0";
-                }
-                else
-                {
-                    cp.callednumberstyle = "1";
-                }
-                //          cp.callednumberstyle = calledstyle.Text.ToString();
-                cp.PUC_ID = txtPUC_ID.Text.Trim().ToString();
-                cp.systemID = systemid.Text.ToString();
-                cp.sapstyle = sapsty.Text.ToString();
-                string sap_GUID = string.Empty;
-                if (SapEntityList != null && SapEntityList.Count > 0)
-                {
-                    try
-                    {
-                        sap_GUID = SapEntityList.FirstOrDefault(sap => sap.System_id == systemid.Text.Trim()).Sap_guid;
-                    }
-                    catch(Exception ex)
-                    {
-                        Hytera.Commom.Log.Logger.Error("sapList is Null",ex);
-                    }
-                    if (sap_GUID.Equals("") || sap_GUID.Equals(string.Empty) || sap_GUID.Equals(null))
-                    {
-                        sap_GUID = "";
-                    }
-                }
+                //string callcmdguid = BusinessCenter.GUID;
+                //Cmdguid = callcmdguid;
+                //_cp.cmd_guid = callcmdguid;
+                //_cp.callernumber = callnum.Text.ToString();
+                //if (numstyle.Text.ToString() == "Dispatcher")
+                //{
+                //    _cp.callernumberstyle = "7";
+                //}
 
-                if (Isduplex.IsChecked == true)
-                {
-                    cp.IsDuplex = "1";
-                }
-                else
-                {
-                    cp.IsDuplex = "0";
-                }
-                if (IsEncryp.IsChecked == true)
-                {
-                    cp.IsEncryption = "1";
-                }
-                else
-                {
-                    cp.IsEncryption = "0";
-                }
-                cp.CallMode = callMode.Text.ToString();
-                cp.pictrueboxHandle = pictureBox.Handle.ToInt32();
+                //_cp.callednumber = callednum.Text.ToString();
+                //if (calledstyle.Text.ToString() == "个号")
+                //{
+                //    _cp.callednumberstyle = "0";
+                //}
+                //else
+                //{
+                //    _cp.callednumberstyle = "1";
+                //}
+                ////          cp.callednumberstyle = calledstyle.Text.ToString();
+                //_cp.PUC_ID = txtPUC_ID.Text.Trim().ToString();
+                //_cp.systemID = systemid.Text.ToString();
+                //_cp.sapstyle = sapsty.Text.ToString();
+                //string sap_GUID = string.Empty;
+                //if (_SapEntityList != null && _SapEntityList.Count > 0)
+                //{
+                //    try
+                //    {
+                //        sap_GUID = _SapEntityList.FirstOrDefault(sap => sap.System_id == systemid.Text.Trim()).Sap_guid;
+                //    }
+                //    catch(Exception ex)
+                //    {
+                //        Hytera.Commom.Log.Logger.Error("sapList is Null",ex);
+                //    }
+                //    if (sap_GUID.Equals("") || sap_GUID.Equals(string.Empty) || sap_GUID.Equals(null))
+                //    {
+                //        sap_GUID = "";
+                //    }
+                //}
+
+                //if (Isduplex.IsChecked == true)
+                //{
+                //    _cp.IsDuplex = "1";
+                //}
+                //else
+                //{
+                //    _cp.IsDuplex = "0";
+                //}
+                //if (IsEncryp.IsChecked == true)
+                //{
+                //    _cp.IsEncryption = "1";
+                //}
+                //else
+                //{
+                //    _cp.IsEncryption = "0";
+                //}
+                //_cp.CallMode = (GlobalCommandName.CallMode)cmbCallMode.SelectedValue;
+
+                //_cp.pictrueboxHandle = pictureBox.Handle.ToInt32();
                 //根据systemId获取sap_guid
                 //string sap_guid = SapEntityList.First(sap => sap.System_id == cp.systemID).Sap_guid;
 
-                BusinessCenter.Instance.PTTDown(cp, cmdguid, sap_GUID, txt);
-                BusinessCenter.Instance.AddToCallList(cmdguid);
+                //BusinessCenter.Instance.PTTDown(_cp, Cmdguid, sap_GUID, txt);
+                //BusinessCenter.Instance.AddToCallList(Cmdguid);
 
-                isshow = true;
+                //isshow = true;
+
+                _client.MakeCall("80020202");
+                Cmdguid = _client.cmdguid;
 
             }
             catch (Exception ex)
@@ -509,46 +531,46 @@ namespace ClientDemo
         private void disconnect_Click(object sender, RoutedEventArgs e)
         {
             isshow = false;
-            BusinessCenter.Instance.Disconnect(cmdguid, txt);
-            BusinessCenter.Instance.RemoveFromCallList(cmdguid);
-            cmdguid = null;
+            BusinessCenter.Instance.Disconnect(Cmdguid, txt);
+            BusinessCenter.Instance.RemoveFromCallList(Cmdguid);
+            Cmdguid = null;
         }
 
         private void send_Click(object sender, RoutedEventArgs e)
         {
-            sds.sendernumber = sendernum.Text.ToString();
-            sds.sendernumberstyle = "7";
-            sds.PUC_ID = txtPUC_ID.Text.Trim();
+            _sds.sendernumber = sendernum.Text.ToString();
+            _sds.sendernumberstyle = "7";
+            _sds.PUC_ID = txtPUC_ID.Text.Trim();
          //   sds.sendernumberstyle = sendernumstyle.Text.ToString();
 
             string sendmesscmdguid = BusinessCenter.GUID;
             sendcmdguid = sendmesscmdguid;
 
-            sds.receivenumber = receivenum.Text.ToString();
+            _sds.receivenumber = receivenum.Text.ToString();
             if (receivenumstyle.Text.ToString() == "个号")
             {
-                sds.receivenumberstyle = "0";
+                _sds.receivenumberstyle = "0";
             }
             else
-                sds.receivenumberstyle = "1";
+                _sds.receivenumberstyle = "1";
             //sds.receivenumberstyle = receivenum.Text.ToString();
-            sds.systemID = sysid.Text.ToString();
-            sds.sapstyle = sapstyle.Text.ToString();
-            sds.sdscontent = sdscon.Text.ToString();
+            _sds.systemID = sysid.Text.ToString();
+            _sds.sapstyle = sapstyle.Text.ToString();
+            _sds.sdscontent = sdscon.Text.ToString();
 
-            BusinessCenter.Instance.sendmessage(sds, sendcmdguid,txt);
+            BusinessCenter.Instance.sendmessage(_sds, sendcmdguid,txt);
 
             //update("发送短信指令成功!");
         }
 
         private void demand_Click(object sender, RoutedEventArgs e)
         {
-            BusinessCenter.Instance.demand(cmdguid,cp.PUC_ID, txt);
+            BusinessCenter.Instance.demand(Cmdguid,_cp.PUC_ID, txt);
         }
 
         private void cease_Click(object sender, RoutedEventArgs e)
         {
-            BusinessCenter.Instance.cease(cmdguid, cp.PUC_ID, txt);
+            BusinessCenter.Instance.cease(Cmdguid, _cp.PUC_ID, txt);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -565,7 +587,7 @@ namespace ClientDemo
 
         private List<GroupEntry> GetCategories(XElement element)
         {
-            return (from GroupEntry in element.Elements("dgna").Where(g => g.Element("dispatcher_account").Value == pc.user_name)
+            return (from GroupEntry in element.Elements("dgna").Where(g => g.Element("dispatcher_account").Value == s_pc.user_name)
                     select new GroupEntry()
                     {
                         GUID = GroupEntry.Element("dgna_guid").Value,
@@ -614,7 +636,7 @@ namespace ClientDemo
             //                             }).ToList());
             //    }
             //}
-            devicelist.AddRange((from DeviceEntry in element.Elements("device") 
+            _devicelist.AddRange((from DeviceEntry in element.Elements("device") 
                                  select new DeviceEntry()
                                  {
                                      GUID = DeviceEntry.Element("guid").Value,
@@ -687,7 +709,7 @@ namespace ClientDemo
                 systemID = addGroup.txtSystemId.Text;
                 groupName = addGroup.txtName.Text;
                 //新增动态重组
-                BusinessCenter.Instance.add_dgna(systemID, groupName,pc, txt);
+                BusinessCenter.Instance.add_dgna(systemID, groupName,s_pc, txt);
                 
                 
             }
@@ -706,7 +728,7 @@ namespace ClientDemo
                 MessageBoxResult result = MessageBox.Show("确定要删除名称‘" + ge.Name + "’DGNA组？", "确认删除", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    BusinessCenter.Instance.Del_dgna(ge,pc.LocalSipIP,pc.user_name, txt);
+                    BusinessCenter.Instance.Del_dgna(ge,s_pc.LocalSipIP,s_pc.user_name, txt);
                     
                 }
             }
@@ -728,7 +750,7 @@ namespace ClientDemo
                 GroupEntry ge = (GroupEntry)cmbGroup.SelectedItem;
 
                 string groupValue = cmbGroup.SelectedValue.ToString();
-                var addGroup = new AddGroupMemberWindow(devicelist);
+                var addGroup = new AddGroupMemberWindow(_devicelist);
                 addGroup.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 addGroup.Owner = this;
                 addGroup.txtSystemId.Text = groupValue;
@@ -984,7 +1006,7 @@ namespace ClientDemo
             if (CheckDeviceExits(DeviceId) == true)
             {
                 string deviceGuid = AnalysisXml.GetInstance().DeviceListDictionary[DeviceId].guid;
-                BusinessCenter.Instance.SetStun(pc.user_password, "", "", deviceGuid, txt);
+                BusinessCenter.Instance.SetStun(s_pc.user_password, "", "", deviceGuid, txt);
             }
         }
 
@@ -1034,7 +1056,7 @@ namespace ClientDemo
             }
             else
             {
-                string userId = pc.user_name;
+                string userId = s_pc.user_name;
                 string number = txtGpsNumber.Text;
                 string numberType = SelectDevicelist[0].Number_type;
                 string systemId = systemid.Text;
@@ -1241,7 +1263,7 @@ namespace ClientDemo
             if (!string.IsNullOrEmpty(recv) && fileList != null && fileList.Count > 0)
             {
                 string[] recvArr = recv.Split(';');
-                BusinessCenter.Instance.SendFax(pc.user_name, fileList, recvArr);
+                BusinessCenter.Instance.SendFax(s_pc.user_name, fileList, recvArr);
             }
         }
 
@@ -1272,47 +1294,47 @@ namespace ClientDemo
 
         private void btnTransfer_Click(object sender, RoutedEventArgs e)
         {
-            if (cmdguid == null)
+            if (Cmdguid == null)
             {
                 MessageBox.Show("请先呼叫再转发视频", "警告！");
                 return;
             }
-            if (transfercmdguid != null)
+            if (Transfercmdguid != null)
             {
                 MessageBox.Show("请先挂断再呼叫", "警告！");
                 return;
             }
             string callcmdguid = BusinessCenter.GUID;
-            cp.callernumber = callnum.Text.ToString();
-            cp.cmd_guid = callcmdguid;
-            transfercmdguid = callcmdguid;
+            _cp.callernumber = callnum.Text.ToString();
+            _cp.cmd_guid = callcmdguid;
+            Transfercmdguid = callcmdguid;
             if (numstyle.Text.ToString() == "Dispatcher")
             {
-                cp.callernumberstyle = "7";
+                _cp.callernumberstyle = "7";
             }
 
-            cp.callednumber = transferNumber.Text.ToString();
+            _cp.callednumber = transferNumber.Text.ToString();
             if (transferNumberType.Text.ToString() == "个号")
             {
-                cp.callednumberstyle = "0";
+                _cp.callednumberstyle = "0";
             }
             else if (transferNumberType.Text.ToString() == "组号")
             {
-                cp.callednumberstyle = "1";
+                _cp.callednumberstyle = "1";
             }
             else
             {
-                cp.callednumberstyle = "5";
+                _cp.callednumberstyle = "5";
             }
-            cp.PUC_ID = txtPUC_ID.Text.Trim().ToString();
-            cp.systemID = systemid.Text.ToString();
-            cp.sapstyle = sapsty.Text.ToString();
+            _cp.PUC_ID = txtPUC_ID.Text.Trim().ToString();
+            _cp.systemID = systemid.Text.ToString();
+            _cp.sapstyle = sapsty.Text.ToString();
             string sap_GUID = string.Empty;
-            if (SapEntityList != null && SapEntityList.Count > 0)
+            if (_SapEntityList != null && _SapEntityList.Count > 0)
             {
                 try
                 {
-                    sap_GUID = SapEntityList.FirstOrDefault(sap => sap.System_id == systemid.Text.Trim()).Sap_guid;
+                    sap_GUID = _SapEntityList.FirstOrDefault(sap => sap.System_id == systemid.Text.Trim()).Sap_guid;
                 }
                 catch (Exception ex)
                 {
@@ -1326,20 +1348,20 @@ namespace ClientDemo
 
 
 
-            cp.IsDuplex = "0";
+            _cp.IsDuplex = "0";
 
             if (IsEncryp.IsChecked == true)
             {
-                cp.IsEncryption = "1";
+                _cp.IsEncryption = "1";
             }
             else
             {
-                cp.IsEncryption = "0";
+                _cp.IsEncryption = "0";
             }
-            cp.CallMode = callMode.Text.ToString();
-            cp.pictrueboxHandle = pictureBox.Handle.ToInt32();
+            _cp.CallMode = (GlobalCommandName.CallMode)cmbCallMode.SelectedValue;
+            _cp.pictrueboxHandle = pictureBox.Handle.ToInt32();
 
-            BusinessCenter.Instance.TransferFuction(cp, callcmdguid, sap_GUID, txt);
+            BusinessCenter.Instance.TransferFuction(_cp, callcmdguid, sap_GUID, txt);
             BusinessCenter.Instance.AddToCallList(callcmdguid);
 
             isshow = true;
@@ -1349,18 +1371,18 @@ namespace ClientDemo
         private void transferDisconnect_Click(object sender, RoutedEventArgs e)
         {
             isshow = false;
-            BusinessCenter.Instance.Disconnect(transfercmdguid, txt);
-            BusinessCenter.Instance.RemoveFromCallList(transfercmdguid);
-            transfercmdguid = null;
+            BusinessCenter.Instance.Disconnect(Transfercmdguid, txt);
+            BusinessCenter.Instance.RemoveFromCallList(Transfercmdguid);
+            Transfercmdguid = null;
         }
 
         #region 监听
         private void btnMonitor_Click(object sender, RoutedEventArgs e)
         {
             Monitor monitor=new Monitor();
-            monitor.Puc_id = pc.PUC_ID;
+            monitor.Puc_id = s_pc.PUC_ID;
             monitor.SystemID = systemId_monitor.Text;
-            monitor.pseudo_trunking_id = pc.user_name;
+            monitor.pseudo_trunking_id = s_pc.user_name;
             monitor.NumberType = numberType_monitor.Text == "个号" ? GlobalCommandName.NUMBERTYPE_INDIVIDUAL : GlobalCommandName.NUMBERTYPE_GROUP;
             int startNumber = 0;
             int endNumber=0;
@@ -1385,9 +1407,9 @@ namespace ClientDemo
         private void btnCancelMonitor_Click(object sender, RoutedEventArgs e)
         {
             Monitor monitor = new Monitor();
-            monitor.Puc_id = pc.PUC_ID;
+            monitor.Puc_id = s_pc.PUC_ID;
             monitor.SystemID = systemId_monitor.Text;
-            monitor.pseudo_trunking_id = pc.user_name;
+            monitor.pseudo_trunking_id = s_pc.user_name;
             monitor.NumberType = numberType_monitor.Text == "个号" ? GlobalCommandName.NUMBERTYPE_INDIVIDUAL : GlobalCommandName.NUMBERTYPE_GROUP;
             int startNumber = 0;
             int endNumber = 0;
@@ -1406,7 +1428,8 @@ namespace ClientDemo
 
         private void btnGetGroups_Click(object sender, RoutedEventArgs e)
         {
-            BusinessCenter.Instance.organization_list_request(txtPUC_ID.Text.Trim());
+            //BusinessCenter.Instance.organization_list_request(txtPUC_ID.Text.Trim());
+            BusinessCenter.Instance.device_list_request(txtPUC_ID.Text.Trim());
         }
     }
 }
