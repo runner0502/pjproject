@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="lhdbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="hnd_device">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="deviceId" Type="varchar" MaxLength="64" />
+    <Property Name="Alias" Type="varchar" MaxLength="64" />
+  </EntityType>
+  <EntityContainer Name="lhdbModelStoreContainer">
+    <EntitySet Name="hnd_device" EntityType="Self.hnd_device" Schema="lhdb" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

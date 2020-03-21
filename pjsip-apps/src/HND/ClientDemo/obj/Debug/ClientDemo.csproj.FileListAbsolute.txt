@@ -1,0 +1,53 @@
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\bin\Debug\ClientDemo.exe.config
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\bin\Debug\ClientDemo.exe
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\bin\Debug\ClientDemo.pdb
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\bin\Debug\ClientLogger.dll
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\bin\Debug\log4net.dll
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\AddGroupMemberWindow.baml
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\AddGroupWindow.baml
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\GroupWindow.baml
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\MainWindow2.baml
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\TransferCallWin.baml
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\AddGroupMemberWindow.g.cs
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\AddGroupWindow.g.cs
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\GroupWindow.g.cs
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\MainWindow2.g.cs
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\TransferCallWin.g.cs
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\App.g.cs
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\ClientDemo_MarkupCompile.cache
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\ClientDemo.g.resources
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\ClientDemo.Properties.Resources.resources
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\ClientDemo.csproj.GenerateResource.Cache
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\ClientDemo.exe
+E:\Users\ANGELCOMM\Documents\ClientSDK 2.7 SP1\ClientDemo\ClientDemo\obj\Debug\ClientDemo.pdb
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\ClientDemo.exe.config
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\ClientDemo.exe
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\ClientDemo.pdb
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\ClientLogger.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\log4net.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\ClientDemo.csprojResolveAssemblyReference.cache
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\AddGroupMemberWindow.baml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\AddGroupWindow.baml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\GroupWindow.baml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\MainWindow2.baml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\TransferCallWin.baml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\AddGroupMemberWindow.g.cs
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\AddGroupWindow.g.cs
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\GroupWindow.g.cs
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\MainWindow2.g.cs
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\TransferCallWin.g.cs
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\App.g.cs
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\ClientDemo_MarkupCompile.cache
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\ClientDemo.g.resources
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\ClientDemo.Properties.Resources.resources
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\ClientDemo.csproj.GenerateResource.Cache
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\ClientDemo.exe
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\obj\Debug\ClientDemo.pdb
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\HNDModule.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\HNDModule.pdb
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\EntityFramework.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\EntityFramework.SqlServer.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\EntityFramework.xml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\EntityFramework.SqlServer.xml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\DBModule.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\pjsip-apps\src\HND\ClientDemo\bin\Debug\DBModule.pdb

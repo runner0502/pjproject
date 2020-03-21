@@ -1,0 +1,2278 @@
+  HNDModule.g.resources - Embedded, ContainedInManifestFile, 
+ImageRuntimeVersion: v4.0.30319
+Assembly HNDModule, Version=1.0.*, Culture=固定语言(固定国家/地区): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35: 
+	hash=None, flags=None
+Assembly ClientLogger, Version=1.0.*, Culture=固定语言(固定国家/地区): 
+	hash=None, flags=None
+Assembly System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class Hytera.I18N.XMLHelper: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    DeSerializeFromFile(String): PrivateScope, Public, Static, HideBySig
+    SerializeToFile(T, String): PrivateScope, Public, Static, HideBySig
+Class HNDModule.Client: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    ClientDemo.paramclass pc : Public, Static
+  Properties:
+    System.String cmdguid 'get set' : 
+    ClientDemo.callparam Cp 'get set' : 
+    ClientDemo.SDSParam Sds 'get set' : 
+    ClientDemo.LoginPara Loginpara 'get set' : 
+    System.Collections.Generic.List`1[ClientDemo.GroupEntry] Categories 'get set' : 
+    System.Collections.Generic.List`1[ClientDemo.DeviceEntry] Devicelist 'get set' : 
+    System.Collections.Generic.List`1[ClientDemo.SapEntity] SapEntityList1 'get set' : 
+  Methods:
+    GetInstance(): PrivateScope, Public, Static, HideBySig
+    Init(): PrivateScope, Public, HideBySig
+    Login(): PrivateScope, Public, HideBySig
+    Login(paramclass): PrivateScope, Public, HideBySig
+    Logout(): PrivateScope, Public, HideBySig
+    Dispose1(): PrivateScope, Public, HideBySig
+    get_cmdguid(): PrivateScope, Public, HideBySig, SpecialName
+    set_cmdguid(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Cp(): PrivateScope, Public, HideBySig, SpecialName
+    set_Cp(callparam): PrivateScope, Public, HideBySig, SpecialName
+    get_Sds(): PrivateScope, Public, HideBySig, SpecialName
+    set_Sds(SDSParam): PrivateScope, Public, HideBySig, SpecialName
+    get_Loginpara(): PrivateScope, Public, HideBySig, SpecialName
+    set_Loginpara(LoginPara): PrivateScope, Public, HideBySig, SpecialName
+    get_Categories(): PrivateScope, Public, HideBySig, SpecialName
+    set_Categories(List`1): PrivateScope, Public, HideBySig, SpecialName
+    get_Devicelist(): PrivateScope, Public, HideBySig, SpecialName
+    set_Devicelist(List`1): PrivateScope, Public, HideBySig, SpecialName
+    get_SapEntityList1(): PrivateScope, Public, HideBySig, SpecialName
+    set_SapEntityList1(List`1): PrivateScope, Public, HideBySig, SpecialName
+    MakeCall(String): PrivateScope, Public, HideBySig
+    GetLocalPort(): PrivateScope, Public, HideBySig
+    SetRemoteSipPort(Int32): PrivateScope, Public, HideBySig
+Class ClientDemo.BusinessCenter: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Boolean Islogin : Public
+    System.String pXmlData22 : Public
+    System.String logincmdguid : Public
+    System.String cmdguid : Public
+    System.String transfercmdguid : Public
+    ClientDemo.BusinessCenter _pBusinessCenter : Public, Static
+  Properties:
+    System.String GUID 'get ' : 
+    ClientDemo.BusinessCenter Instance 'get ' : 
+  Events:
+    System.Action`1[System.String] OnDataback: 
+    System.Action`1[System.String] showDialog: 
+  Methods:
+    add_OnDataback(Action`1): PrivateScope, Public, HideBySig, SpecialName
+    remove_OnDataback(Action`1): PrivateScope, Public, HideBySig, SpecialName
+    add_showDialog(Action`1): PrivateScope, Public, HideBySig, SpecialName
+    remove_showDialog(Action`1): PrivateScope, Public, HideBySig, SpecialName
+    InitPucApi(paramclass): PrivateScope, Public, HideBySig
+    get_GUID(): PrivateScope, Public, Static, HideBySig, SpecialName
+    login(paramclass): PrivateScope, Public, HideBySig
+    Serialize(Object): PrivateScope, Public, Static, HideBySig
+    PTTDown(callparam, String, String, TextBox): PrivateScope, Public, HideBySig
+    Disconnect(String): PrivateScope, Public, HideBySig
+    Disconnect(String, TextBox): PrivateScope, Public, HideBySig
+    sendmessage(SDSParam, String, TextBox): PrivateScope, Public, HideBySig
+    sap_list_request(String): PrivateScope, Public, HideBySig
+    device_list_request(String): PrivateScope, Public, HideBySig
+    group_list_request(String): PrivateScope, Public, HideBySig
+    organization_list_request(String): PrivateScope, Public, HideBySig
+    system_list_request(String): PrivateScope, Public, HideBySig
+    dgna_request(String): PrivateScope, Public, HideBySig
+    add_dgna(String, String, paramclass, TextBox): PrivateScope, Public, HideBySig
+    update_dgna(String, String): PrivateScope, Public, HideBySig
+    Del_dgna(GroupEntry, String, String, TextBox): PrivateScope, Public, HideBySig
+    add_dgna_member(String, String, DeviceEntry, TextBox): PrivateScope, Public, HideBySig
+    delete_dgna_member(String, String, TextBox): PrivateScope, Public, HideBySig
+    gps_batch_start(String, TextBox): PrivateScope, Public, HideBySig
+    gps_batch_stop(String, TextBox): PrivateScope, Public, HideBySig
+    gps_record_query(String, String, String, String, String, String, String, TextBox): PrivateScope, Public, HideBySig
+    demand(String, String, TextBox): PrivateScope, Public, HideBySig
+    cease(String, String, TextBox): PrivateScope, Public, HideBySig
+    DeviceCheckStatus(String, String, String, String, TextBox): PrivateScope, Public, HideBySig
+    SetStun(String, String, String, String, TextBox): PrivateScope, Public, HideBySig
+    SetRevive(String, String, String, String, TextBox): PrivateScope, Public, HideBySig
+    DeviceKill(String, String, String, String, TextBox): PrivateScope, Public, HideBySig
+    loginout(paramclass): PrivateScope, Public, HideBySig
+    devolveCall(String, String, String, String, String): PrivateScope, Public, HideBySig
+    SendFax(String, List`1, String[]): PrivateScope, Public, HideBySig
+    RevcCall(String, String): PrivateScope, Public, HideBySig
+    get_Instance(): PrivateScope, Public, Static, HideBySig, SpecialName
+    Instance_InitializeCallbackEvent(IntPtr): PrivateScope, Public, HideBySig
+    Deserialize(String): PrivateScope, Public, Static, HideBySig
+    Des_CBC_crypt(IntPtr, Int32, IntPtr, Module, IntPtr, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    EncryptDES(String): PrivateScope, Public, Static, HideBySig
+    ByteToIntptrEx(Byte[]): PrivateScope, Public, Static, HideBySig
+    AddSysMutetMicList(String): PrivateScope, Public, HideBySig
+    RemoveSysMutetMicList(String): PrivateScope, Public, HideBySig
+    processMicCallback(UInt32, Int32, Int32, IntPtr, UInt32): PrivateScope, Public, HideBySig
+    AddToCallList(String): PrivateScope, Public, HideBySig
+    RemoveFromCallList(String): PrivateScope, Public, HideBySig
+    OpenLocalCamera(Int32): PrivateScope, Public, HideBySig
+    TransferFuction(callparam, String, String, TextBox): PrivateScope, Public, HideBySig
+Class ClientDemo.callparam: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String cmd_guid : Public
+    System.String _callernumber : Public
+    System.String _callernumberstyle : Public
+    System.String _callednumber : Public
+    System.String _callednumberstyle : Public
+    System.String _systemID : Public
+    System.String _sapstyle : Public
+    System.String _IsDuplex : Public
+    System.String _IsEncryption : Public
+    CallMode _CallMode : Public
+  Properties:
+    System.String callernumber 'get set' : 
+    System.String callernumberstyle 'get set' : 
+    System.String callednumber 'get set' : 
+    System.String callednumberstyle 'get set' : 
+    System.String PUC_ID 'get set' : 
+    System.String systemID 'get set' : 
+    System.String sapstyle 'get set' : 
+    System.String IsDuplex 'get set' : 
+    System.String IsEncryption 'get set' : 
+    CallMode CallMode 'get set' : 
+    Int32 pictrueboxHandle 'get set' : 
+    Boolean istransferCall 'get set' : 
+  Methods:
+    get_callernumber(): PrivateScope, Public, HideBySig, SpecialName
+    set_callernumber(String): PrivateScope, Public, HideBySig, SpecialName
+    get_callernumberstyle(): PrivateScope, Public, HideBySig, SpecialName
+    set_callernumberstyle(String): PrivateScope, Public, HideBySig, SpecialName
+    get_callednumber(): PrivateScope, Public, HideBySig, SpecialName
+    set_callednumber(String): PrivateScope, Public, HideBySig, SpecialName
+    get_callednumberstyle(): PrivateScope, Public, HideBySig, SpecialName
+    set_callednumberstyle(String): PrivateScope, Public, HideBySig, SpecialName
+    get_PUC_ID(): PrivateScope, Public, HideBySig, SpecialName
+    set_PUC_ID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_systemID(): PrivateScope, Public, HideBySig, SpecialName
+    set_systemID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_sapstyle(): PrivateScope, Public, HideBySig, SpecialName
+    set_sapstyle(String): PrivateScope, Public, HideBySig, SpecialName
+    get_IsDuplex(): PrivateScope, Public, HideBySig, SpecialName
+    set_IsDuplex(String): PrivateScope, Public, HideBySig, SpecialName
+    get_IsEncryption(): PrivateScope, Public, HideBySig, SpecialName
+    set_IsEncryption(String): PrivateScope, Public, HideBySig, SpecialName
+    get_CallMode(): PrivateScope, Public, HideBySig, SpecialName
+    set_CallMode(CallMode): PrivateScope, Public, HideBySig, SpecialName
+    get_pictrueboxHandle(): PrivateScope, Public, HideBySig, SpecialName
+    set_pictrueboxHandle(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_istransferCall(): PrivateScope, Public, HideBySig, SpecialName
+    set_istransferCall(Boolean): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.CommonData: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String puc_login : Public
+    System.String puc_logout : Public
+    System.String puc_login_ack : Public
+    System.String puc_logout_ack : Public
+    System.String successResult : Public
+    System.String puc_disconnect_evt : Public
+    System.String device_list_status_check_evt : Public
+    System.String gps_get_gps_info : Public
+    System.String gps_start_gps_info_report : Public
+    System.String gps_stop_gps_info_report : Public
+    System.String gps_quick_start : Public
+    System.String gps_quick_stop : Public
+    System.String gps_record_query : Public
+    System.String ps_query_gps_subscribeinfo_count : Public
+    System.String gps_start_gps_info_report_list : Public
+    System.String gps_batch_start_gps_info_report : Public
+    System.String gps_batch_stop_gps_info_report : Public
+    System.String sds_send_text : Public
+    System.String sds_send_status : Public
+    System.String predefined_sds_request : Public
+    System.String add_sds_info : Public
+    System.String delete_sds_info : Public
+    System.String update_sds_info : Public
+    System.String sds_status_list_request : Public
+    System.String add_sds_status : Public
+    System.String organization_list_request : Public
+    System.String add_organization_info : Public
+    System.String delete_organization_info : Public
+    System.String update_organization_info : Public
+    System.String staff_list_request : Public
+    System.String add_staff_info : Public
+    System.String delete_staff_info : Public
+    System.String update_staff_info : Public
+    System.String device_list_request : Public
+    System.String add_device : Public
+    System.String delete_device : Public
+    System.String update_device : Public
+    System.String group_list_request : Public
+    System.String add_group_info : Public
+    System.String delete_group_info : Public
+    System.String update_group_info : Public
+    System.String group_member_list_request : Public
+    System.String add_dgna : Public
+    System.String delete_dgna : Public
+    System.String add_dgna_member : Public
+    System.String delete_dgna_member : Public
+    System.String sap_list_request : Public
+    System.String system_list_request : Public
+    System.String mgr_get_uegroups : Public
+    System.String organization_list_request_ack : Public
+    System.String staff_list_request_ack : Public
+    System.String device_list_request_ack : Public
+    System.String group_list_request_ack : Public
+    System.String system_list_request_ack : Public
+    System.String sap_list_request_ack : Public
+    System.String gps_get_gps_info_ack : Public
+    System.String gps_start_gps_info_report_ack : Public
+    System.String gps_batch_start_gps_info_report_ack : Public
+    System.String gps_batch_stop_gps_info_report_ack : Public
+    System.String gps_stop_gps_info_report_ack : Public
+    System.String get_gps_report_evt : Public
+    System.String gps_record_query_ack : Public
+    System.String sds_text_send_ack : Public
+    System.String sds_status_receive_evt : Public
+    System.String sds_status_list_request_ack : Public
+    System.String edit_dgna_ack : Public
+    System.String edit_dgna_member_ack : Public
+    System.String sds_text_receive_evt : Public
+    System.String mgr_get_uegroups_ack : Public
+    System.String SAPType_HYTERA_DMR3_SSI = 5 : Public, Static, Literal, HasDefault
+    System.String SAPType_IPPBX = 9 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_Intercom = 13 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_INDIVIDUAL = 0 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_GROUP = 1 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_EXTERNAL = 2 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_DISPATCHER = 7 : Public, Static, Literal, HasDefault
+  Properties:
+    System.String CurrDispatch 'get set' : 
+    System.Collections.Generic.List`1[System.String] AckList 'get ' : 
+    System.String GetNewGuid 'get ' : 
+  Methods:
+    get_CurrDispatch(): PrivateScope, Public, HideBySig, SpecialName
+    set_CurrDispatch(String): PrivateScope, Public, HideBySig, SpecialName
+    GetInstance(): PrivateScope, Public, Static, HideBySig
+    get_AckList(): PrivateScope, Public, HideBySig, SpecialName
+    get_GetNewGuid(): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.DeviceEntry: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.ComponentModel.INotifyPropertyChanged
+  Properties:
+    System.String GUID 'get set' : 
+    System.String Device_id 'get set' : 
+    System.String Device_alias 'get set' : 
+    System.String Device_number 'get set' : 
+    System.String Number_type 'get set' : 
+    System.String Nember_guid 'get set' : 
+    System.String SystemID 'get set' : 
+    System.Collections.Generic.List`1[ClientDemo.DeviceEntry] DeviceList 'get set' : 
+  Events:
+    System.ComponentModel.PropertyChangedEventHandler PropertyChanged: 
+  Methods:
+    get_GUID(): PrivateScope, Public, HideBySig, SpecialName
+    set_GUID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Device_id(): PrivateScope, Public, HideBySig, SpecialName
+    set_Device_id(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Device_alias(): PrivateScope, Public, HideBySig, SpecialName
+    set_Device_alias(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Device_number(): PrivateScope, Public, HideBySig, SpecialName
+    set_Device_number(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Number_type(): PrivateScope, Public, HideBySig, SpecialName
+    set_Number_type(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Nember_guid(): PrivateScope, Public, HideBySig, SpecialName
+    set_Nember_guid(String): PrivateScope, Public, HideBySig, SpecialName
+    get_SystemID(): PrivateScope, Public, HideBySig, SpecialName
+    set_SystemID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_DeviceList(): PrivateScope, Public, HideBySig, SpecialName
+    set_DeviceList(List`1): PrivateScope, Public, HideBySig, SpecialName
+    add_PropertyChanged(PropertyChangedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_PropertyChanged(PropertyChangedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+Class ClientDemo.GlobalCommandName: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String CallPriority_Common : Public, Static
+    System.String CallPriority_First : Public, Static
+    System.String CallPriority_Emergency : Public, Static
+    System.String RingMode_vibration : Public, Static
+    System.String RingMode_Directvibration : Public, Static
+    System.String GrantStatus_PTTIDLE : Public, Static
+    System.String GrantStatus_GRANTED : Public, Static
+    System.String GrantStatus_GRANTTOANOTHERUSER : Public, Static
+    System.String GrantStatus_NOTGRANTED : Public, Static
+    System.String GrantStatus_QUEUED : Public, Static
+    System.Collections.Generic.List`1[System.String] CallSubjects_Duplexs : Public, Static, InitOnly
+    System.Collections.Generic.List`1[System.String] CallSubjects_AmbListenings : Public, Static, InitOnly
+    System.Collections.Generic.List`1[System.String] CallSubjects_HookSignalings : Public, Static, InitOnly
+    System.Collections.Generic.List`1[System.String] CallSubjects_E2EEncryptions : Public, Static, InitOnly
+    System.String PluginPrefix : Public, Static
+    System.String Permission_Valid : Public, Static
+    System.String Permission_Invalid : Public, Static
+    System.String Version = 10 : Public, Static, Literal, HasDefault
+    System.String Product_Name = PUC : Public, Static, Literal, HasDefault
+    System.String PUC_LoginTypeDispatcher = Dispatcher : Public, Static, Literal, HasDefault
+    System.String ResultSuccess = 0 : Public, Static, Literal, HasDefault
+    System.String OutOfLicence = -5 : Public, Static, Literal, HasDefault
+    System.String PUC_LogIn = puc_login : Public, Static, Literal, HasDefault
+    System.String PUC_LogIn_Ack = puc_login_ack : Public, Static, Literal, HasDefault
+    System.String PUC_Logout = puc_logout : Public, Static, Literal, HasDefault
+    System.String PUC_Logout_Ack = puc_logout_ack : Public, Static, Literal, HasDefault
+    System.String Data_Version_Request = data_version_request : Public, Static, Literal, HasDefault
+    System.String Data_Version_Request_Ack = data_version_request_ack : Public, Static, Literal, HasDefault
+    System.String Puc_Add_Evt = puc_add_evt : Public, Static, Literal, HasDefault
+    System.String Puc_Remove_Evt = puc_remove_evt : Public, Static, Literal, HasDefault
+    System.String Puc_Server_Connect_Evt = puc_server_connect_evt : Public, Static, Literal, HasDefault
+    System.String Puc_Server_Disconnect_Evt = puc_server_disconnect_evt : Public, Static, Literal, HasDefault
+    System.String PUC_List_Request = puc_list_request : Public, Static, Literal, HasDefault
+    System.String PUC_List_Request_Ack = puc_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Puc_License_Info_Request = puc_license_info_request : Public, Static, Literal, HasDefault
+    System.String Puc_License_Info_Request_Ack = puc_license_info_request_ack : Public, Static, Literal, HasDefault
+    System.String Account_Info_Edit_Ack = account_info_edit_ack : Public, Static, Literal, HasDefault
+    System.String Role_Info_Edit_Ack = edit_role_ack : Public, Static, Literal, HasDefault
+    System.String Role_Request = role_request : Public, Static, Literal, HasDefault
+    System.String Role_Request_Ack = role_request_ack : Public, Static, Literal, HasDefault
+    System.String Account_List_Request = account_list_request : Public, Static, Literal, HasDefault
+    System.String Account_List_Request_Ack = account_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Account_List_Request_Evt = account_list_request_evt : Public, Static, Literal, HasDefault
+    System.String Organization_List_Request = organization_list_request : Public, Static, Literal, HasDefault
+    System.String Organization_List_Request_Ack = organization_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Custom_Organization_List_Request = custom_organization_list_request : Public, Static, Literal, HasDefault
+    System.String Custom_Organization_List_Request_Ack = custom_organization_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Organization_List_Request_Evt = organization_list_request_evt : Public, Static, Literal, HasDefault
+    System.String Organization_Edit_Ack = organization_edit_ack : Public, Static, Literal, HasDefault
+    System.String Custom_Organization_Edit_Ack = custom_organization_edit_ack : Public, Static, Literal, HasDefault
+    System.String Add_Organization_InfoProc = add_organization_info : Public, Static, Literal, HasDefault
+    System.String Add_Custom_OrganizationProc = add_custom_organization : Public, Static, Literal, HasDefault
+    System.String Update_Organization_InfoProc = update_organization_info : Public, Static, Literal, HasDefault
+    System.String Update_Custom_OrganizationProc = update_custom_organization : Public, Static, Literal, HasDefault
+    System.String System_List_Request = system_list_request : Public, Static, Literal, HasDefault
+    System.String Ability_List_Request = ability_list_request : Public, Static, Literal, HasDefault
+    System.String Ability_List_Request_Ack = ability_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Update_Dispatch_Request = update_dispatch_ability : Public, Static, Literal, HasDefault
+    System.String Update_Dispatch_Request_Ack = update_dispatch_ability_ack : Public, Static, Literal, HasDefault
+    System.String System_List_Request_Ack = system_list_request_ack : Public, Static, Literal, HasDefault
+    System.String System_Edit_Ack = system_edit_ack : Public, Static, Literal, HasDefault
+    System.String CC_Disconnect = cc_disconnect : Public, Static, Literal, HasDefault
+    System.String CC_DisConnected_Evt = cc_disconnected_evt : Public, Static, Literal, HasDefault
+    System.String CC_Member_DisConnected_Evt = cc_member_disconnect_evt : Public, Static, Literal, HasDefault
+    System.String CC_Member_Connected_Evt = cc_member_connect_evt : Public, Static, Literal, HasDefault
+    System.String CC_Connected_Evt = cc_connected_evt : Public, Static, Literal, HasDefault
+    System.String CC_Tx_Granted_Evt = cc_tx_granted_evt : Public, Static, Literal, HasDefault
+    System.String CC_Remain_Time_Report_Evt = cc_remain_time_report_evt : Public, Static, Literal, HasDefault
+    System.String Portable_Alias_Report_Evt = portable_alias_report_evt : Public, Static, Literal, HasDefault
+    System.String CC_Notify_Calltype_Change_evt = cc_notify_calltype_change_evt : Public, Static, Literal, HasDefault
+    System.String CC_Setup_Call = cc_setup_call : Public, Static, Literal, HasDefault
+    System.String CC_Setup_Call_Ack = cc_setup_call_ack : Public, Static, Literal, HasDefault
+    System.String CC_Setup_RsPlay = cc_setup_rsplay : Public, Static, Literal, HasDefault
+    System.String CC_Connect_RsPlay = cc_connect_RsPlay : Public, Static, Literal, HasDefault
+    System.String CC_Incoming_Evt = cc_incoming_evt : Public, Static, Literal, HasDefault
+    System.String CC_Alert = cc_alert : Public, Static, Literal, HasDefault
+    System.String CC_Alerting_Evt = cc_alerting_evt : Public, Static, Literal, HasDefault
+    System.String CC_Connect = cc_connect : Public, Static, Literal, HasDefault
+    System.String CC_Tx_Cease = cc_tx_cease : Public, Static, Literal, HasDefault
+    System.String CC_Tx_Demand = cc_tx_demand : Public, Static, Literal, HasDefault
+    System.String CC_Tx_Ceased_Evt = cc_tx_cease_evt : Public, Static, Literal, HasDefault
+    System.String CC_RecordPlay_Span_Set = cc_recordplay_span_set : Public, Static, Literal, HasDefault
+    System.String CC_RecordPlay_Span_Set_Ack = cc_recordplay_span_set_ack : Public, Static, Literal, HasDefault
+    System.String CC_RecordPlay_Pause_Set = cc_recordplay_pause_set : Public, Static, Literal, HasDefault
+    System.String CC_RecordPlay_Pause_Set_Ack = cc_recordplay_pause_set_ack : Public, Static, Literal, HasDefault
+    System.String CC_Voicecall_With_Video = cc_voicecall_with_video : Public, Static, Literal, HasDefault
+    System.String CC_Voicecall_With_Video_Ack = cc_voicecall_with_video_ack : Public, Static, Literal, HasDefault
+    System.String CC_Voicecall_With_Video_Evt = cc_voicecall_with_video_evt : Public, Static, Literal, HasDefault
+    System.String CC_Force_Disconnect = cc_force_disconnect : Public, Static, Literal, HasDefault
+    System.String Device_List_Request = device_list_request : Public, Static, Literal, HasDefault
+    System.String Device_List_Request_Ack = device_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Device_List_Request_Evt = device_list_request_evt : Public, Static, Literal, HasDefault
+    System.String Device_Request = device_request : Public, Static, Literal, HasDefault
+    System.String Device_Request_Ack = device_request_ack : Public, Static, Literal, HasDefault
+    System.String Device_Edit_Ack = device_edit_ack : Public, Static, Literal, HasDefault
+    System.String Group_List_Request = group_list_request : Public, Static, Literal, HasDefault
+    System.String Group_List_Request_Ack = group_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Group_List_Request_Evt = group_list_request_evt : Public, Static, Literal, HasDefault
+    System.String Group_Request = group_request : Public, Static, Literal, HasDefault
+    System.String Group_Request_Ack = group_request_ack : Public, Static, Literal, HasDefault
+    System.String Group_Info_Edit_Ack = group_info_edit_ack : Public, Static, Literal, HasDefault
+    System.String Staff_List_Request = staff_list_request : Public, Static, Literal, HasDefault
+    System.String Staff_List_Request_Ack = staff_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Staff_List_Request_Evt = staff_list_request_evt : Public, Static, Literal, HasDefault
+    System.String Staff_Request = staff_request : Public, Static, Literal, HasDefault
+    System.String Staff_Request_Ack = staff_request_ack : Public, Static, Literal, HasDefault
+    System.String Staff_Info_Edit_Ack = staff_info_edit_ack : Public, Static, Literal, HasDefault
+    System.String Sap_List_Request = sap_list_request : Public, Static, Literal, HasDefault
+    System.String Sap_List_Request_Ack = sap_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Sap_Edit_Ack = sap_edit_ack : Public, Static, Literal, HasDefault
+    System.String Sds_Status_List_Request = sds_status_list_request : Public, Static, Literal, HasDefault
+    System.String Sds_Status_List_Request_Ack = sds_status_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Sds_Status_Edit_Ack = sds_status_edit_ack : Public, Static, Literal, HasDefault
+    System.String Favorite_Request = favorite_request : Public, Static, Literal, HasDefault
+    System.String Favorite_Request_Ack = favorite_request_ack : Public, Static, Literal, HasDefault
+    System.String Add_Favorite = add_favorite : Public, Static, Literal, HasDefault
+    System.String Update_Favorite = update_favorite : Public, Static, Literal, HasDefault
+    System.String Delete_Favorite = delete_favorite : Public, Static, Literal, HasDefault
+    System.String Favorite_Edit_Ack = favorite_edit_ack : Public, Static, Literal, HasDefault
+    System.String Favorite_Basic_Data_Request_Start = favorite_basic_data_request_start : Public, Static, Literal, HasDefault
+    System.String Favorite_Basic_Data_Request_Start_Ack = favorite_basic_data_request_start_ack : Public, Static, Literal, HasDefault
+    System.String Device_Attach_GrpList_Request = device_attach_grp_list_request : Public, Static, Literal, HasDefault
+    System.String Device_Attach_GrpList_Request_Ack = device_attach_grp_list_ack : Public, Static, Literal, HasDefault
+    System.String Device_Attach_Grp_List_Evt = device_attach_grp_list_evt : Public, Static, Literal, HasDefault
+    System.String Crosspatch_Request = crosspatch_request : Public, Static, Literal, HasDefault
+    System.String Crosspatch_Request_Ack = crosspatch_request_ack : Public, Static, Literal, HasDefault
+    System.String MGR_Channel_Zone_Change = mgr_channel_zone_change : Public, Static, Literal, HasDefault
+    System.String MGR_Channel_Zone_Change_Ack = mgr_channel_zone_change_ack : Public, Static, Literal, HasDefault
+    System.String Phone_Client_Bind_Info_Request = phone_client_bind_info_request : Public, Static, Literal, HasDefault
+    System.String Phone_Client_Bind_Info_Request_Ack = phone_client_bind_info_request_ack : Public, Static, Literal, HasDefault
+    System.String Add_Phone_Client_Bind_Info = add_phone_client_bind_info : Public, Static, Literal, HasDefault
+    System.String Modify_Phone_Client_Bind_Info = modify_phone_client_bind_info : Public, Static, Literal, HasDefault
+    System.String Remove_Phone_Client_Bind_Info = remove_phone_client_bind_info : Public, Static, Literal, HasDefault
+    System.String Edit_Phone_Client_Bind_Info_Ack = edit_phone_client_bind_info_ack : Public, Static, Literal, HasDefault
+    System.String Client_Group_Request = client_group_request : Public, Static, Literal, HasDefault
+    System.String Client_Group_Request_Ack = client_group_request_ack : Public, Static, Literal, HasDefault
+    System.String Add_Client_Group = add_client_group : Public, Static, Literal, HasDefault
+    System.String Modify_Client_Group = modify_client_group : Public, Static, Literal, HasDefault
+    System.String Remove_Client_Group = remove_client_group : Public, Static, Literal, HasDefault
+    System.String Edit_Client_Group_Ack = edit_client_group_ack : Public, Static, Literal, HasDefault
+    System.String Route_Add_Request = route_add_request : Public, Static, Literal, HasDefault
+    System.String Route_Delete_Request = route_delete_request : Public, Static, Literal, HasDefault
+    System.String Route_Update_Request = route_update_request : Public, Static, Literal, HasDefault
+    System.String Route_Query_Request_Ack = route_query_request_ack : Public, Static, Literal, HasDefault
+    System.String Route_Add_Request_Ack = route_add_request_ack : Public, Static, Literal, HasDefault
+    System.String Route_Delete_Request_Ack = route_delete_request_ack : Public, Static, Literal, HasDefault
+    System.String Route_Update_Request_Ack = route_update_request_ack : Public, Static, Literal, HasDefault
+    System.String Route_Update_Priority_Request = route_update_priority_request : Public, Static, Literal, HasDefault
+    System.String Route_Update_Priority_Request_Ack = route_update_priority_request_ack : Public, Static, Literal, HasDefault
+    System.String Add_Device = add_device : Public, Static, Literal, HasDefault
+    System.String Add_Group_Info = add_group_info : Public, Static, Literal, HasDefault
+    System.String Add_Organization_Info = add_organization_info : Public, Static, Literal, HasDefault
+    System.String Add_Custom_Organization = add_custom_organization : Public, Static, Literal, HasDefault
+    System.String Add_Staff_Info = add_staff_info : Public, Static, Literal, HasDefault
+    System.String Add_System = add_system : Public, Static, Literal, HasDefault
+    System.String Add_Account = add_account : Public, Static, Literal, HasDefault
+    System.String Add_Sds_Status = add_sds_status : Public, Static, Literal, HasDefault
+    System.String Add_Crosspatch = add_crosspatch : Public, Static, Literal, HasDefault
+    System.String Add_Crosspatch_Member = add_crosspatch_member : Public, Static, Literal, HasDefault
+    System.String Add_Sap = add_sap : Public, Static, Literal, HasDefault
+    System.String Add_Role = add_role : Public, Static, Literal, HasDefault
+    System.String Include_call_Request = cc_include_call_request : Public, Static, Literal, HasDefault
+    System.String Include_call_Request_ACK = cc_include_call_request_ack : Public, Static, Literal, HasDefault
+    System.String Delete_Device = delete_device : Public, Static, Literal, HasDefault
+    System.String Delete_Group_Info = delete_group_info : Public, Static, Literal, HasDefault
+    System.String Delete_Organization_Info = delete_organization_info : Public, Static, Literal, HasDefault
+    System.String Delete_Custom_Organization = delete_custom_organization : Public, Static, Literal, HasDefault
+    System.String Delete_Staff_Info = delete_staff_info : Public, Static, Literal, HasDefault
+    System.String Delete_System = delete_system : Public, Static, Literal, HasDefault
+    System.String Delete_Account = delete_account : Public, Static, Literal, HasDefault
+    System.String Delete_Sds_Status = delete_sds_status : Public, Static, Literal, HasDefault
+    System.String Delete_Role = delete_role : Public, Static, Literal, HasDefault
+    System.String Delete_Crosspatch = delete_crosspatch : Public, Static, Literal, HasDefault
+    System.String Delete_Crosspatch_Member = delete_crosspatch_member : Public, Static, Literal, HasDefault
+    System.String Delete_Sap = delete_sap : Public, Static, Literal, HasDefault
+    System.String Update_Role = update_role : Public, Static, Literal, HasDefault
+    System.String Update_Device = update_device : Public, Static, Literal, HasDefault
+    System.String Update_Group_Info = update_group_info : Public, Static, Literal, HasDefault
+    System.String Update_Organization_Info = update_organization_info : Public, Static, Literal, HasDefault
+    System.String Update_Custom_Organization = update_custom_organization : Public, Static, Literal, HasDefault
+    System.String Update_Staff_Info = update_staff_info : Public, Static, Literal, HasDefault
+    System.String Update_System = update_system : Public, Static, Literal, HasDefault
+    System.String Update_Account = update_account : Public, Static, Literal, HasDefault
+    System.String Update_Sds_Status = update_sds_status : Public, Static, Literal, HasDefault
+    System.String Update_Sap = update_sap : Public, Static, Literal, HasDefault
+    System.String Update_Crosspatch = update_crosspatch : Public, Static, Literal, HasDefault
+    System.String Edit_Crosspatch_Ack = edit_crosspatch_ack : Public, Static, Literal, HasDefault
+    System.String Edit_Crosspatch_Member_Ack = edit_crosspatch_member_ack : Public, Static, Literal, HasDefault
+    System.String Set_Crosspatch_Active = set_crosspatch_active : Public, Static, Literal, HasDefault
+    System.String Dispatcher_Status_Check_Evt = dispatcher_status_check_evt : Public, Static, Literal, HasDefault
+    System.String Simulselect_Request = simulselect_request : Public, Static, Literal, HasDefault
+    System.String Simulselect_Request_Ack = simulselect_request_ack : Public, Static, Literal, HasDefault
+    System.String Add_Simulselect = add_simulselect : Public, Static, Literal, HasDefault
+    System.String Delete_Simulselect = delete_simulselect : Public, Static, Literal, HasDefault
+    System.String Update_Simulselect = update_simulselect : Public, Static, Literal, HasDefault
+    System.String Simulselect_Edit_Ack = simulselect_edit_ack : Public, Static, Literal, HasDefault
+    System.String CC_Send_DTMF = cc_send_dtmf : Public, Static, Literal, HasDefault
+    System.String Add_Poi = add_poi : Public, Static, Literal, HasDefault
+    System.String Delete_Poi = delete_poi : Public, Static, Literal, HasDefault
+    System.String Update_Poi = update_poi : Public, Static, Literal, HasDefault
+    System.String Poi_Request = poi_request : Public, Static, Literal, HasDefault
+    System.String Poi_Edit_Ack = poi_edit_ack : Public, Static, Literal, HasDefault
+    System.String Poi_Request_Ack = poi_request_ack : Public, Static, Literal, HasDefault
+    System.String Mgr_Get_Groupmembers_Ack = mgr_get_groupmembers_ack : Public, Static, Literal, HasDefault
+    System.String Mgr_Startsub_Syscall_Ack = mgr_startsub_syscall_ack : Public, Static, Literal, HasDefault
+    System.String Mgr_Stopsub_Syscall_Ack = mgr_stopsub_syscall_ack : Public, Static, Literal, HasDefault
+    System.String Mgr_Get_Groupmembers = mgr_get_groupmembers : Public, Static, Literal, HasDefault
+    System.String Mgr_Get_Uegroups_Ack = mgr_get_uegroups_ack : Public, Static, Literal, HasDefault
+    System.String Mgr_Get_Uegroups = mgr_get_uegroups : Public, Static, Literal, HasDefault
+    System.String Mgr_Startsub_Syscall = mgr_startsub_syscall : Public, Static, Literal, HasDefault
+    System.String Mgr_Stopsub_Syscall = mgr_stopsub_syscall : Public, Static, Literal, HasDefault
+    System.String PUC_Gb_Ipc_Control = puc_gb_ipc_control : Public, Static, Literal, HasDefault
+    System.String Record_Download_Request = record_download_request : Public, Static, Literal, HasDefault
+    System.String Record_Download_Request_Ack = record_download_request_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Num_Query = fax_num_query : Public, Static, Literal, HasDefault
+    System.String Fax_Num_Query_Ack = fax_num_query_ack : Public, Static, Literal, HasDefault
+    System.String Add_Fax_Num = fax_num_add : Public, Static, Literal, HasDefault
+    System.String Add_Fax_Num_Ack = fax_num_add_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Num_Modify = fax_num_modify : Public, Static, Literal, HasDefault
+    System.String Fax_Num_Modify_Ack = fax_num_modify_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Num_Del = fax_num_del : Public, Static, Literal, HasDefault
+    System.String Fax_Num_Del_Ack = fax_num_del_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Send_File = fax_send_file : Public, Static, Literal, HasDefault
+    System.String Fax_Send_File_Ack = fax_send_file_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Query_Send_Log_Count = fax_query_send_log_count : Public, Static, Literal, HasDefault
+    System.String Fax_Query_Send_Log_Count_Ack = fax_query_send_log_count_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Query_Send_Log = fax_query_send_log : Public, Static, Literal, HasDefault
+    System.String Fax_Query_Send_Log_Ack = fax_query_send_log_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Download_File = fax_download_file : Public, Static, Literal, HasDefault
+    System.String Fax_Download_File_Ack = fax_download_file_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Query_Recv_Log_Count = fax_query_recv_log_count : Public, Static, Literal, HasDefault
+    System.String Fax_Query_Recv_Log_Count_Ack = fax_query_recv_log_count_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Query_Recv_Log = fax_query_recv_log : Public, Static, Literal, HasDefault
+    System.String Fax_Query_Recv_Log_Ack = fax_query_recv_log_ack : Public, Static, Literal, HasDefault
+    System.String Fax_Notify = fax_notify : Public, Static, Literal, HasDefault
+    System.String Virtual_Crosspatch_Request = virtual_crosspatch_request : Public, Static, Literal, HasDefault
+    System.String Virtual_Crosspatch_Request_ack = virtual_crosspatch_request_ack : Public, Static, Literal, HasDefault
+    System.String Add_Virtual_Crosspatch = add_virtual_crosspatch : Public, Static, Literal, HasDefault
+    System.String Modify_Virtual_Crosspatch = modify_virtual_crosspatch : Public, Static, Literal, HasDefault
+    System.String Remove_Virtual_Crosspatch = remove_virtual_crosspatch : Public, Static, Literal, HasDefault
+    System.String Edit_Virtual_Crosspatch_Ack = edit_virtual_crosspatch_ack : Public, Static, Literal, HasDefault
+    System.String Add_DGNA = add_dgna : Public, Static, Literal, HasDefault
+    System.String Add_Predefined_DGNA = add_predefined_dgna : Public, Static, Literal, HasDefault
+    System.String Delete_DGNA = delete_dgna : Public, Static, Literal, HasDefault
+    System.String Delete_Predefined_DGNA = delete_predefined_dgna : Public, Static, Literal, HasDefault
+    System.String Edit_DGNA_Ack = edit_dgna_ack : Public, Static, Literal, HasDefault
+    System.String DGNA_Request = dgna_request : Public, Static, Literal, HasDefault
+    System.String DGNA_Request_Ack = dgna_request_ack : Public, Static, Literal, HasDefault
+    System.String Edit_Predefined_DGNA_Ack = edit_predefined_dgna_ack : Public, Static, Literal, HasDefault
+    System.String Predefined_DGNA_Request = predefined_dgna_request : Public, Static, Literal, HasDefault
+    System.String Predefined_DGNA_Request_Ack = predefined_dgna_request_ack : Public, Static, Literal, HasDefault
+    System.String Update_DGNA = update_dgna : Public, Static, Literal, HasDefault
+    System.String Update_Predefined_DGNA = update_predefined_dgna : Public, Static, Literal, HasDefault
+    System.String Add_DGNA_Member = add_dgna_member : Public, Static, Literal, HasDefault
+    System.String Edit_DGNA_Member_Ack = edit_dgna_member_ack : Public, Static, Literal, HasDefault
+    System.String Delete_DGNA_Member = delete_dgna_member : Public, Static, Literal, HasDefault
+    System.String Query_Call_Log_Count = query_call_log_count : Public, Static, Literal, HasDefault
+    System.String Query_Call_Log_Count_Ack = query_call_log_count_ack : Public, Static, Literal, HasDefault
+    System.String Query_Call_Log = query_call_log : Public, Static, Literal, HasDefault
+    System.String Query_Call_Log_Ack = query_call_log_ack : Public, Static, Literal, HasDefault
+    System.String Query_SDS_Log_Count = query_sds_log_count : Public, Static, Literal, HasDefault
+    System.String Query_SDS_Log_Count_Ack = query_sds_log_count_ack : Public, Static, Literal, HasDefault
+    System.String Query_SDS_Log = query_sds_log : Public, Static, Literal, HasDefault
+    System.String Query_SDS_Log_Ack = query_sds_log_ack : Public, Static, Literal, HasDefault
+    System.String Query_RRS_Count_Info = query_rrs_count_info : Public, Static, Literal, HasDefault
+    System.String Query_RRS_Count_Info_Ack = query_rrs_count_info_ack : Public, Static, Literal, HasDefault
+    System.String Query_RRS_Info = query_rrs_info : Public, Static, Literal, HasDefault
+    System.String Query_RRS_Info_Ack = query_rrs_info_ack : Public, Static, Literal, HasDefault
+    System.String PUC_Kickout_Evt = puc_kickout_evt : Public, Static, Literal, HasDefault
+    System.String PUC_Disconnect_Evt = puc_disconnect_evt : Public, Static, Literal, HasDefault
+    System.String Device_Status_Check = device_status_check : Public, Static, Literal, HasDefault
+    System.String Device_Call_Alert = device_call_alert : Public, Static, Literal, HasDefault
+    System.String Device_Call_Alert_Ack = device_call_alert_ack : Public, Static, Literal, HasDefault
+    System.String Device_Status_List_Request = device_status_list_request : Public, Static, Literal, HasDefault
+    System.String Device_Status_Check_Ack = device_status_check_ack : Public, Static, Literal, HasDefault
+    System.String Device_List_Status_Check_Evt = device_list_status_check_evt : Public, Static, Literal, HasDefault
+    System.String Device_Lock_List_Check_Evt = device_lock_list_check_evt : Public, Static, Literal, HasDefault
+    System.String Device_Status_Check_Evt = device_status_check_evt : Public, Static, Literal, HasDefault
+    System.String Sap_Status_Check_Evt = sap_status_check_evt : Public, Static, Literal, HasDefault
+    System.String RRS_Online = 1 : Public, Static, Literal, HasDefault
+    System.String RRS_Offline = 0 : Public, Static, Literal, HasDefault
+    System.String Device_Stun_Request = device_stun_request : Public, Static, Literal, HasDefault
+    System.String Device_Stun_Request_Ack = device_stun_request_ack : Public, Static, Literal, HasDefault
+    System.String Update_Device_Lock_Status_Evt = update_device_lock_status_evt : Public, Static, Literal, HasDefault
+    System.String Device_Lock_Status_Check = device_lock_status_check : Public, Static, Literal, HasDefault
+    System.String Device_Kill_Request = device_kill_request : Public, Static, Literal, HasDefault
+    System.String Device_Revive_Request = device_revive_request : Public, Static, Literal, HasDefault
+    System.String Device_Revive_Request_Ack = device_revive_request_ack : Public, Static, Literal, HasDefault
+    System.String Device_Kill_Request_Ack = device_kill_request_ack : Public, Static, Literal, HasDefault
+    System.String Device_Lock_Status_Check_Ack = device_lock_status_check_ack : Public, Static, Literal, HasDefault
+    System.String Mgr_Sub_Syscall_Evt = mgr_sub_syscall_evt : Public, Static, Literal, HasDefault
+    System.String Device_Capability_Change_Evt = device_capability_change_evt : Public, Static, Literal, HasDefault
+    System.String Device_Capability_List_Request = device_capability_list_request : Public, Static, Literal, HasDefault
+    System.String Device_Capability_List_Evt = device_capability_list_evt : Public, Static, Literal, HasDefault
+    System.String Pistol_Holster_Status_EvtProc = pistol_holster_status_evt : Public, Static, Literal, HasDefault
+    System.String Sub_CallStatus_Info = sub_callstatus_info : Public, Static, Literal, HasDefault
+    System.String Sub_CallStatus_Info_Ack = sub_callstatus_info_ack : Public, Static, Literal, HasDefault
+    System.String Sub_Callstatus_Info_EvtProc = sub_callstatus_info_evt : Public, Static, Literal, HasDefault
+    System.String Sds_Text_Send_Ack = sds_text_send_ack : Public, Static, Literal, HasDefault
+    System.String Sds_Status_Send_Ack = sds_status_send_ack : Public, Static, Literal, HasDefault
+    System.String Sds_Text_Receive_Evt = sds_text_receive_evt : Public, Static, Literal, HasDefault
+    System.String Sds_Status_Receive_Evt = sds_status_receive_evt : Public, Static, Literal, HasDefault
+    System.String Sds_Send_Text = sds_send_text : Public, Static, Literal, HasDefault
+    System.String Sds_Send_Status = sds_send_status : Public, Static, Literal, HasDefault
+    System.String Sds_Send_Receive_State = sds_send_receive_state : Public, Static, Literal, HasDefault
+    System.String Gps_Get_Gps_Info = gps_get_gps_info : Public, Static, Literal, HasDefault
+    System.String Get_Gps_Report_Timeout = get_gps_report_timeout : Public, Static, Literal, HasDefault
+    System.String Gps_Start_Gps_Info_Report = gps_start_gps_info_report : Public, Static, Literal, HasDefault
+    System.String Gps_Stop_Gps_Info_Report = gps_stop_gps_info_report : Public, Static, Literal, HasDefault
+    System.String Gps_Quick_Start = gps_quick_start : Public, Static, Literal, HasDefault
+    System.String Gps_Quick_Stop = gps_quick_stop : Public, Static, Literal, HasDefault
+    System.String Device_List_Status_Quickgps_Evt = device_list_status_quickgps_evt : Public, Static, Literal, HasDefault
+    System.String Gps_Get_Gps_Info_Ack = gps_get_gps_info_ack : Public, Static, Literal, HasDefault
+    System.String Gps_Start_Gps_Info_Report_Ack = gps_start_gps_info_report_ack : Public, Static, Literal, HasDefault
+    System.String Gps_Stop_Gps_Info_Report_Ack = gps_stop_gps_info_report_ack : Public, Static, Literal, HasDefault
+    System.String Gps_Quick_Start_Ack = gps_quick_start_ack : Public, Static, Literal, HasDefault
+    System.String Gps_Quick_Stop_Ack = gps_quick_stop_ack : Public, Static, Literal, HasDefault
+    System.String Get_Gps_Report_Evt = get_gps_report_evt : Public, Static, Literal, HasDefault
+    System.String Get_Cycle_Report_State_Evt = get_cycle_report_state_evt : Public, Static, Literal, HasDefault
+    System.String Gps_Record_Query = gps_record_query : Public, Static, Literal, HasDefault
+    System.String Gps_Record_Query_Ack = gps_record_query_ack : Public, Static, Literal, HasDefault
+    System.String Gps_Query_Gps_Subscribeinfo_Count = gps_query_gps_subscribeinfo_count : Public, Static, Literal, HasDefault
+    System.String Gps_Start_Gps_Info_Report_List = gps_start_gps_info_report_list : Public, Static, Literal, HasDefault
+    System.String Gps_Query_Gps_Subscribeinfo_Count_Ack = gps_query_gps_subscribeinfo_count_ack : Public, Static, Literal, HasDefault
+    System.String Gps_Start_Gps_Info_Report_List_Ack = gps_start_gps_info_report_list_ack : Public, Static, Literal, HasDefault
+    System.String Gps_Batch_Start_Gps_Info_Report = gps_batch_start_gps_info_report : Public, Static, Literal, HasDefault
+    System.String Gps_Batch_Start_Gps_Info_Report_Ack = gps_batch_start_gps_info_report_ack : Public, Static, Literal, HasDefault
+    System.String Gps_Batch_Stop_Gps_Info_Report = gps_batch_stop_gps_info_report : Public, Static, Literal, HasDefault
+    System.String Gps_Batch_Stop_Gps_Info_Report_Ack = gps_batch_stop_gps_info_report_ack : Public, Static, Literal, HasDefault
+    System.String Gps_Notify_Gps_Info_Active_Report = gps_notify_gps_info_active_report : Public, Static, Literal, HasDefault
+    System.String Gps_Notify_Gps_Info_Active_Report_Ack = gps_notify_gps_info_active_report_ack : Public, Static, Literal, HasDefault
+    System.String Rule_List_Request = rule_list_request : Public, Static, Literal, HasDefault
+    System.String Rule_List_Request_Ack = rule_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Update_Rule_List = update_rule_list : Public, Static, Literal, HasDefault
+    System.String Update_Rule_List_Ack = update_rule_list_ack : Public, Static, Literal, HasDefault
+    System.String Update_Rule_List_Evt = update_rule_list_evt : Public, Static, Literal, HasDefault
+    System.String Add_Region = add_region : Public, Static, Literal, HasDefault
+    System.String Add_Region_Ack = add_region_ack : Public, Static, Literal, HasDefault
+    System.String Delete_Region = delete_region : Public, Static, Literal, HasDefault
+    System.String Delete_Region_Ack = delete_region_ack : Public, Static, Literal, HasDefault
+    System.String Update_Region = update_region : Public, Static, Literal, HasDefault
+    System.String Update_Region_Ack = update_region_ack : Public, Static, Literal, HasDefault
+    System.String Region_List_Request = region_list_request : Public, Static, Literal, HasDefault
+    System.String Region_List_Request_Ack = region_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Region_Edit_Evt = region_edit_evt : Public, Static, Literal, HasDefault
+    System.String Geofencing_Alarm_Query = geofencing_alarm_query : Public, Static, Literal, HasDefault
+    System.String Geofencing_Alarm_Query_Ack = geofencing_alarm_query_ack : Public, Static, Literal, HasDefault
+    System.String Geofencing_Alarm_List_Request = geofencing_alarm_list_request : Public, Static, Literal, HasDefault
+    System.String Geofencing_Alarm_List_Request_Ack = geofencing_alarm_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Geofencing_Alarm_Count_Query = geofencing_alarm_count_query : Public, Static, Literal, HasDefault
+    System.String Geofencing_Alarm_Count_Query_Ack = geofencing_alarm_count_query_ack : Public, Static, Literal, HasDefault
+    System.String Geofencing_Alarm_Report_Evt = geofencing_alarm_report_evt : Public, Static, Literal, HasDefault
+    System.String gps_start_admin_req = gps_start_gps_admin_req : Public, Static, Literal, HasDefault
+    System.String gps_start_admin_req_ack = gps_start_gps_admin_ack : Public, Static, Literal, HasDefault
+    System.String gps_get_radio_sub_para_req = gps_get_radio_sub_para_req : Public, Static, Literal, HasDefault
+    System.String gps_get_radio_sub_para_ack = gps_get_radio_sub_para_ack : Public, Static, Literal, HasDefault
+    System.String gps_get_sub_relation_req = gps_get_sub_relation_req : Public, Static, Literal, HasDefault
+    System.String gps_get_sub_relation_req_ack = gps_get_sub_relation_ack : Public, Static, Literal, HasDefault
+    System.String gps_set_radio_min_cycle_req = gps_set_radio_min_cycle_req : Public, Static, Literal, HasDefault
+    System.String gps_set_radio_min_cycle_req_ack = gps_set_radio_min_cycle_ack : Public, Static, Literal, HasDefault
+    System.String gps_cancel_radio_min_cycle_req = gps_cancel_radio_min_cycle_req : Public, Static, Literal, HasDefault
+    System.String gps_cancel_radio_min_cycle_req_ack = gps_cancel_radio_min_cycle_ack : Public, Static, Literal, HasDefault
+    System.String gps_cancel_radio_sub_req = gps_cancel_radio_sub_req : Public, Static, Literal, HasDefault
+    System.String gps_cancel_radio_sub_req_ack = gps_cancel_radio_sub_ack : Public, Static, Literal, HasDefault
+    System.String gps_stop_gps_info_report_syn = gps_stop_gps_info_report_syn : Public, Static, Literal, HasDefault
+    System.String gps_cancel_dispatcher_sub_syn = gps_cancel_dispatcher_sub_syn : Public, Static, Literal, HasDefault
+    System.String gps_cancel_dispatcher_sub_req = gps_cancel_dispatcher_sub_req : Public, Static, Literal, HasDefault
+    System.String gps_cancel_dispatcher_sub_ack = gps_cancel_dispatcher_sub_ack : Public, Static, Literal, HasDefault
+    System.String gps_set_whole_net_req = gps_set_whole_net_req : Public, Static, Literal, HasDefault
+    System.String gps_set_whole_net_ack = gps_set_whole_net_ack : Public, Static, Literal, HasDefault
+    System.String gps_set_unify_min_cycle_req = gps_set_unify_min_cycle_req : Public, Static, Literal, HasDefault
+    System.String gps_set_unify_min_cycle_req_ack = gps_set_unify_min_cycle_ack : Public, Static, Literal, HasDefault
+    System.String gps_cancel_unify_min_cycle_req = gps_cancel_unify_min_cycle_req : Public, Static, Literal, HasDefault
+    System.String gps_cancel_unify_min_cycle_req_ack = gps_cancel_unify_min_cycle_ack : Public, Static, Literal, HasDefault
+    System.String Mon_Monitor = mon_monitor : Public, Static, Literal, HasDefault
+    System.String Mon_Monitor_Ack = mon_monitor_ack : Public, Static, Literal, HasDefault
+    System.String Mon_Monitor_Evt = mon_monitor_evt : Public, Static, Literal, HasDefault
+    System.String Mon_Monitor_Register_Evt = mon_monitor_register_evt : Public, Static, Literal, HasDefault
+    System.String Mon_Status_Receive_Evt = mon_status_receive_evt : Public, Static, Literal, HasDefault
+    System.String Mon_Text_Rreceive_Evt = mon_text_receive_evt : Public, Static, Literal, HasDefault
+    Int32 PUCMonitorLevelCancelAll = 0 : Public, Static, Literal, HasDefault
+    Int32 PUCMonitorLevelOnline = 1 : Public, Static, Literal, HasDefault
+    Int32 PUCMonitorLevelSDSText = 4 : Public, Static, Literal, HasDefault
+    Int32 PUCMonitorLevelSDSStatus = 8 : Public, Static, Literal, HasDefault
+    Int32 PUCMonitorLevelEvent = 32 : Public, Static, Literal, HasDefault
+    Int32 PUCMonitorLevelMedia = 64 : Public, Static, Literal, HasDefault
+    System.String Base_station_info_list_request = base_station_info_list_request : Public, Static, Literal, HasDefault
+    System.String Base_station_info_list_request_ack = base_station_info_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Cm_channel_info_list_sub = cm_channel_info_list_sub : Public, Static, Literal, HasDefault
+    System.String Cm_channel_info_list_stop_sub = cm_channel_info_list_stop_sub : Public, Static, Literal, HasDefault
+    System.String update_base_station_info_list = update_base_station_info_list : Public, Static, Literal, HasDefault
+    System.String Cm_channel_info_list_sub_ack = cm_channel_info_list_sub_ack : Public, Static, Literal, HasDefault
+    System.String Cm_channel_info_list_stop_sub_ack = cm_channel_info_list_stop_sub_ack : Public, Static, Literal, HasDefault
+    System.String Cm_channel_info_list_report_evt = cm_channel_info_list_report_evt : Public, Static, Literal, HasDefault
+    System.String Cm_channel_ptt_info_list_report_evt = cm_ptt_info_list_report_evt : Public, Static, Literal, HasDefault
+    System.String drag_position_info_report = drag_position_info_report : Public, Static, Literal, HasDefault
+    System.String channel_monitor = channel_monitor : Public, Static, Literal, HasDefault
+    System.String MonitorBaseStation = MonitorBaseStation : Public, Static, Literal, HasDefault
+    System.String cc_bs_force_disconnect = cc_bs_force_disconnect : Public, Static, Literal, HasDefault
+    System.String cc_interrupt = cc_interrupt : Public, Static, Literal, HasDefault
+    System.String SubBaseStationInfo = SubBaseStationInfo : Public, Static, Literal, HasDefault
+    System.String voc_control = voc_control : Public, Static, Literal, HasDefault
+    System.String ice_keep_alive = ice_keep_alive : Public, Static, Literal, HasDefault
+    System.String base_station_online_devices_request = base_station_online_devices_request : Public, Static, Literal, HasDefault
+    System.String cc_tx_granted_evt = cc_tx_granted_evt1 : Public, Static, Literal, HasDefault
+    System.String client_logout_evt = client_logout_evt : Public, Static, Literal, HasDefault
+    System.String System_Ctrl = system_ctrl : Public, Static, Literal, HasDefault
+    System.String System_Ctrl_Ack = system_ctrl_ack : Public, Static, Literal, HasDefault
+    System.String Add_Roll_Call_Init = add_roll_call_init : Public, Static, Literal, HasDefault
+    System.String Add_Roll_Call_Records = add_roll_call_records : Public, Static, Literal, HasDefault
+    System.String Query_Roll_Call_Record = query_roll_call_record : Public, Static, Literal, HasDefault
+    System.String Query_Roll_Call_Record_Count = query_roll_call_record_count : Public, Static, Literal, HasDefault
+    System.String Request_Roll_Call_Init = request_roll_call_init : Public, Static, Literal, HasDefault
+    System.String Add_Roll_Call_Init_Ack = add_roll_call_init_ack : Public, Static, Literal, HasDefault
+    System.String Add_Roll_Call_Record_Ack = add_roll_call_records_ack : Public, Static, Literal, HasDefault
+    System.String Query_Roll_Call_Record_Count_Ack = query_roll_call_record_count_ack : Public, Static, Literal, HasDefault
+    System.String Query_Roll_Call_Record_Ack = query_roll_call_record_ack : Public, Static, Literal, HasDefault
+    System.String Request_Roll_Call_Init_Ack = request_roll_call_init_ack : Public, Static, Literal, HasDefault
+    System.String Update_Account_Password = update_account_password : Public, Static, Literal, HasDefault
+    System.String Sync_ICC_Login = sync_icc_login : Public, Static, Literal, HasDefault
+    System.String ICC_Dictcode_List_Request = icc_dictcode_list_request : Public, Static, Literal, HasDefault
+    System.String Sync_ICC_Dictcode = sync_icc_dictcode : Public, Static, Literal, HasDefault
+    System.String ICC_Dictcode_List_Request_Ack = icc_dictcode_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Dictcodedesc_List_Request = icc_dictcodedesc_list_request : Public, Static, Literal, HasDefault
+    System.String Add_ICC_Dictcodedesc = add_icc_dictcodedesc : Public, Static, Literal, HasDefault
+    System.String Update_ICC_Dictcodedesc = update_icc_dictcodedesc : Public, Static, Literal, HasDefault
+    System.String Delete_ICC_Dictcodedesc = delete_icc_dictcodedesc : Public, Static, Literal, HasDefault
+    System.String ICC_Dictcodedesc_List_Request_Ack = icc_dictcodedesc_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Dictcodedesc_Edit_Ack = icc_dictcodedesc_edit_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Alarm_Case_List_Request = icc_alarm_case_list_request : Public, Static, Literal, HasDefault
+    System.String Sync_ICC_Alarm_Case = sync_icc_alarm_case : Public, Static, Literal, HasDefault
+    System.String ICC_Alarm_Case_List_Request_Ack = icc_alarm_case_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Alarm_Process_List_Request = icc_alarm_process_list_request : Public, Static, Literal, HasDefault
+    System.String ICC_Alarm_Process_List_Request_Ack = icc_alarm_process_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Alarm_Dispatch_List_Request = icc_alarm_dispatch_list_request : Public, Static, Literal, HasDefault
+    System.String ICC_Alarm_Dispatch_List_Request_Ack = icc_alarm_dispatch_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Keydep_List_Request = icc_keydep_list_request : Public, Static, Literal, HasDefault
+    System.String Sync_ICC_Keydep = sync_icc_keydep : Public, Static, Literal, HasDefault
+    System.String Delete_ICC_Keydep = delete_icc_keydep : Public, Static, Literal, HasDefault
+    System.String ICC_Keydep_List_Request_Ack = icc_keydep_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Monitor_List_Request = icc_monitor_list_request : Public, Static, Literal, HasDefault
+    System.String Sync_ICC_Monitor = sync_icc_monitor : Public, Static, Literal, HasDefault
+    System.String Delete_ICC_Monitor = delete_icc_monitor : Public, Static, Literal, HasDefault
+    System.String ICC_Monitor_List_Request_Ack = icc_monitor_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_ColorWarningRelation_List_Request = icc_colorwarningrelation_list_request : Public, Static, Literal, HasDefault
+    System.String Add_ICC_ColorWarningRelation = add_icc_colorwarningrelation : Public, Static, Literal, HasDefault
+    System.String Update_ICC_ColorWarningRelation = update_icc_colorwarningrelation : Public, Static, Literal, HasDefault
+    System.String Delete_ICC_ColorWarningRelation = delete_icc_colorwarningrelation : Public, Static, Literal, HasDefault
+    System.String ICC_ColorWarningRelation_List_Request_Ack = icc_colorwarningrelation_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_ColorWarningRelation_Edit_Ack = icc_colorwarningrelation_edit_ack : Public, Static, Literal, HasDefault
+    System.String ICC_GridAreaStatistic_List_Request = icc_gridareastatistic_list_request : Public, Static, Literal, HasDefault
+    System.String ICC_GridAreaStatistic_List_Request_Ack = icc_gridareastatistic_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Region_Associate_List_Request = icc_region_associate_list_request : Public, Static, Literal, HasDefault
+    System.String Add_ICC_Region_Associate = add_icc_region_associate : Public, Static, Literal, HasDefault
+    System.String Update_ICC_Region_Associate = update_icc_region_associate : Public, Static, Literal, HasDefault
+    System.String Delete_ICC_Region_Associate = delete_icc_region_associate : Public, Static, Literal, HasDefault
+    System.String ICC_Region_Associate_List_Request_Ack = icc_region_associate_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Region_Associate_Edit_Ack = icc_region_associate_edit_ack : Public, Static, Literal, HasDefault
+    System.String ICC_PDTState_List_Request = icc_pdtstate_list_request : Public, Static, Literal, HasDefault
+    System.String Sync_ICC_PDTState = sync_icc_pdtstate : Public, Static, Literal, HasDefault
+    System.String ICC_PDTState_List_Request_Ack = icc_pdtstate_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Car_List_Request = icc_car_list_request : Public, Static, Literal, HasDefault
+    System.String Add_ICC_Car = add_icc_car : Public, Static, Literal, HasDefault
+    System.String Update_ICC_Car = update_icc_car : Public, Static, Literal, HasDefault
+    System.String Delete_ICC_Car = delete_icc_car : Public, Static, Literal, HasDefault
+    System.String ICC_Car_List_Request_Ack = icc_car_list_request_ack : Public, Static, Literal, HasDefault
+    System.String ICC_Car_Edit_Ack = icc_car_edit_ack : Public, Static, Literal, HasDefault
+    System.String Resouce_Request = resource_request : Public, Static, Literal, HasDefault
+    System.String Resouce_Request_Ack = resource_request_ack : Public, Static, Literal, HasDefault
+    System.String CaseGridAnalysis_Request = casegridanalysis_request : Public, Static, Literal, HasDefault
+    System.String CaseGridAnalysis_Request_Ack = casegridanalysis_request_ack : Public, Static, Literal, HasDefault
+    System.String GridResource_Request = gridresource_request : Public, Static, Literal, HasDefault
+    System.String GridResource_Request_Ack = gridresource_request_ack : Public, Static, Literal, HasDefault
+    System.String FuzzyQuery_Request = fuzzyquery_request : Public, Static, Literal, HasDefault
+    System.String FuzzyQuery_Request_Ack = fuzzyquery_request_ack : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_Report_Evt = emergency_alarm_report_evt : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_Handle = emergency_alarm_handle : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_Handle_Ack = emergency_alarm_handle_ack : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_Update = emergency_alarm_update : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_List_Request = emergency_alarm_list_request : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_List_Request_Ack = emergency_alarm_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_Count_Query = emergency_alarm_count_query : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_Count_Query_Ack = emergency_alarm_count_query_ack : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_Query = emergency_alarm_query : Public, Static, Literal, HasDefault
+    System.String Emergency_Alarm_Query_Ack = emergency_alarm_query_ack : Public, Static, Literal, HasDefault
+    System.String Callback_Alarm_Report_Evt = callback_list_report_evt : Public, Static, Literal, HasDefault
+    System.String Callback_List_Handle = callback_list_handle : Public, Static, Literal, HasDefault
+    System.String Callback_List_Handle_Ack = callback_list_handle_ack : Public, Static, Literal, HasDefault
+    System.String Callback_List_Update = callback_list_update : Public, Static, Literal, HasDefault
+    System.String Callback_List_Request = callback_list_request : Public, Static, Literal, HasDefault
+    System.String Callback_List_Request_Ack = callback_list_request_ack : Public, Static, Literal, HasDefault
+    System.String Callback_List_Count_Query = callback_list_count_query : Public, Static, Literal, HasDefault
+    System.String Callback_List_Count_Query_Ack = callback_list_count_query_ack : Public, Static, Literal, HasDefault
+    System.String Callback_List_Query = callback_list_query : Public, Static, Literal, HasDefault
+    System.String Callback_List_Query_Ack = callback_list_query_ack : Public, Static, Literal, HasDefault
+    System.String Add_Indoor_Org = add_indoor_org : Public, Static, Literal, HasDefault
+    System.String Add_Indoor_Org_Ack = add_indoor_org_ack : Public, Static, Literal, HasDefault
+    System.String Add_Indoor_Point = add_indoor_point : Public, Static, Literal, HasDefault
+    System.String Add_Indoor_Point_Ack = add_indoor_point_ack : Public, Static, Literal, HasDefault
+    System.String Add_Indoor_Monitor = add_indoor_monitor : Public, Static, Literal, HasDefault
+    System.String Delete_Indoor_Org = delete_indoor_org : Public, Static, Literal, HasDefault
+    System.String Delete_Indoor_Org_Ack = delete_indoor_org_ack : Public, Static, Literal, HasDefault
+    System.String Delete_Indoor_Point = delete_indoor_point : Public, Static, Literal, HasDefault
+    System.String Delete_Indoor_Point_Ack = delete_indoor_point_ack : Public, Static, Literal, HasDefault
+    System.String Edit_Indoor_Monitor_Ack = edit_indoor_monitor_ack : Public, Static, Literal, HasDefault
+    System.String Delete_Indoor_Monitor = delete_indoor_monitor : Public, Static, Literal, HasDefault
+    System.String Device_Indoor_Location_Report_Evt = device_indoor_location_report_evt : Public, Static, Literal, HasDefault
+    System.String Get_Indoor_Map = get_indoor_map : Public, Static, Literal, HasDefault
+    System.String Get_Indoor_Map_Ack = get_indoor_map_ack : Public, Static, Literal, HasDefault
+    System.String Get_Indoor_Org_List = get_indoor_org_list : Public, Static, Literal, HasDefault
+    System.String Get_Indoor_Org_List_Ack = get_indoor_org_list_ack : Public, Static, Literal, HasDefault
+    System.String Get_Indoor_Points_List = get_indoor_points_list : Public, Static, Literal, HasDefault
+    System.String Get_Indoor_Points_List_Ack = get_indoor_points_list_ack : Public, Static, Literal, HasDefault
+    System.String Get_Indoor_Monitors_List = get_indoor_monitors_list : Public, Static, Literal, HasDefault
+    System.String Get_Indoor_Monitors_List_Ack = get_indoor_monitors_list_ack : Public, Static, Literal, HasDefault
+    System.String Updata_Indoor_Org = updata_indoor_org : Public, Static, Literal, HasDefault
+    System.String Updata_Indoor_Org_Ack = updata_indoor_org_ack : Public, Static, Literal, HasDefault
+    System.String Updata_Indoor_Point = updata_indoor_point : Public, Static, Literal, HasDefault
+    System.String Updata_Indoor_Point_Ack = updata_indoor_point_ack : Public, Static, Literal, HasDefault
+    System.String Update_Indoor_Monitor = update_indoor_monitor : Public, Static, Literal, HasDefault
+    System.String Upload_Indoor_Map = upload_indoor_map : Public, Static, Literal, HasDefault
+    System.String Upload_Indoor_Map_Ack = upload_indoor_map_ack : Public, Static, Literal, HasDefault
+    System.String Query_Indoor_Record = query_indoor_record : Public, Static, Literal, HasDefault
+    System.String Query_Indoor_Record_Ack = query_indoor_record_ack : Public, Static, Literal, HasDefault
+    System.String Get_Current_Group_Mem_Request = get_current_group_mem_request : Public, Static, Literal, HasDefault
+    System.String Get_Current_Group_Mem_Request_Ack = get_current_group_mem_request_ack : Public, Static, Literal, HasDefault
+    System.String Get_Current_Group_Mem_Cancel_Request = get_current_group_mem_cancel_request : Public, Static, Literal, HasDefault
+    System.String Get_Current_Group_Mem_Cancel_Request_Ack = get_current_group_mem_cancel_request_ack : Public, Static, Literal, HasDefault
+    System.String Get_Current_Group_Mem_Evt = get_current_group_mem_evt : Public, Static, Literal, HasDefault
+    System.String Terminal_Current_Attach_Updata_Evt = terminal_current_attach_updata_evt : Public, Static, Literal, HasDefault
+    System.String Conference_Request = conference_request : Public, Static, Literal, HasDefault
+    System.String Conference_Request_Ack = conference_request_ack : Public, Static, Literal, HasDefault
+    System.String Add_Conference = add_conference : Public, Static, Literal, HasDefault
+    System.String Delete_Conference = delete_conference : Public, Static, Literal, HasDefault
+    System.String Update_Conference = update_conference : Public, Static, Literal, HasDefault
+    System.String Edit_Conference_Ack = edit_conference_ack : Public, Static, Literal, HasDefault
+    System.String Add_Conference_Member = add_conference_member : Public, Static, Literal, HasDefault
+    System.String Update_Conference_Member_Videomix = update_conference_member_videomix : Public, Static, Literal, HasDefault
+    System.String Delete_Conference_Member = delete_conference_member : Public, Static, Literal, HasDefault
+    System.String Edit_Conference_Member_Ack = edit_conference_member_ack : Public, Static, Literal, HasDefault
+    System.String Apply_Conference_Chairman = apply_conference_chairman : Public, Static, Literal, HasDefault
+    System.String Apply_Conference_Chairman_Ack = apply_conference_chairman_ack : Public, Static, Literal, HasDefault
+    System.String Specify_Conference_Chairman = specify_conference_chairman : Public, Static, Literal, HasDefault
+    System.String Specify_Conference_Chairman_Ack = specify_conference_chairman_ack : Public, Static, Literal, HasDefault
+    System.String Apply_Conference_Speaker = apply_conference_speaker : Public, Static, Literal, HasDefault
+    System.String Apply_Conference_Speaker_Ack = apply_conference_speaker_ack : Public, Static, Literal, HasDefault
+    System.String Specify_Conference_Speaker = specify_conference_speaker : Public, Static, Literal, HasDefault
+    System.String Specify_Conference_Speaker_Ack = specify_conference_speaker_ack : Public, Static, Literal, HasDefault
+    System.String Set_Conference_Freetalk = set_conference_freetalk : Public, Static, Literal, HasDefault
+    System.String Set_Conference_Freetalk_Ack = set_conference_freetalk_ack : Public, Static, Literal, HasDefault
+    System.String Turn_Conference_Member_Device = turn_conference_member_device : Public, Static, Literal, HasDefault
+    System.String Turn_Conference_Member_Device_Ack = turn_conference_member_device_ack : Public, Static, Literal, HasDefault
+    System.String Broadcast_Conference_Screen = broadcast_conference_screen : Public, Static, Literal, HasDefault
+    System.String Broadcast_Conference_Screen_Ack = broadcast_conference_screen_ack : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR2DFSI_Unknown = 0 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR2DFSI_HangUp = 1 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR2DFSI_CallTimeout = 2 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_Unknown = 0 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_HangUp = 1 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_CCServiceNotOpen = 2 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_NotLogin = 3 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_FailToSetupcall = 4 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_NoPermission = 5 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_InvalidSsi = 6 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_OtherPartyBusy = 7 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_OtherPartyRefuse = 8 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_OtherPartyNotSupportEncryption = 9 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_SystemCCBusy = 10 : Public, Static, Literal, HasDefault
+    System.String DisconnectReason_HyteraDMR3SSI_CallTimeout = 11 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_NotDefinedOrUnknown = 0 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_UserRequest = 1 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_CalledPartyIsBusy = 2 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_CalledPartyCanNotBeReached = 3 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_CalledPartyDoesNotSupportEncryption = 4 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_NetworkIsBusy = 5 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_TheTrafficIsNotAllowed = 6 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_TheTrafficIsIncompatible = 7 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_TheServiceIsUnavailable = 8 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_EitherPartyIsPreempted = 9 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_InvalidCallIdentifier = 10 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_CalledPartyRejectsTheCall = 11 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_NoCCEntity = 12 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_TimerExpiry = 13 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_SwMIDisconnect = 14 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_NoAcknowledgement = 15 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_UnknownTETRAIdentity = 16 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_SupplementaryServiceDependent = 17 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_UnknownExternalSubscriberNumber = 18 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_CallRestorationFailure = 19 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_CalledPartyRequiresEncryption = 20 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_ConcurrentSetupNotSupported = 21 : Public, Static, Literal, HasDefault
+    System.String HyteraTetraDFSI_CalledPartyIsUnderTheSameDMGATEOfTheCallingParty = 22 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_309 = 309 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_415 = 415 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_701 = 701 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_702 = 702 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_703 = 703 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_704 = 704 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_705 = 705 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_706 = 706 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_707 = 707 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_708 = 708 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_709 = 709 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_710 = 710 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_711 = 711 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_712 = 712 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_713 = 713 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_714 = 714 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_715 = 715 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_716 = 716 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_717 = 717 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_718 = 718 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_751 = 751 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_752 = 752 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_753 = 753 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_754 = 754 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_755 = 755 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_756 = 756 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_757 = 757 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_801 = 801 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_802 = 802 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_803 = 803 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_804 = 804 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_805 = 805 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_806 = 806 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_807 = 807 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_808 = 808 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_809 = 809 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_821 = 821 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_822 = 822 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_823 = 823 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_824 = 824 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_825 = 825 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_826 = 826 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_827 = 827 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_828 = 828 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_829 = 829 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_830 = 830 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_831 = 831 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_832 = 832 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_833 = 833 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_834 = 834 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_835 = 835 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_836 = 836 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_837 = 837 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_838 = 838 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_839 = 839 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_840 = 840 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_841 = 841 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_842 = 842 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_843 = 843 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_844 = 844 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_845 = 845 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_846 = 846 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_847 = 847 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_848 = 848 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_901 = 901 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_902 = 902 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_903 = 903 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_904 = 904 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_905 = 905 : Public, Static, Literal, HasDefault
+    System.String DISPATCH_DISCONNECTED_REASON_SERVER_906 = 906 : Public, Static, Literal, HasDefault
+    System.String SAPType_DISPATCHER = 53 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_DMR3_DFSI = 1 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_DMR2_DFSI = 2 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_TETRA_DFSI = 3 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_MPT_CFSI = 4 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_DMR3_SSI = 5 : Public, Static, Literal, HasDefault
+    System.String SAPType_HMF_Tetra_SSI = 6 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_MPT_CSSI = 7 : Public, Static, Literal, HasDefault
+    System.String SAPType_MOTO_Tetra_SSI = 8 : Public, Static, Literal, HasDefault
+    System.String SAPType_IPPBX = 9 : Public, Static, Literal, HasDefault
+    System.String SAPType_AGAT_Tetra_SSI = 10 : Public, Static, Literal, HasDefault
+    System.String SAPType_CrossPatch = 11 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_DMR3_ISSI = 12 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_Intercom = 13 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_RecordReplay = 14 : Public, Static, Literal, HasDefault
+    System.String SAPType_EADS_Tetra_SSI = 15 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_DMR2_Repeater = 16 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_TM800_MPT_AFSI = 17 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_TM800_Conventional_AFSI = 18 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_DMR2_Simulcast_CSSI = 19 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_DMR2_Simulcast_Subnet = 20 : Public, Static, Literal, HasDefault
+    System.String SAPType_SQ = 21 : Public, Static, Literal, HasDefault
+    System.String SAPType_DMR2_XPT = 22 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_DMR2_AIS = 25 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_DMR3_AIS = 26 : Public, Static, Literal, HasDefault
+    System.String SAPType_Custom2TetraSSI = 24 : Public, Static, Literal, HasDefault
+    System.String SAPType_HYTERA_MPT_ISSI = 23 : Public, Static, Literal, HasDefault
+    System.String SAPType_Custom3_BeiDou = 27 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_FXO_Trunking = 28 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_FXS_PostsPort = 29 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_GSM = 30 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_LTE_CSSI = 31 : Public, Static, Literal, HasDefault
+    System.String SAPType_HuaWei_LTE = 32 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_DS_CSSI = 33 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_HMJ340M = 34 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_Police_LED = 44 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_Police_Alert = 45 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_Police_CarKey = 46 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_DaHua_GPS = 35 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_KeDa_GPS = 36 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_YingFuTaiKe_GPS = 37 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_DMR2_VirtualDC = 38 : Public, Static, Literal, HasDefault
+    System.String SAPType_Codan_HF = 39 : Public, Static, Literal, HasDefault
+    System.String SAPType_FengHuo_HF = 40 : Public, Static, Literal, HasDefault
+    System.String SAPType_Haige_HF = 41 : Public, Static, Literal, HasDefault
+    System.String SAPType_Hytera_DMR3_ISSI_DISP = 42 : Public, Static, Literal, HasDefault
+    System.String SAPType_Video_GB28181_1 = 52 : Public, Static, Literal, HasDefault
+    System.String SAPType_Conference = 55 : Public, Static, Literal, HasDefault
+    System.String SAPType_Video_GB28181_57 = 57 : Public, Static, Literal, HasDefault
+    System.String ENCODE_BIN_FORMAT = 0 : Public, Static, Literal, HasDefault
+    System.String ENCODE_MSN_FORMAT = 1 : Public, Static, Literal, HasDefault
+    System.String ENCODE_BCD_FORMAT = 2 : Public, Static, Literal, HasDefault
+    System.String ENCODE_ISO7_FORMAT = 3 : Public, Static, Literal, HasDefault
+    System.String ENCODE_ISO8_FORMAT = 4 : Public, Static, Literal, HasDefault
+    System.String ENCODE_NMEA_FORMAT = 5 : Public, Static, Literal, HasDefault
+    System.String ENCODE_IP_ADDRESS = 6 : Public, Static, Literal, HasDefault
+    System.String ENCODE_16BIT_UNICODE = 7 : Public, Static, Literal, HasDefault
+    System.String ENCODE_8BIT_FORMAT = 8 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_INDIVIDUAL = 0 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_GROUP = 1 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_EXTERNAL = 2 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_BROADCAST = 3 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_DGNA_GROUP = 4 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_WORKSTATION = 5 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_FLEET = 6 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_DISPATCHER = 7 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_CROSSPATCH = 8 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_SIMULSELECT = 9 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_VirtualCROSSPATCH = 10 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_Include = 12 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_CONFERENCE = 11 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_SAP = 9999 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraDMRConventional = 1 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraDMRTrunking = 2 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraPDT = 3 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraMPT = 4 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraAnalogConventional = 5 : Public, Static, Literal, HasDefault
+    System.String SystemType_HMFTetra = 6 : Public, Static, Literal, HasDefault
+    System.String SystemType_EADSTetra = 7 : Public, Static, Literal, HasDefault
+    System.String SystemType_MOTOTetra = 8 : Public, Static, Literal, HasDefault
+    System.String SystemType_AGATTetra = 9 : Public, Static, Literal, HasDefault
+    System.String SystemType_PSTN = 10 : Public, Static, Literal, HasDefault
+    System.String SystemType_Reserved = 11 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraT2 = 12 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraIntercom = 13 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraDMR2Simulcast = 14 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraDMR2XPT = 15 : Public, Static, Literal, HasDefault
+    System.String SystemType_Custom2Tetra = 16 : Public, Static, Literal, HasDefault
+    System.String SystemType_Custom3_BeiDou = 17 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraFXO = 18 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraFXS = 19 : Public, Static, Literal, HasDefault
+    System.String SystemType_Hytera_GSM = 20 : Public, Static, Literal, HasDefault
+    System.String SystemType_HyteraLTE = 21 : Public, Static, Literal, HasDefault
+    System.String SystemType_HuaWeiLTE = 22 : Public, Static, Literal, HasDefault
+    System.String SystemType_DS_System = 23 : Public, Static, Literal, HasDefault
+    System.String SystemType_DC_System = 30 : Public, Static, Literal, HasDefault
+    System.String SystemType_HuiMingJie = 24 : Public, Static, Literal, HasDefault
+    System.String SystemType_DaHua = 25 : Public, Static, Literal, HasDefault
+    System.String SystemType_KeDa = 26 : Public, Static, Literal, HasDefault
+    System.String SystemType_YingFuTaiKe = 27 : Public, Static, Literal, HasDefault
+    System.String SystemType_HF = 28 : Public, Static, Literal, HasDefault
+    System.String SystemType_HIKVISION = 29 : Public, Static, Literal, HasDefault
+    System.String SystemType_Video_GB28181_1 = 33 : Public, Static, Literal, HasDefault
+    System.String SystemType_Video_GB28181_37 = 37 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_Simulation_Group_CTCSS = 101 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_Simulation_Group_CDCSS = 102 : Public, Static, Literal, HasDefault
+    System.String NUMBERTYPE_Simulation_Group_CDCSS_Invert = 103 : Public, Static, Literal, HasDefault
+    System.String SimulationIdentify = 9999 : Public, Static, Literal, HasDefault
+    System.String CallType_Individual = 0 : Public, Static, Literal, HasDefault
+    System.String CallType_Group = 1 : Public, Static, Literal, HasDefault
+    System.String CallType_System = 2 : Public, Static, Literal, HasDefault
+    System.String CallType_Broadcast = 3 : Public, Static, Literal, HasDefault
+    System.String CallType_External = 4 : Public, Static, Literal, HasDefault
+    System.String CallType_Analog = 6 : Public, Static, Literal, HasDefault
+    System.String CallType_Emergency = 7 : Public, Static, Literal, HasDefault
+    System.String CallType_CrossPatch = 8 : Public, Static, Literal, HasDefault
+    System.String CallType_Intercom = 9 : Public, Static, Literal, HasDefault
+    System.String CallType_RecordReplay = 10 : Public, Static, Literal, HasDefault
+    System.String CallType_Individual_VideoAndVoc = 11 : Public, Static, Literal, HasDefault
+    System.String CallType_Individual_Video = 12 : Public, Static, Literal, HasDefault
+    System.String CallType_Group_VideoAndVoc = 13 : Public, Static, Literal, HasDefault
+    System.String CallType_Group_Video = 14 : Public, Static, Literal, HasDefault
+    System.String CallType_Group_DifferentSource = 15 : Public, Static, Literal, HasDefault
+    System.String CallType_Broadcast_Voc = 16 : Public, Static, Literal, HasDefault
+    System.String CallType_Broadcast_Video = 17 : Public, Static, Literal, HasDefault
+    System.String CallType_Broadcast_OnlyVideo = 18 : Public, Static, Literal, HasDefault
+    System.String CallType_PullVedioCall = 19 : Public, Static, Literal, HasDefault
+    System.String CallType_VideoCallBack = 21 : Public, Static, Literal, HasDefault
+    System.String CallType_PushVedioCall = 22 : Public, Static, Literal, HasDefault
+    System.String CallType_PullVedioCallWithVoice = 23 : Public, Static, Literal, HasDefault
+    System.String CallType_VedioFeedbackWithVoice = 24 : Public, Static, Literal, HasDefault
+    System.String CallType_IntercomVedioAndVoc = 25 : Public, Static, Literal, HasDefault
+    System.String CallType_IntercomVedioCall = 26 : Public, Static, Literal, HasDefault
+    System.String CallType_ConferenceCallWithVoice = 27 : Public, Static, Literal, HasDefault
+    System.String CallType_ConferenceCallWithVideoAndVoice = 28 : Public, Static, Literal, HasDefault
+    System.String CallType_IncludeCall = 29 : Public, Static, Literal, HasDefault
+    System.String SDSType_SDS1 = 1 : Public, Static, Literal, HasDefault
+    System.String SDSType_SDS2 = 2 : Public, Static, Literal, HasDefault
+    System.String SDSType_SDS3 = 3 : Public, Static, Literal, HasDefault
+    System.String SDSType_SDS4 = 4 : Public, Static, Literal, HasDefault
+    System.String SDSType_StatusMesage = 5 : Public, Static, Literal, HasDefault
+    System.String SDSType_CommonMesage = 6 : Public, Static, Literal, HasDefault
+    System.String SDSType_Emergency = 7 : Public, Static, Literal, HasDefault
+    System.String SDSType_MediaMessage = 8 : Public, Static, Literal, HasDefault
+    System.String SDSType_BinaryMessage = 9 : Public, Static, Literal, HasDefault
+    System.String SDSSend_Status1 = 1 : Public, Static, Literal, HasDefault
+    System.String SDSSend_Status2 = 2 : Public, Static, Literal, HasDefault
+    System.String SDSSend_Status3 = 3 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_SendSucess = 0 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_SendSucess_lds_device_receive = 1 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_SendSucess_ms_device_receive = 2 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_SendSucess_system_receive = 3 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Unknown = -1 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Number_error = -2 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Recipient_offline = -3 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Number_disable = -4 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Permission_denied = -5 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Channel_busy = -6 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Rx_only = -7 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Low_bettery = -8 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Pll_unlock = -9 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Call_no_ack = -10 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Repeater_wakeup_fail = -11 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_No_contact = -12 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Tx_deny = -13 : Public, Static, Literal, HasDefault
+    System.String SDSAckResult_Tx_interrupted = -14 : Public, Static, Literal, HasDefault
+    System.String VideoCall_Type_Request = 0 : Public, Static, Literal, HasDefault
+    System.String VideoCall_Type_Send = 2 : Public, Static, Literal, HasDefault
+    System.String VideoCall_Type_Duplex = 3 : Public, Static, Literal, HasDefault
+    System.String VideoSource_Type_Local = 0 : Public, Static, Literal, HasDefault
+    System.String VideoSource_Type_Other = 2 : Public, Static, Literal, HasDefault
+    System.String Lock_State_None = 0 : Public, Static, Literal, HasDefault
+    System.String Lock_State_Stun = 1 : Public, Static, Literal, HasDefault
+    System.String Lock_State_Revive = 2 : Public, Static, Literal, HasDefault
+    System.String Lock_State_Kill = 3 : Public, Static, Literal, HasDefault
+    System.String Lock_State_Stun_Preview = 4 : Public, Static, Literal, HasDefault
+    System.String Lock_State_Revive_Preview = 5 : Public, Static, Literal, HasDefault
+    System.String Lock_State_Kill_Preview = 6 : Public, Static, Literal, HasDefault
+    System.String DuplexMode_AllPlex = 1 : Public, Static, Literal, HasDefault
+    System.String DuplexMode_HalfPlex = 0 : Public, Static, Literal, HasDefault
+    System.String CallListingFlag = 1 : Public, Static, Literal, HasDefault
+    System.String CallNotListing = 0 : Public, Static, Literal, HasDefault
+    System.String CallSubjects_EmgPri = 15 : Public, Static, Literal, HasDefault
+    System.String CallSubjects_HighPri = 14 : Public, Static, Literal, HasDefault
+    System.String CallSubjects_AmbListenDemandTxPri = 3 : Public, Static, Literal, HasDefault
+    System.String CallSubjects_DefautPri = 1 : Public, Static, Literal, HasDefault
+    System.String CallSubjects_ForInterPri = 15 : Public, Static, Literal, HasDefault
+    System.String TxDemandPriority_Low = 0 : Public, Static, Literal, HasDefault
+    System.String TxDemandPriority_High = 1 : Public, Static, Literal, HasDefault
+    System.String TxDemandPriority_PreEmptive = 2 : Public, Static, Literal, HasDefault
+    System.String TxDemandPriority_Emergency = 3 : Public, Static, Literal, HasDefault
+    System.String AlarmStatus_Cancel = 0 : Public, Static, Literal, HasDefault
+    System.String AlarmStatus_Mark = 1 : Public, Static, Literal, HasDefault
+    System.String AlarmStatus_Receive = 2 : Public, Static, Literal, HasDefault
+    System.String AlarmType_DMR2_Alarm = 1 : Public, Static, Literal, HasDefault
+    System.String AlarmType_DMR2_AlarmAndCall = 2 : Public, Static, Literal, HasDefault
+    System.String AlarmType_DMR2_AlarmAndGps = 3 : Public, Static, Literal, HasDefault
+    System.String AlarmType_DMR2_AlarmAndCallAndGps = 4 : Public, Static, Literal, HasDefault
+    System.String AlarmType_Trunking_AlarmAndCall = 5 : Public, Static, Literal, HasDefault
+    System.String AlarmType_Trunking_ObviousAlarm = 6 : Public, Static, Literal, HasDefault
+    System.String AlarmType_Trunking_SecretAlarm = 7 : Public, Static, Literal, HasDefault
+    System.String RRSStatus_Offline = 0 : Public, Static, Literal, HasDefault
+    System.String RRSStatus_Online = 1 : Public, Static, Literal, HasDefault
+    System.String RegionAlarmType_leavealarm = 0 : Public, Static, Literal, HasDefault
+    System.String RegionAlarmType_enteralarm = 1 : Public, Static, Literal, HasDefault
+    System.String RegionAlarmStatus_resolvealarm = 0 : Public, Static, Literal, HasDefault
+    System.String RegionAlarmStatus_activealarm = 1 : Public, Static, Literal, HasDefault
+    System.String XML_PAYLOAD = payload : Public, Static, Literal, HasDefault
+    System.String XML_SYSTEM_TYPE = systemtype : Public, Static, Literal, HasDefault
+    System.String XML_CMD_GUID = cmdguid : Public, Static, Literal, HasDefault
+    System.String XML_CMD_NAME = cmdname : Public, Static, Literal, HasDefault
+    System.String CommandMode_Out = Out : Public, Static, Literal, HasDefault
+    System.String CommandMode_In = In : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_AgatTetraSSI = Hytera.PUC.AgatTetraSSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_AVL = Hytera.PUC.AVL : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_AVLForICC = Hytera.PUC.AVLForICC : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_CAPF = Hytera.PUC.CAPF : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Browser = Hytera.PUC.Browser : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Clock = Hytera.PUC.Clock : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_GPSControl = Hytera.PUC.GPSControl : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_CrossPatch = Hytera.PUC.CrossPatch : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Conference = Hytera.PUC.Conference : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_IncludeCall = Hytera.PUC.IncludeCall : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_DGNA = Hytera.PUC.DGNA : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_DialPad = Hytera.PUC.DialPad : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_EADSTetraSSI = Hytera.PUC.EADSTetraSSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HistoryTrack = Hytera.PUC.HistoryTrack : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraDMR2DFSI = Hytera.PUC.HyteraDMR2DFSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraMPTCFSI = Hytera.PUC.HyteraMPTCFSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraMPTCSSI = Hytera.PUC.HyteraMPTCSSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraMPTISSI = Hytera.PUC.HyteraMPTISSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraMPT800AFSI = Hytera.PUC.HyteraTM800MPTAFSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraPDTTrunking = Hytera.PUC.HyteraPDTTrunking : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraTetraDFSI = Hytera.PUC.HyteraTetraDFSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Intercom = Hytera.PUC.Intercom : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_MultiGridVideo = Hytera.PUC.MultiGridVideo : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraGB28181 = Hytera.PUC.HyteraGB28181 : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Media = Hytera.PUC.Media : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Pic = Hytera.PUC.Pic : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_BaseStationMonitor = Hytera.PUC.HyteraBaseStationMonitor : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_PSTN = Hytera.PUC.PSTN : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Report = Hytera.PUC.Report : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_RichText = Hytera.PUC.RichText : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_SDS = Hytera.PUC.SDS : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_SimulSelect = Hytera.PUC.SimulSelect : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Video = Hytera.PUC.Video : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Freecomm = Hytera.PUC.Freecomm : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraDMR2Simulcast = Hytera.PUC.HyteraDMR2Simulcast : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraCORMDFSI = Hytera.PUC.EMSignal : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraDMR2XPT = Hytera.PUC.HyteraDMR2XPT : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Custom2TetraSSI = Hytera.PUC.Custom2TetraSSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraDMR3AIS = Hytera.PUC.HyteraDMR3AIS : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraGSM = Hytera.PUC.HyteraGSM : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraPSTNFXS = Hytera.PUC.HyteraFXSPotsPort : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraPSTNFXO = Hytera.PUC.HyteraFXOTrunking : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraLTECSSI = Hytera.PUC.HyteraLTECSSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_IndoorLocation = Hytera.PUC.IndoorLocation : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HMJ340M = Hytera.PUC.HMJ340M : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Custom3HFDFSI = Hytera.PUC.Custom3HFDFSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraBaseStationMonitor = Hytera.PUC.HyteraBaseStationMonitor : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_COR_MD_FSI = COR_MD_FSI : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_SystemMonitor = Hytera.PUC.SystemMonitor : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_Fax = Hytera.PUC.FaxManage : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HuaWeiLTE = Hytera.PUC.HuaWeiLTE : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_CallRouteManager = CallRouteManager : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HIKVISIONIPC = Hytera.PUC.HIKVISIONIPC : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_HyteraEVK = Hytera.PUC.HyteraEVK : Public, Static, Literal, HasDefault
+    System.String PluginLicenseName_RollCall = RollCallPlugin : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Individualcall = individualcall : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Groupcall = Groupcall : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Systemcall = systemcall : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Encryptcall = EncryptCall : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Intercom = intercom : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Pstn = pstn : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Simulselect = simulselect : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Broadcastcall = Broadcastcall : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Emergencycall = emergencycall : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Crosspatchcall = crosspatchcall : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Conferencecall = Conference : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Duplexcall = duplexcall : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_CallTransfer = CallTransfer : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Multipartycall = multipartycall : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_CallHoldCallRestore = CallHoldCallRestore : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_GroupPatch = GroupPatch : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Dynamicgroup = Dynamicgroup : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Monitor = monitor : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Environmentmonitor = Environmentmonitor : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Callonchannel = Callonchannel : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_GPS = GPS : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Googlemap = Googlemap : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_OfflineGooglemap = OfflineGooglemap : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_MetroGooglemap = GoogleMapMetro : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_PGIS = PGIS : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Mapinfo = Mapinfo : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_OpenStreetmap = OpenStreetmap : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_CustomizedMap = CustomizedMap : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_AMap = AMap : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_HeavenAndEarthMap = HeavenAndEarthMap : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Geographicalarm = GeoDefenceAlarm : Public, Static, Literal, HasDefault
+    System.String License_Function_InterestPoint = InterestPoint : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Singlegpspull = singlegpspull : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Callonmap = callonmap : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Dgnaonmap = dgnaonmap : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Gpspullmain = gpspullmain : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Gpspullslave = gpspullslave : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Systemgpspull = systemgpspull : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Partgpspull = partgpspull : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Historytrack = historytrack : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_SDS = SDS : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Favorite = Favorite : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Textmessage = Textmessage : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Statusmessage = Statusmessage : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_EmergencyAlarm = EmergencyAlarm : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_EmergencyAlarmQuery = EmergencyAlarmQuery : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Callbackrequest = Callbackrequest : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_SecurityService = SecurityService : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Stun = Stun : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Revive = Revive : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Kill = Kill : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_SystemCtrl = SystemCtrl : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Modeset = Modeset : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Defgroupset = Defgroupset : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Switchchannel = Switchchannel : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_ReportQuery = ReportQuery : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_CallhistoryQuery = callhistoryQuery : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_SDShistoryQuery = SDShistoryQuery : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_RRShistoryQuery = RRShistoryQuery : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_GeographicalarmQuery = geographicalarmQuery : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_AllQuery = allQuery : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_RRSServer = RRSServer : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_DialPad = DialPad : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Pic = Pic : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Browser = Browser : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_RichText = RichText : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Media = Media : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Clock = Clock : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_BaseStationMonitor = BaseStationMonitor : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Video = video : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Allgpscyclereport = Allgpscyclereport : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_Overtheairprogramming = overtheairprogramming : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_End2EndEncryption = end2end_encryption : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_RecordPlay = RecordPlay : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_RecordFileDownload = RecordFileDownload : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_Custombackup1 = Custombackup1 : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_IndoorLocation = IndoorLocation : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_FaxManage = Fax : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_MediaMessage = MediaMessage : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_GPSControl = GPSControl : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_MultiGridVideo = MultiGridVideo : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_HIKVISIONIPC = HIKVISIONIPC : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_HyteraEVK = HyteraEVK : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_IFreecommVideo = iFreecommVideo : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_OverrideCall = override : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_InterruptCall = Interrupt : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseName_RollCall = Roll_Call : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_Monitor_Num = monitor_num : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_DGNA_Num = dgna_num : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_DGNAMember_Num = dgnamember_num : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_Simulselect_Num = simulselect : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_SimulselectMember_Num = simulselect_member : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_CrossPatch_Num = crosspatch : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_CrossPatchMember_Num = crosspatch_member : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_Conference_Num = onference : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_ConferenceMember_Num = conference_member : Public, Static, Literal, HasDefault
+    System.String FunctionLicenseCount_Client_Num = client_num : Public, Static, Literal, HasDefault
+    System.String Panel_Name_BaseStationMonitorPanel = BaseStationMonitorPanel : Public, Static, Literal, HasDefault
+    System.String DispatcherHierarchy = [Dispatcher{CBB10F0B-A280-4AD1-B599-54D7F527B167}] : Public, Static, Literal, HasDefault
+    System.String OthersHierarchy = [Others{BBFC5D5B-1D61-44D0-9C68-6423A09A7A93}] : Public, Static, Literal, HasDefault
+    System.String FreecommHierarchy = [Freecomm{C79E8C02-F2EE-48B5-8E21-BE9BBFB00C64}] : Public, Static, Literal, HasDefault
+    System.String FreecommDeviceHierarchy = [Freecomm{97109B69-CFDF-4A76-A3B9-B422AE45E992}] : Public, Static, Literal, HasDefault
+    System.String FreecommGroupHierarchy = [Freecomm{9AC992E1-3B0C-4B42-9B2B-EFA55745021A}] : Public, Static, Literal, HasDefault
+    System.String FavoriteOrganizationHierarchyId = [FavoriteOrg] : Public, Static, Literal, HasDefault
+    System.String FavoriteObjectHierarchyId = [FavoriteObject] : Public, Static, Literal, HasDefault
+    System.String FavoriteGroupHierarchyId = [FavoriteGroup] : Public, Static, Literal, HasDefault
+    System.String FavoriteDeviceHierarchyId = [FavoriteDevice] : Public, Static, Literal, HasDefault
+    System.String FavoriteCustomOrgHierarchyId = [CustomOrganization] : Public, Static, Literal, HasDefault
+    Int32 DataType_Data = 1 : Public, Static, Literal, HasDefault
+    Int32 DataType_Command = 0 : Public, Static, Literal, HasDefault
+    System.String Administrator = admin : Public, Static, Literal, HasDefault
+    System.String Root_Organization = 00 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_Organization = 0 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_Device = 1 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_Group = 2 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_Dispatcher = 3 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_Sap = 4 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_CarStationGroup = 5 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_Crosspatch = 6 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_Conference = 7 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_DGNA = 8 : Public, Static, Literal, HasDefault
+    System.String FavoriteType_Simulselect = 9 : Public, Static, Literal, HasDefault
+    System.String Operate_Add = Add : Public, Static, Literal, HasDefault
+    System.String Operate_Update = Update : Public, Static, Literal, HasDefault
+    System.String Operate_Delete = Delete : Public, Static, Literal, HasDefault
+    System.String Resource_Organization = Organization : Public, Static, Literal, HasDefault
+    System.String Resource_Device = Device : Public, Static, Literal, HasDefault
+    System.String Resource_Group = Group : Public, Static, Literal, HasDefault
+    System.String Resource_Staff = Staff : Public, Static, Literal, HasDefault
+    System.String CC_Call_Devolve_Request = cc_call_devolve_request : Public, Static, Literal, HasDefault
+    System.String CC_Call_Devolve_Evt = cc_call_devolve_evt : Public, Static, Literal, HasDefault
+    System.String Emgerency = Emgerency : Public, Static, Literal, HasDefault
+    System.String Incomming = Incomming : Public, Static, Literal, HasDefault
+    System.String Connect = Connect : Public, Static, Literal, HasDefault
+    System.String Granted = Granted : Public, Static, Literal, HasDefault
+    System.String SetupCall = SetupCall : Public, Static, Literal, HasDefault
+    System.String Disconnect = Disconnect : Public, Static, Literal, HasDefault
+    System.String ReceiveMsg = ReceiveMsg : Public, Static, Literal, HasDefault
+    System.String CallbackAlert = CallbackAlert : Public, Static, Literal, HasDefault
+  Properties:
+    System.String GUID 'get ' : 
+  Methods:
+    get_GUID(): PrivateScope, Public, Static, HideBySig, SpecialName
+Class ClientDemo.GroupEntry: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.ComponentModel.INotifyPropertyChanged
+  Properties:
+    System.String GUID 'get set' : 
+    System.String PID 'get set' : 
+    System.String Name 'get set' : 
+    System.String Value 'get set' : 
+    System.String Number 'get set' : 
+    System.String Number_type 'get set' : 
+    System.String Account 'get set' : 
+    System.String SystemID 'get set' : 
+    System.Collections.Generic.List`1[ClientDemo.GroupEntry] SubGroupEntry 'get set' : 
+  Events:
+    System.ComponentModel.PropertyChangedEventHandler PropertyChanged: 
+  Methods:
+    get_GUID(): PrivateScope, Public, HideBySig, SpecialName
+    set_GUID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_PID(): PrivateScope, Public, HideBySig, SpecialName
+    set_PID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Name(): PrivateScope, Public, HideBySig, SpecialName
+    set_Name(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Value(): PrivateScope, Public, HideBySig, SpecialName
+    set_Value(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Number(): PrivateScope, Public, HideBySig, SpecialName
+    set_Number(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Number_type(): PrivateScope, Public, HideBySig, SpecialName
+    set_Number_type(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Account(): PrivateScope, Public, HideBySig, SpecialName
+    set_Account(String): PrivateScope, Public, HideBySig, SpecialName
+    get_SystemID(): PrivateScope, Public, HideBySig, SpecialName
+    set_SystemID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_SubGroupEntry(): PrivateScope, Public, HideBySig, SpecialName
+    set_SubGroupEntry(List`1): PrivateScope, Public, HideBySig, SpecialName
+    add_PropertyChanged(PropertyChangedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_PropertyChanged(PropertyChangedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+Class ClientDemo.hytera: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String product_name : Public
+    System.String version : Public
+    System.String cmd_name : Public
+    System.String cmd_guid : Public
+    System.String login_type : Public
+    System.String user_name : Public
+    System.String password : Public
+    System.String permission_name : Public
+    System.String result : Public
+    System.String online : Public
+    System.String sap_guid : Public
+    System.String sap_type : Public
+Class ClientDemo.LoginPara: AutoLayout, AnsiClass, Class, Public, Serializable, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String LoginName 'get set' : 
+    System.String Password 'get set' : 
+    System.String LocolSipIP 'get set' : 
+    System.String LocolSipPort 'get set' : 
+    System.String ServerSipIP 'get set' : 
+    System.String ServerSipPort 'get set' : 
+    System.String ServerIP 'get set' : 
+    System.String ServerPort 'get set' : 
+  Methods:
+    get_LoginName(): PrivateScope, Public, HideBySig, SpecialName
+    set_LoginName(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Password(): PrivateScope, Public, HideBySig, SpecialName
+    set_Password(String): PrivateScope, Public, HideBySig, SpecialName
+    get_LocolSipIP(): PrivateScope, Public, HideBySig, SpecialName
+    set_LocolSipIP(String): PrivateScope, Public, HideBySig, SpecialName
+    get_LocolSipPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_LocolSipPort(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ServerSipIP(): PrivateScope, Public, HideBySig, SpecialName
+    set_ServerSipIP(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ServerSipPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_ServerSipPort(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ServerIP(): PrivateScope, Public, HideBySig, SpecialName
+    set_ServerIP(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ServerPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_ServerPort(String): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.MediaManager: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Fields:
+    Boolean MediaTermRuning : Public, Static
+    System.String cameraName : Public, Static
+    Int32 resultAudioStartCap : Public, Static
+    Int32 resultVideoStartCap : Public, Static
+    Boolean isAudioCapNormal : Public, Static
+    Boolean isVideoCapNormal : Public, Static
+    System.Collections.Generic.List`1[ClientDemo.PUCApiAdapter+mediaTermDeviceInfo] mediaTermDeviceInfoList : Public, Static
+    Int32 videoWidth : Public, Static
+    Int32 videoHeight : Public, Static
+    Int32 videoDecodeProfile : Public, Static
+    Int32 videoEncodeProfile : Public, Static
+    Int32 videoDecodeFrameRate : Public, Static
+    Int32 videoEncodeFrameRate : Public, Static
+    Int32 videoDecodeFrameSize : Public, Static
+    Int32 videoEncodeFrameSize : Public, Static
+    Int32 videoPlayFrameSize : Public, Static
+    Int32 videoMaxResolution : Public, Static
+  Properties:
+    Int32 CapturePtr 'get set' : 
+  Events:
+    System.Action`2[System.Int32,System.Int32] MediaTermEventCallBack: 
+  Methods:
+    MediaTermDeviceInfoCallBack(IntPtr, Int64): PrivateScope, Public, HideBySig
+    add_MediaTermEventCallBack(Action`2): PrivateScope, Public, HideBySig, SpecialName
+    remove_MediaTermEventCallBack(Action`2): PrivateScope, Public, HideBySig, SpecialName
+    MediaTermEventReportCallBack(Int32, IntPtr, Int64): PrivateScope, Public, HideBySig
+    GetInstance(): PrivateScope, Public, Static, HideBySig
+    InitMediaTerm(): PrivateScope, Public, HideBySig
+    MediaTerm_Init(IntPtr, MediaTermEventReportCallBackFun, Int64): PrivateScope, Public, Static, HideBySig
+    MediaTerm_GetDevInfo(Int32): PrivateScope, Public, Static, HideBySig
+    get_CapturePtr(): PrivateScope, Public, HideBySig, SpecialName
+    MediaTerm_QueryDevNum(): PrivateScope, Public, Static, HideBySig
+    StartCapAudio(): PrivateScope, Public, HideBySig
+    StartOpenDevice(mediaTermDeviceInfo): PrivateScope, Public, HideBySig
+    MediaTerm_StartCap(IntPtr): PrivateScope, Public, Static, HideBySig
+    MediaTerm_StopCap(Int32): PrivateScope, Public, Static, HideBySig
+    MediaTerm_StartPlay(IntPtr): PrivateScope, Public, Static, HideBySig
+    MediaTerm_StopPlay(Int32): PrivateScope, Public, Static, HideBySig
+    MediaTerm_SetLink(Int32, Int32): PrivateScope, Public, Static, HideBySig
+    MediaTerm_StartRecv(IntPtr): PrivateScope, Public, Static, HideBySig
+    MediaTerm_StartRecvS(IntPtr): PrivateScope, Public, Static, HideBySig
+    MediaTerm_StopRecv(Int32): PrivateScope, Public, Static, HideBySig
+    MediaTerm_StartSend(IntPtr): PrivateScope, Public, Static, HideBySig
+    MediaTerm_StopSend(Int32): PrivateScope, Public, Static, HideBySig
+    MediaTerm_Destroy(): PrivateScope, Public, Static, HideBySig
+    MediaTermDestroy(): PrivateScope, Public, HideBySig
+    GetSoundCard(): PrivateScope, Public, HideBySig
+    GetMediaTermDeviceInfoList(): PrivateScope, Public, HideBySig
+    GetAudioPlayPtr(): PrivateScope, Public, HideBySig
+    StartLinkByPtr(Int32, Int32): PrivateScope, Public, HideBySig
+    GetPtrSendBycmdGuid(String, String, String, Int32, Int32(Optional, HasDefault), Int32(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    GetVoicePtrRecvBycmdGuid(String, String): PrivateScope, Public, HideBySig
+    GetVedioPtrRecvBycmdGuid(String, String): PrivateScope, Public, HideBySig
+    MediaTerm_GetHndPara(Int32): PrivateScope, Public, Static, HideBySig
+    StopRecvByPtrRecv(Int32): PrivateScope, Public, HideBySig
+    StopPlayByPtrPlay(Int32): PrivateScope, Public, HideBySig
+    StopSendByPtrSend(Int32): PrivateScope, Public, HideBySig
+    StopLinkByPtrLink(Int32): PrivateScope, Public, HideBySig
+    MediaTerm_UnsetLink(Int32): PrivateScope, Public, Static, HideBySig
+    GetVedioPlayPtr(Int32): PrivateScope, Public, HideBySig
+    OpenLocalCamera(Int32): PrivateScope, Public, HideBySig
+    StartCapVideo(): PrivateScope, Public, HideBySig
+    MediaTerm_CtrlSendPause(Int32, Int32): PrivateScope, Public, Static, HideBySig
+    MediaTerm_SetHndPara(Int32, IntPtr): PrivateScope, Public, Static, HideBySig
+Class ClientDemo.Monitor: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String Puc_id 'get set' : 
+    System.String CmdGuid 'get set' : 
+    System.String SystemID 'get set' : 
+    System.String SapGuid 'get set' : 
+    System.String pseudo_trunking_id 'get set' : 
+    System.String DeviceGuid 'get set' : 
+    System.String SapType 'get set' : 
+    System.String Number 'get set' : 
+    System.String NumberType 'get set' : 
+    Int32 Count 'get set' : 
+    System.String MonitorLevel 'get set' : 
+    System.String xptsite_id 'get set' : 
+    Boolean IsSuccess 'get set' : 
+  Methods:
+    get_Puc_id(): PrivateScope, Public, HideBySig, SpecialName
+    set_Puc_id(String): PrivateScope, Public, HideBySig, SpecialName
+    get_CmdGuid(): PrivateScope, Public, HideBySig, SpecialName
+    set_CmdGuid(String): PrivateScope, Public, HideBySig, SpecialName
+    get_SystemID(): PrivateScope, Public, HideBySig, SpecialName
+    set_SystemID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_SapGuid(): PrivateScope, Public, HideBySig, SpecialName
+    set_SapGuid(String): PrivateScope, Public, HideBySig, SpecialName
+    get_pseudo_trunking_id(): PrivateScope, Public, HideBySig, SpecialName
+    set_pseudo_trunking_id(String): PrivateScope, Public, HideBySig, SpecialName
+    get_DeviceGuid(): PrivateScope, Public, HideBySig, SpecialName
+    set_DeviceGuid(String): PrivateScope, Public, HideBySig, SpecialName
+    get_SapType(): PrivateScope, Public, HideBySig, SpecialName
+    set_SapType(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Number(): PrivateScope, Public, HideBySig, SpecialName
+    set_Number(String): PrivateScope, Public, HideBySig, SpecialName
+    get_NumberType(): PrivateScope, Public, HideBySig, SpecialName
+    set_NumberType(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Count(): PrivateScope, Public, HideBySig, SpecialName
+    set_Count(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_MonitorLevel(): PrivateScope, Public, HideBySig, SpecialName
+    set_MonitorLevel(String): PrivateScope, Public, HideBySig, SpecialName
+    get_xptsite_id(): PrivateScope, Public, HideBySig, SpecialName
+    set_xptsite_id(String): PrivateScope, Public, HideBySig, SpecialName
+    get_IsSuccess(): PrivateScope, Public, HideBySig, SpecialName
+    set_IsSuccess(Boolean): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.MonitorCenter: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    ClientDemo.MonitorCenter GetInstance 'get ' : 
+  Methods:
+    get_GetInstance(): PrivateScope, Public, Static, HideBySig, SpecialName
+    SetMonitor(Monitor, TextBox): PrivateScope, Public, HideBySig
+    CancelMonitor(Monitor, TextBox): PrivateScope, Public, HideBySig
+Class ClientDemo.paramclass: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String _user_name : Public
+    System.String _user_password : Public
+    System.String _localSipIP : Public
+    System.String _IP2 : Public
+    System.String _IP3 : Public
+    System.String _IP4 : Public
+    System.String _serverIP : Public
+    System.String _serverPort : Public
+    System.String _serverSipIP : Public
+    System.String _serverSipPort : Public
+    System.String _localSipPort : Public
+    System.String _ID2 : Public
+    System.String _ID3 : Public
+    System.String _ID4 : Public
+  Properties:
+    System.String user_name 'get set' : 
+    System.String user_password 'get set' : 
+    System.String PUC_ID 'get set' : 
+    System.String LocalSipIP 'get set' : 
+    System.String IP2 'get set' : 
+    System.String IP3 'get set' : 
+    System.String IP4 'get set' : 
+    System.String ServerIP 'get set' : 
+    System.String ServerPort 'get set' : 
+    System.String ServerSipIP 'get set' : 
+    System.String ServerSipPort 'get set' : 
+    System.String LocalSipPort 'get set' : 
+    System.String ID2 'get set' : 
+    System.String ID3 'get set' : 
+    System.String ID4 'get set' : 
+    Boolean BOverNat2 'get set' : 
+    Boolean BOverNat1 'get set' : 
+  Methods:
+    get_user_name(): PrivateScope, Public, HideBySig, SpecialName
+    set_user_name(String): PrivateScope, Public, HideBySig, SpecialName
+    get_user_password(): PrivateScope, Public, HideBySig, SpecialName
+    set_user_password(String): PrivateScope, Public, HideBySig, SpecialName
+    get_PUC_ID(): PrivateScope, Public, HideBySig, SpecialName
+    set_PUC_ID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_LocalSipIP(): PrivateScope, Public, HideBySig, SpecialName
+    set_LocalSipIP(String): PrivateScope, Public, HideBySig, SpecialName
+    get_IP2(): PrivateScope, Public, HideBySig, SpecialName
+    set_IP2(String): PrivateScope, Public, HideBySig, SpecialName
+    get_IP3(): PrivateScope, Public, HideBySig, SpecialName
+    set_IP3(String): PrivateScope, Public, HideBySig, SpecialName
+    get_IP4(): PrivateScope, Public, HideBySig, SpecialName
+    set_IP4(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ServerIP(): PrivateScope, Public, HideBySig, SpecialName
+    set_ServerIP(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ServerPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_ServerPort(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ServerSipIP(): PrivateScope, Public, HideBySig, SpecialName
+    set_ServerSipIP(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ServerSipPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_ServerSipPort(String): PrivateScope, Public, HideBySig, SpecialName
+    get_LocalSipPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_LocalSipPort(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ID2(): PrivateScope, Public, HideBySig, SpecialName
+    set_ID2(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ID3(): PrivateScope, Public, HideBySig, SpecialName
+    set_ID3(String): PrivateScope, Public, HideBySig, SpecialName
+    get_ID4(): PrivateScope, Public, HideBySig, SpecialName
+    set_ID4(String): PrivateScope, Public, HideBySig, SpecialName
+    get_BOverNat2(): PrivateScope, Public, HideBySig, SpecialName
+    set_BOverNat2(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_BOverNat1(): PrivateScope, Public, HideBySig, SpecialName
+    set_BOverNat1(Boolean): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.VideoData: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String callId : Public
+    Int32 nHwnd : Public
+    Int32 nHwndMe : Public
+    Boolean bIsTransfer : Public
+    System.String sourceCallId : Public
+Class ClientDemo.PUCApiAdapter: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    MediaTerm_Init(IntPtr, MediaTermEventReportCallBackFun, Int64): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_QueryDevNum(): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_GetDevInfo(Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_StopHnd(Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_StartPlay(IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_StartCap(IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_StartSend(IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_StartRecv(IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_StartOpFile(IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_SetLink(Int32, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_UnsetLink(Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_SetHndPara(Int32, IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_GetHndPara(Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_CtrlHnd(Int32, IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    MediaTerm_Destroy(): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    PUCAPI_Init(InitPUCAPIData&): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    PUCAPI_Start(): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    PUCAPI_ProcessRequest(IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    PUCAPI_Stop(): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    PUCAPI_Destroy(): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOIP_Start(UInt32, UInt16, UInt32, VoipClientCallBackFun): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOIP_SendVocData(IntPtr, Int32, IntPtr, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOIP_Stop(): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    PUCAPI_ResetInitData(InitPUCAPIData&): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    PUCAPI_SetAPILog(Int32, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_OpenAudioDevice(Int32, VocCodecTypes, UInt32, MicCallBackFun): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_CloseAudioDevice(): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_StartPlay(IntPtr, Int32, Int32, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_StopPlay(IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_Playing(IntPtr, Int32, Byte[], Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_PlayingEx(IntPtr, IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_SetPlayGain(IntPtr, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_SetPlayChannel(IntPtr, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_GetMicDeviceCount(): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_GetPlayDeviceCount(): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_GetPlayDeviceName(Int32, IntPtr&(Out)): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    VOC_GetMicDeviceName(Int32, IntPtr&(Out)): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    PlayOnRecvData(IntPtr, Int32, Int32, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+Class ClientDemo.SapEntity: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String System_id 'get set' : 
+    System.String Puc_id 'get set' : 
+    System.String Sap_guid 'get set' : 
+    System.String Sap_alias 'get set' : 
+    System.String Online 'get set' : 
+    System.String Sap_Type 'get set' : 
+  Methods:
+    get_System_id(): PrivateScope, Public, HideBySig, SpecialName
+    set_System_id(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Puc_id(): PrivateScope, Public, HideBySig, SpecialName
+    set_Puc_id(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Sap_guid(): PrivateScope, Public, HideBySig, SpecialName
+    set_Sap_guid(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Sap_alias(): PrivateScope, Public, HideBySig, SpecialName
+    set_Sap_alias(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Online(): PrivateScope, Public, HideBySig, SpecialName
+    set_Online(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Sap_Type(): PrivateScope, Public, HideBySig, SpecialName
+    set_Sap_Type(String): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.SDSParam: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String _sendernumber : Public
+    System.String _sendernumberstyle : Public
+    System.String _receivenumber : Public
+    System.String _receivenumberstyle : Public
+    System.String _sdscontent : Public
+    System.String _systemID : Public
+    System.String _sapstyle : Public
+    System.String _sapGuid : Public
+  Properties:
+    System.String sendernumber 'get set' : 
+    System.String sendernumberstyle 'get set' : 
+    System.String receivenumber 'get set' : 
+    System.String receivenumberstyle 'get set' : 
+    System.String sdscontent 'get set' : 
+    System.String PUC_ID 'get set' : 
+    System.String systemID 'get set' : 
+    System.String sapstyle 'get set' : 
+    System.String SapGuid 'get set' : 
+  Methods:
+    get_sendernumber(): PrivateScope, Public, HideBySig, SpecialName
+    set_sendernumber(String): PrivateScope, Public, HideBySig, SpecialName
+    get_sendernumberstyle(): PrivateScope, Public, HideBySig, SpecialName
+    set_sendernumberstyle(String): PrivateScope, Public, HideBySig, SpecialName
+    get_receivenumber(): PrivateScope, Public, HideBySig, SpecialName
+    set_receivenumber(String): PrivateScope, Public, HideBySig, SpecialName
+    get_receivenumberstyle(): PrivateScope, Public, HideBySig, SpecialName
+    set_receivenumberstyle(String): PrivateScope, Public, HideBySig, SpecialName
+    get_sdscontent(): PrivateScope, Public, HideBySig, SpecialName
+    set_sdscontent(String): PrivateScope, Public, HideBySig, SpecialName
+    get_PUC_ID(): PrivateScope, Public, HideBySig, SpecialName
+    set_PUC_ID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_systemID(): PrivateScope, Public, HideBySig, SpecialName
+    set_systemID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_sapstyle(): PrivateScope, Public, HideBySig, SpecialName
+    set_sapstyle(String): PrivateScope, Public, HideBySig, SpecialName
+    get_SapGuid(): PrivateScope, Public, HideBySig, SpecialName
+    set_SapGuid(String): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.Util.DECEncryptHelper: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    SetKey(IntPtr, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    Des_CBC_crypt(IntPtr, Int32, IntPtr, Module, IntPtr, Int32): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    EncryptDES(String): PrivateScope, Public, Static, HideBySig
+    StringCipherCode(IntPtr, IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    StringCipherDecode(IntPtr, IntPtr): PrivateScope, Public, Static, HideBySig, PinvokeImpl
+    EncryptCipher(String): PrivateScope, Public, Static, HideBySig
+    DecryptCipher(String): PrivateScope, Public, Static, HideBySig
+Class ClientDemo.Util.MemoryControl: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    StructToIntPtr(Object): PrivateScope, Public, Static, HideBySig
+    NewIntPtr(Type, Int32): PrivateScope, Public, Static, HideBySig
+    FreeHGlobalPtr(IntPtr): PrivateScope, Public, Static, HideBySig
+    IntPtrToType(IntPtr): PrivateScope, Public, Static, HideBySig
+    ToType(IntPtr): PrivateScope, Public, Static, HideBySig
+Class ClientDemo.model.DeviceEntity: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String system_id : Public
+    System.String puc_id : Public
+    System.String guid : Public
+    System.String device_id : Public
+    System.String device_alias : Public
+    System.String staff_guid : Public
+    System.String staff_name : Public
+    System.String device_type : Public
+    System.String basestation_id : Public
+    System.String online : Public
+    System.String sap_guid : Public
+    System.String sap_Type : Public
+    System.String staff_id : Public
+    System.String basestation_name : Public
+    System.String latitude : Public
+    System.String longitude : Public
+    System.String latitude_bs : Public
+    System.String longitude_bs : Public
+    System.String receivedatetime : Public
+    System.String phone_num : Public
+Class ClientDemo.model.SapEntity: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String system_id : Public
+    System.String puc_id : Public
+    System.String sap_guid : Public
+    System.String sap_alias : Public
+    System.String online : Public
+    System.String sap_Type : Public
+Class ClientDemo.model.SystemEntity: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String system_id : Public
+    System.String puc_id : Public
+    System.String guid : Public
+    System.String system_alias : Public
+    System.String system_type : Public
+Class ClientDemo.CallBusiness.CallManager: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Fields:
+    System.Collections.Generic.Dictionary`2[System.String,ClientDemo.CallBusiness.CC] CCSession : Public
+    System.String _localSipIP : Public, Static
+  Methods:
+    GetInstance(): PrivateScope, Public, Static, HideBySig
+    CreateCCSession(callparam, String): PrivateScope, Public, HideBySig
+Class ClientDemo.CallBusiness.CC: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String CallID 'get set' : 
+    System.String LocalIp 'get set' : 
+    Int32 LocalPort 'get set' : 
+    System.String DestIp 'get set' : 
+    Int32 DestPort 'get set' : 
+    Boolean IsDuplex 'get set' : 
+    CallMode CallMode 'get set' : 
+    Int32 VoicePtrRecv 'get set' : 
+    Int32 VoicePtrSendSip 'get set' : 
+    Int32 VoiceSendSipPort 'get set' : 
+    Int32 VoicePtrPlay 'get set' : 
+    Int32 VoicePtrSend 'get set' : 
+    Int32 VoicePtrLinkSend 'get set' : 
+    Int32 VoicePtrLinkPlay 'get set' : 
+    Int32 VideoPtrRecv 'get set' : 
+    Int32 VideoPtrSend 'get set' : 
+    Int32 VideoPtrLinkSend 'get set' : 
+    Int32 VideoPtrLinkPlay 'get set' : 
+    Int32 VideoPtrLinkLocalPlay 'get set' : 
+    Int32 VideoPtrPlay 'get set' : 
+    Int32 pictrueboxHandle 'get set' : 
+    ClientDemo.CallBusiness.Media Media 'get set' : 
+  Methods:
+    get_CallID(): PrivateScope, Public, HideBySig, SpecialName
+    set_CallID(String): PrivateScope, Public, HideBySig, SpecialName
+    get_LocalIp(): PrivateScope, Public, HideBySig, SpecialName
+    set_LocalIp(String): PrivateScope, Public, HideBySig, SpecialName
+    get_LocalPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_LocalPort(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_DestIp(): PrivateScope, Public, HideBySig, SpecialName
+    set_DestIp(String): PrivateScope, Public, HideBySig, SpecialName
+    get_DestPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_DestPort(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_IsDuplex(): PrivateScope, Public, HideBySig, SpecialName
+    set_IsDuplex(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_CallMode(): PrivateScope, Public, HideBySig, SpecialName
+    set_CallMode(CallMode): PrivateScope, Public, HideBySig, SpecialName
+    get_VoicePtrRecv(): PrivateScope, Public, HideBySig, SpecialName
+    set_VoicePtrRecv(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VoicePtrSendSip(): PrivateScope, Public, HideBySig, SpecialName
+    set_VoicePtrSendSip(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VoiceSendSipPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_VoiceSendSipPort(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VoicePtrPlay(): PrivateScope, Public, HideBySig, SpecialName
+    set_VoicePtrPlay(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VoicePtrSend(): PrivateScope, Public, HideBySig, SpecialName
+    set_VoicePtrSend(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VoicePtrLinkSend(): PrivateScope, Public, HideBySig, SpecialName
+    set_VoicePtrLinkSend(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VoicePtrLinkPlay(): PrivateScope, Public, HideBySig, SpecialName
+    set_VoicePtrLinkPlay(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoPtrRecv(): PrivateScope, Public, HideBySig, SpecialName
+    set_VideoPtrRecv(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoPtrSend(): PrivateScope, Public, HideBySig, SpecialName
+    set_VideoPtrSend(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoPtrLinkSend(): PrivateScope, Public, HideBySig, SpecialName
+    set_VideoPtrLinkSend(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoPtrLinkPlay(): PrivateScope, Public, HideBySig, SpecialName
+    set_VideoPtrLinkPlay(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoPtrLinkLocalPlay(): PrivateScope, Public, HideBySig, SpecialName
+    set_VideoPtrLinkLocalPlay(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoPtrPlay(): PrivateScope, Public, HideBySig, SpecialName
+    set_VideoPtrPlay(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_pictrueboxHandle(): PrivateScope, Public, HideBySig, SpecialName
+    set_pictrueboxHandle(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Media(): PrivateScope, Public, HideBySig, SpecialName
+    set_Media(Media): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.CallBusiness.Media: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    ClientDemo.CallBusiness.AudioEntity Audio 'get set' : 
+    ClientDemo.CallBusiness.AudioEntity Video 'get set' : 
+  Methods:
+    get_Audio(): PrivateScope, Public, HideBySig, SpecialName
+    set_Audio(AudioEntity): PrivateScope, Public, HideBySig, SpecialName
+    get_Video(): PrivateScope, Public, HideBySig, SpecialName
+    set_Video(AudioEntity): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.CallBusiness.AudioEntity: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String Rtp_local_ip 'get set' : 
+    System.String Rtp_local_port 'get set' : 
+    System.String Codec 'get set' : 
+    System.String FrameRate 'get set' : 
+    System.String FrameSize 'get set' : 
+    System.String Rtp_remote_ip 'get set' : 
+    System.String Rtp_remote_port 'get set' : 
+    System.String Video_Max_Profile 'get set' : 
+    System.String Video_Real_Profile 'get set' : 
+  Methods:
+    get_Rtp_local_ip(): PrivateScope, Public, HideBySig, SpecialName
+    set_Rtp_local_ip(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Rtp_local_port(): PrivateScope, Public, HideBySig, SpecialName
+    set_Rtp_local_port(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Codec(): PrivateScope, Public, HideBySig, SpecialName
+    set_Codec(String): PrivateScope, Public, HideBySig, SpecialName
+    get_FrameRate(): PrivateScope, Public, HideBySig, SpecialName
+    set_FrameRate(String): PrivateScope, Public, HideBySig, SpecialName
+    get_FrameSize(): PrivateScope, Public, HideBySig, SpecialName
+    set_FrameSize(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Rtp_remote_ip(): PrivateScope, Public, HideBySig, SpecialName
+    set_Rtp_remote_ip(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Rtp_remote_port(): PrivateScope, Public, HideBySig, SpecialName
+    set_Rtp_remote_port(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Video_Max_Profile(): PrivateScope, Public, HideBySig, SpecialName
+    set_Video_Max_Profile(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Video_Real_Profile(): PrivateScope, Public, HideBySig, SpecialName
+    set_Video_Real_Profile(String): PrivateScope, Public, HideBySig, SpecialName
+Class ClientDemo.AnalysisData.AnalysisXml: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Fields:
+    System.Collections.Generic.Dictionary`2[System.String,ClientDemo.model.DeviceEntity] DeviceListDictionary : Public
+    System.Collections.Generic.Dictionary`2[System.String,ClientDemo.model.SystemEntity] SystemListDictionary : Public
+    System.Collections.Generic.Dictionary`2[System.String,ClientDemo.SapEntity] SapListDictionary : Public
+  Methods:
+    GetInstance(): PrivateScope, Public, Static, HideBySig
+    GetDeviceListDictionary(): PrivateScope, Public, HideBySig
+    GetSapListDictionary(): PrivateScope, Public, HideBySig
+    ReciveData(String): PrivateScope, Public, HideBySig
+    ClearAllData(): PrivateScope, Public, HideBySig
+    AnalysisDeviceListXML(String): PrivateScope, Public, HideBySig
+    AnalysisSystemListXML(String): PrivateScope, Public, HideBySig
+    AnalysisSapListXML(String): PrivateScope, Public, HideBySig
+    AnalysisGpsReportEventXML(String): PrivateScope, Public, HideBySig
+    AnalysisDeviceListStatusCheckEvtXML(String): PrivateScope, Public, HideBySig
+    StringToDouble(String): PrivateScope, Public, HideBySig
+    AnalysisBaseStationInfoXML(): PrivateScope, Public, HideBySig
+    SetDeviceListValue(): PrivateScope, Public, HideBySig
+Struct ClientDemo.BusinessCenter+Module: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    Module ENCRYPT = 0 : Public, Static, Literal, HasDefault
+    Module DECRYPT = 1 : Public, Static, Literal, HasDefault
+Struct ClientDemo.GlobalCommandName+CallMode: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    CallMode Audio = 0 : Public, Static, Literal, HasDefault
+    CallMode video = 1 : Public, Static, Literal, HasDefault
+    CallMode AudioAndVideo = 2 : Public, Static, Literal, HasDefault
+Struct ClientDemo.MediaManager+VideoFrameSize: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    VideoFrameSize enVedioFrameSizeQCIF = 0 : Public, Static, Literal, HasDefault
+    VideoFrameSize enVedioFrameSizeQVGA = 1 : Public, Static, Literal, HasDefault
+    VideoFrameSize enVedioFrameSizeCIF = 2 : Public, Static, Literal, HasDefault
+    VideoFrameSize enVedioFrameSizeVGA = 3 : Public, Static, Literal, HasDefault
+    VideoFrameSize enVedioFrameSize4CIF = 4 : Public, Static, Literal, HasDefault
+    VideoFrameSize enVedioFrameSizeD1 = 5 : Public, Static, Literal, HasDefault
+    VideoFrameSize enVedioFrameSize720P = 6 : Public, Static, Literal, HasDefault
+    VideoFrameSize enVedioFrameSize1080P = 7 : Public, Static, Literal, HasDefault
+Class ClientDemo.PUCApiAdapter+PUCCallbackEventHandler: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(IntPtr): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(IntPtr, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Struct ClientDemo.PUCApiAdapter+InitPUCAPIData: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, UnicodeClass, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    PUCCallbackEventHandler OnResponse : Public
+    IntPtr _strLocalSipIP : Public
+    Int32 _nLocalSipPort : Public
+    IntPtr _strServerIP : Public
+    Int32 _nServerPort : Public
+    IntPtr _strServerIP2 : Public
+    Int32 _nServerPort2 : Public
+    IntPtr _strLocalIP : Public
+    IntPtr _strPUCID : Public
+    Int32 _bOverNat1 : Public
+    Int32 _bOverNat2 : Public
+    Int32 _nPropertyCount : Public
+    IntPtr _property : Public
+Struct ClientDemo.PUCApiAdapter+InitPucApiDataProperty: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, UnicodeClass, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    IntPtr _strModule : Public
+    IntPtr _configname : Public
+    IntPtr _configValue : Public
+Struct ClientDemo.PUCApiAdapter+CallBackMsg_Enum: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    CallBackMsg_Enum CBACK_CLIENTMSG_VOCDATA = 0 : Public, Static, Literal, HasDefault
+    CallBackMsg_Enum CBACK_CLIENTMSG_VOCRECV_START = 1 : Public, Static, Literal, HasDefault
+    CallBackMsg_Enum CBACK_CLIENTMSG_VOCSEND_START = 2 : Public, Static, Literal, HasDefault
+    CallBackMsg_Enum CBACK_CLIENTMSG_VOCDUPLEX_START = 3 : Public, Static, Literal, HasDefault
+    CallBackMsg_Enum CBACK_CLIENTMSG_VOICEOVER = 4 : Public, Static, Literal, HasDefault
+    CallBackMsg_Enum CBACK_CLIENTMSG_MAX = 5 : Public, Static, Literal, HasDefault
+Struct ClientDemo.PUCApiAdapter+VocCodecTypes: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    VocCodecTypes CODECTYPE_G711U = 0 : Public, Static, Literal, HasDefault
+    VocCodecTypes CODECTYPE_G711A = 8 : Public, Static, Literal, HasDefault
+    VocCodecTypes CODETYPE_H264RTP_PL = 98 : Public, Static, Literal, HasDefault
+    VocCodecTypes CODECYPE_H264RTP_PLEX = 99 : Public, Static, Literal, HasDefault
+    VocCodecTypes CODECYPE_H264RTP_PACK = 100 : Public, Static, Literal, HasDefault
+    VocCodecTypes CODECYPE_H264_FRAME = 101 : Public, Static, Literal, HasDefault
+Class ClientDemo.PUCApiAdapter+VoipClientCallBackFun: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(CallBackMsg_Enum, UInt32, IntPtr, IntPtr): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(CallBackMsg_Enum, UInt32, IntPtr, IntPtr, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Struct ClientDemo.PUCApiAdapter+tagVoipVoiceData: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, UnicodeClass, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    Byte codec : Public
+    Int32 nLen : Public
+    Byte[] DataBuf : Public, HasFieldMarshal
+Class ClientDemo.PUCApiAdapter+MicCallBackFun: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(UInt32, Int32, Int32, IntPtr, UInt32): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(UInt32, Int32, Int32, IntPtr, UInt32, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class ClientDemo.PUCApiAdapter+OnGetStreamWidthHeight: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Int32, Int32, Int32): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(Int32, Int32, Int32, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class ClientDemo.PUCApiAdapter+GetStreamWidthHeight: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Int32, Int32, Int32): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(Int32, Int32, Int32, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class ClientDemo.PUCApiAdapter+MediaTermDeviceInfoCallBackFun: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(IntPtr, Int64): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(IntPtr, Int64, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class ClientDemo.PUCApiAdapter+MediaTermEventReportCallBackFun: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Int32, IntPtr, Int64): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(Int32, IntPtr, Int64, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class ClientDemo.PUCApiAdapter+MediaTermDataBackFunCallBackFun: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Int32, IntPtr, Int32, MediaTermBufferType, Int64): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(Int32, IntPtr, Int32, MediaTermBufferType, Int64, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class ClientDemo.PUCApiAdapter+MediaPlgTermFileInfoCallBackFun: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(IntPtr, Int64): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(IntPtr, Int64, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Struct ClientDemo.PUCApiAdapter+mediaTermType: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    mediaTermType videoCaptureDev = 0 : Public, Static, Literal, HasDefault
+    mediaTermType videoPlayDev = 1 : Public, Static, Literal, HasDefault
+    mediaTermType audioCaptureDev = 2 : Public, Static, Literal, HasDefault
+    mediaTermType audioPlayDev = 3 : Public, Static, Literal, HasDefault
+    mediaTermType screenCapSoftDev = 4 : Public, Static, Literal, HasDefault
+    mediaTermType loudSpeakerCapSoftDev = 5 : Public, Static, Literal, HasDefault
+Struct ClientDemo.PUCApiAdapter+mediaTermDataType: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    mediaTermDataType MEDIA_FRAME_DATA = 0 : Public, Static, Literal, HasDefault
+    mediaTermDataType MEDIA_RTP_WITH_HEAD_DATA = 1 : Public, Static, Literal, HasDefault
+    mediaTermDataType MEDIA_RTP_WITHOUT_HEAD_DATA = 2 : Public, Static, Literal, HasDefault
+Struct ClientDemo.PUCApiAdapter+MediaTermBufferType: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    MediaTermBufferType MEDIA_BUFFER_UNKOW = 0 : Public, Static, Literal, HasDefault
+    MediaTermBufferType MEDIA_FRAME_G711ADATA = 1 : Public, Static, Literal, HasDefault
+    MediaTermBufferType MEDIA_FRAME_H264DATA = 2 : Public, Static, Literal, HasDefault
+    MediaTermBufferType MEDIA_RTP_G711A_PACKET = 3 : Public, Static, Literal, HasDefault
+    MediaTermBufferType MEDIA_RTP_SINGLE_PACKET = 4 : Public, Static, Literal, HasDefault
+    MediaTermBufferType MEDIA_RTP_FIRST_PACKET = 5 : Public, Static, Literal, HasDefault
+    MediaTermBufferType MEDIA_RTP_MIDLE_PACKET = 6 : Public, Static, Literal, HasDefault
+    MediaTermBufferType MEDIA_RTP_LAST_PACKET = 7 : Public, Static, Literal, HasDefault
+Struct ClientDemo.PUCApiAdapter+mediaTermEventType: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    mediaTermEventType MEDIA_EVENT_CAPTURE = 0 : Public, Static, Literal, HasDefault
+    mediaTermEventType MEDIA_EVENT_PLAY = 1 : Public, Static, Literal, HasDefault
+    mediaTermEventType MEDIA_EVENT_SENDFILE = 2 : Public, Static, Literal, HasDefault
+    mediaTermEventType MEDIA_EVENT_SAVEFILE = 3 : Public, Static, Literal, HasDefault
+Struct ClientDemo.PUCApiAdapter+mediaTermDeviceInfo: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, UnicodeClass, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    mediaTermType mediaType : Public
+    Int32 devCh : Public
+    Byte[] name : Public, HasFieldMarshal
+    Int32 videoMaxWidth : Public
+    Int32 videoMaxHeight : Public
+    Int32 videoMaxFrameRate : Public
+    Int32 videoMaxProfile : Public
+    Int32 videoMaxResolution : Public
+    Int32 audioMaxSampleRate : Public
+    Int32 audioMaxChanel : Public
+    Int32 gpuAbility : Public
+Struct ClientDemo.PUCApiAdapter+mediaTermInitCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    Int32 saveLog : Public
+    System.String localIpAddr : Public, HasFieldMarshal
+    MediaTermEventReportCallBackFun eventCallBack : Public
+    Int64 appIns : Public
+Struct ClientDemo.PUCApiAdapter+mediaTermEventInfo: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, UnicodeClass, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    Int32 type : Public
+    Int32 subType : Public
+    Int32 detailId : Public
+    Int32 reserve : Public
+Struct ClientDemo.PUCApiAdapter+mediaTermCtrlType: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    mediaTermCtrlType CtrlAudioPlayVolume = 0 : Public, Static, Literal, HasDefault
+    mediaTermCtrlType CtrlAudioPlayChannel = 1 : Public, Static, Literal, HasDefault
+    mediaTermCtrlType CtrlVideoPlayAngle = 2 : Public, Static, Literal, HasDefault
+    mediaTermCtrlType CtrlVideoPlayWindowSize = 3 : Public, Static, Literal, HasDefault
+    mediaTermCtrlType CtrlPlayPause = 4 : Public, Static, Literal, HasDefault
+    mediaTermCtrlType CtrlVideoPlayFullWindow = 5 : Public, Static, Literal, HasDefault
+    mediaTermCtrlType CtrlSendPause = 6 : Public, Static, Literal, HasDefault
+    mediaTermCtrlType CtrlRecvPause = 7 : Public, Static, Literal, HasDefault
+Struct ClientDemo.PUCApiAdapter+mediaTermCtrlCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    mediaTermCtrlType ctrlType : Public
+    Int32 par1 : Public
+    Int32 par2 : Public
+    Int32 par3 : Public
+    Int32 reserved : Public
+Struct ClientDemo.PUCApiAdapter+mediaTermCapCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, UnicodeClass, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    mediaTermType mediaType : Public
+    Int32 capDevCh : Public
+    Int32 videoType : Public
+    Int32 videoWidth : Public
+    Int32 videoHeight : Public
+    Int32 videoBitRate : Public
+    Int32 videoFrameRate : Public
+    Int32 videoResolution : Public
+    Int32 videoFullScreenCapFlag : Public
+    Int32 videoScreenOffsetX : Public
+    Int32 videoScreenOffsetY : Public
+    Int64 videoScreenCapWindHnd : Public
+    Int32 audioType : Public
+    Int32 audioSampingRate : Public
+    Int32 audioChannel : Public
+    Int32 audioBitRate : Public
+    Int32 audioNsLevel : Public
+    Int32 audioAgcLevel : Public
+    Int32 audioAecLevel : Public
+    Int32 audioAecDelayTime : Public
+    Int32 reserved : Public
+Struct ClientDemo.PUCApiAdapter+mediaTermPlayCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    mediaTermType mediaType : Public
+    Int32 playDevCh : Public
+    System.String mixTempletFilePath : Public, HasFieldMarshal
+    Int64 videoWinHnd : Public
+    Int32 videoType : Public
+    Int32 videoWidth : Public
+    Int32 videoHeight : Public
+    Int32 videoResolution : Public
+    Int32 videoJoinTempletIndex : Public
+    Int32 videoJoinSubWinPos : Public
+    Int32 videoFullWindow : Public
+    Int32 audioVolume : Public
+    Int32 audioPlayChannel : Public
+    Int32 audioType : Public
+    Int32 audioChannels : Public
+    Int32 audioSampingRate : Public
+    Int32 audioNsLevel : Public
+    Int32 audioAgcLevel : Public
+    Int32 audioMixTempletIndex : Public
+    Int32 reserved : Public
+Struct ClientDemo.PUCApiAdapter+mediaPlgTermSendCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    System.String localIp : Public, HasFieldMarshal
+    Int32 localPort : Public
+    System.String destIp : Public, HasFieldMarshal
+    Int32 destPort : Public
+    Int32 localSsrc : Public
+    Int32 sendMediaType : Public
+    Int32 bindRecvChannelId : Public
+    Int32 reserved : Public
+Struct ClientDemo.PUCApiAdapter+mediaPlgTermRecvCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    System.String localIp : Public, HasFieldMarshal
+    Int32 localPort : Public
+    Int32 destSsrc : Public
+    Int32 recvMediaType : Public
+    Int32 bindSendChannelId : Public
+    Int32 reserved : Public
+Struct ClientDemo.PUCApiAdapter+mediaPlgTermFileCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, UnicodeClass, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    System.String fileName : Public, HasFieldMarshal
+    Int32 fileType : Public
+    Int32 fileSize : Public
+    Int32 fileStartTime : Public
+    Int32 fileEndTime : Public
+    Int32 reserved : Public
+Struct ClientDemo.PUCApiAdapter+mediaPlgTermOpFileCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    System.String fileName : Public, HasFieldMarshal
+    Int32 operateType : Public
+    Int32 operateMediaType : Public
+    Int32 reserved : Public
+Struct ClientDemo.PUCApiAdapter+mediaPlgTermQueryFileCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, UnicodeClass, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    Int32 reserved : Public
+Struct ClientDemo.PUCApiAdapter+mediaPlgTermHndInfo: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    System.String ipAddr : Public, HasFieldMarshal
+    Int32 localPort : Public
+    Int32 videoType : Public
+    Int32 videoWidth : Public
+    Int32 videoHeight : Public
+    Int32 videoFrameRate : Public
+    Int32 videoProfile : Public
+    Int32 videoResolution : Public
+    Int32 audioType : Public
+    Int32 audioChannels : Public
+    Int32 audioSampingRate : Public
+    Int32 audioPacketTime : Public
+    Int32 reserved : Public
+Struct ClientDemo.PUCApiAdapter+mediaTermLocalFileCfg: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, UnicodeClass, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    mediaTermType mediaType : Public
+    mediaTermDataType fileDataType : Public
+    Int32 nFrameRate : Public
+Struct ClientDemo.Util.DECEncryptHelper+Module: AutoLayout, AnsiClass, Class, NestedPublic, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    Module ENCRYPT = 0 : Public, Static, Literal, HasDefault
+    Module DECRYPT = 1 : Public, Static, Literal, HasDefault

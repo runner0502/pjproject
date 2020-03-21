@@ -1,0 +1,14 @@
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\DBModule.dll.config
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\DBModule.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\DBModule.pdb
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\EntityFramework.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\EntityFramework.SqlServer.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\MySql.Data.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\MySql.Data.Entity.EF6.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\EntityFramework.xml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\EntityFramework.SqlServer.xml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\MySql.Data.xml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\MySql.Data.Entity.EF6.xml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\obj\Debug\DBModule.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\obj\Debug\DBModule.pdb
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\obj\Debug\DBModule.csprojResolveAssemblyReference.cache

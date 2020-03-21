@@ -1,0 +1,10 @@
+﻿  Stdafx.cpp
+  AssemblyInfo.cpp
+  HNDWrap.cpp
+  HNDWrapInternal.cpp
+  正在生成代码...
+  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
+  AssemblyInfo.obj :托管的代码存在时 /DEBUG:FASTLINK 不受支持；正在重新启动与 /DEBUG:FULL 的链接
+    正在创建库 E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\Debug\HNDWrap.lib 和对象 E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\Debug\HNDWrap.exp
+  HNDWrap.vcxproj -> E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\Debug\HNDWrap.dll
+  HNDWrap.vcxproj -> E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\Debug\HNDWrap.pdb (Partial PDB)

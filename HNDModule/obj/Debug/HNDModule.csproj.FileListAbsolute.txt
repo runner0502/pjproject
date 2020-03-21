@@ -1,0 +1,14 @@
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\obj\Debug\HNDModule.g.resources
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\HNDModule.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\HNDModule.pdb
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\ClientLogger.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\log4net.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\obj\Debug\HNDModule.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\obj\Debug\HNDModule.pdb
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\HNDModule.dll.config
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\BouncyCastle.Crypto.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\Google.Protobuf.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\Renci.SshNet.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\Google.Protobuf.xml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\Renci.SshNet.xml
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\obj\Debug\HNDModule.csprojResolveAssemblyReference.cache

@@ -33,8 +33,8 @@
  * @brief Implementation of G.722.1 codec
  * @{
  *
- * <b>G.722.1 licensed from Polycom®</b><br />
- * <b>G.722.1 Annex C licensed from Polycom®</b>
+ * <b>G.722.1 licensed from Polycom?/b><br />
+ * <b>G.722.1 Annex C licensed from Polycom?/b>
  *
  * This section describes functions to initialize and register G.722.1 codec
  * factory to the codec manager. After the codec factory has been registered,
