@@ -30,6 +30,10 @@ namespace ClientDemo.CallBusiness
 
         public int VoiceSendSipPort { get; set; }
 
+        public int VoiceRecvSipPort { get; set; }
+
+        public int VoicePrtRecvSip { get; set; }
+
         /// <summary>
         /// 播放句柄
         /// </summary>

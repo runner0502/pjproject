@@ -1445,7 +1445,6 @@ namespace ClientDemo
             MemoryControl.FreeHGlobalPtr(ptr);
             Logger.Debug("CallDataCenter GetVoicePtrRecvBycmdGuid:cmdGuid:" + cmdGuid + "   ptrRecv" + ptrRecv);
             return ptrRecv;
-
         }
 
         public int GetVedioPtrRecvBycmdGuid(string localIp, string cmdGuid)

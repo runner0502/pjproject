@@ -399,9 +399,12 @@ void HNDDataCallback(char *xml)
 	//PJ_LOG(3, (THIS_FILE, "HNDDataCallback %s ", xml ));
 }
 
+void HNDIncomingCallback(char *called, char *caller);
+
 static int init_hnd()
 {
 	setDataCallback( &HNDDataCallback );
+	setIncomingCallEvent( &HNDIncomingCallback);
 	return HNDInit();
 }
 
@@ -535,6 +538,9 @@ static void destroy_media()
  */
 static pj_status_t make_call(const pj_str_t *dst_uri)
 {
+
+	//HNDMakeCall("80020202");
+
     unsigned i;
     struct call *call;
     pjsip_dialog *dlg;
@@ -604,12 +610,42 @@ static pj_status_t make_call(const pj_str_t *dst_uri)
     return PJ_SUCCESS;
 }
 
+int isHNDIncomingThreadRegd = 0;
+void HNDIncomingCallback(char *called, char *caller)
+{
+	pj_str_t url = pj_str("sip:20.0.0.99:5077");
+
+	if (!isHNDIncomingThreadRegd)
+	{
+		isHNDIncomingThreadRegd = 1;
+		pj_thread_t *thread;
+		pj_thread_desc *desc;
+		pj_status_t status;
+
+		desc = (pj_thread_desc*)malloc(sizeof(pj_thread_desc));
+		if (!desc) {
+			//PJSUA2_RAISE_ERROR(PJ_ENOMEM);
+		}
+		status = pj_thread_register("", *desc, &thread);
+		if (status == PJ_SUCCESS) {
+		}
+		else {
+			free(desc);
+			//PJSUA2_RAISE_ERROR(status);
+		}
+	}
+
+	make_call( &url );
+}
+
 
 /*
  * Receive incoming call
  */
 static void process_incoming_call(pjsip_rx_data *rdata)
 {
+	HNDMakeCall("80020202");
+
     unsigned i, options;
     struct call *call;
     pjsip_dialog *dlg;
@@ -1076,11 +1112,10 @@ static pj_status_t create_sdp( pj_pool_t *pool,
     m->desc.media = pj_str("audio");
 	//m->desc.port = pj_ntohs(tpinfo.sock_info.rtp_addr_name.ipv4.sin_port);
 
-	HNDMakeCall("80020202");
 	int HNDlocalPort = HNDGetLocalPort();
 
-	m->desc.port = RTP_START_PORT;
-	//m->desc.port = HNDlocalPort;
+	//m->desc.port = RTP_START_PORT;
+	m->desc.port = HNDlocalPort;
 
     m->desc.port_count = 1;
     m->desc.transport = pj_str("RTP/AVP");

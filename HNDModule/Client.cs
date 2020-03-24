@@ -33,6 +33,8 @@ namespace HNDModule
         private const string _fileName = "config/AutoConfig.xml";
         string _pucId = "00001";
 
+        public event OnIncomingCall OnIncomingCallEvent;
+
         public bool Init()
         {
             pc = new paramclass();
@@ -60,7 +62,17 @@ namespace HNDModule
             Loginpara.ServerSipIP = "20.0.0.11";
             Loginpara.ServerSipPort = "6060";
 
+            BusinessCenter.Instance.OnIncomingCallEvent += Instance_OnIncomingCallEvent;
+
             return true;
+        }
+
+        private void Instance_OnIncomingCallEvent(string called, string caller)
+        {
+            if (OnIncomingCallEvent != null)
+            {
+                OnIncomingCallEvent(called, caller);
+            }
         }
 
         public void Login()
@@ -323,25 +335,21 @@ namespace HNDModule
 
         public int GetLocalPort()
         {
-            return int.Parse( ClientDemo.CallBusiness.CallManager.GetInstance().CCSession[cmdguid].Media.Audio.Rtp_local_port);
+            return ClientDemo.CallBusiness.CallManager.GetInstance().CCSession[BusinessCenter.Instance.cmdguid].VoiceRecvSipPort;
         }
 
         public void SetRemoteSipPort(int port)
         {
             ClientDemo.CallBusiness.CC session = ClientDemo.CallBusiness.CallManager.GetInstance().CCSession[cmdguid];
             session.VoiceSendSipPort = port;
-            if (session.VoicePtrSend >0)
-            {
+            //if (session.VoicePtrSend >0)
+            //{
                 if (session.VoicePtrLinkPlay > 0)
                     MediaManager.GetInstance().StopLinkByPtrLink(session.VoicePtrLinkPlay);
                 //cc.VoicePtrPlay = MediaManager.GetInstance().GetAudioPlayPtr();//播放语音
-                if (session.VoiceSendSipPort > 0)
-                {
-                    session.VoicePtrSendSip = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmdguid, "22.0.0.99", "22.0.0.99", session.VoiceSendSipPort, 2);//发送语音
-                    session.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(session.VoicePtrRecv, session.VoicePtrSendSip);//链接语音  接收-->播放
-
-                }
-            }
+                  session.VoicePtrSendSip = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmdguid, "20.0.0.99", "20.0.0.99", session.VoiceSendSipPort, 2);//发送语音
+                  session.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(session.VoicePtrRecv, session.VoicePtrSendSip);//链接语音  接收-->播放
+            //}
         }
     }
 }

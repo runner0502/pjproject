@@ -4,8 +4,11 @@
 
 typedef void(*onDataCallback)(char* xml);
 
+typedef void(*onIncomingCallback)(char* called, char* caller);
+
 extern "C" __declspec(dllexport) int __stdcall testcx(int i);
-extern "C" __declspec(dllexport) void __stdcall setDataCallback( onDataCallback cb );
+extern "C" __declspec(dllexport) void __stdcall setDataCallback(onDataCallback cb);
+extern "C" __declspec(dllexport) void __stdcall setIncomingCallEvent(onIncomingCallback cb );
 extern "C" __declspec(dllexport) bool __stdcall HNDInit();
 extern "C" __declspec(dllexport) bool __stdcall HNDDispose();
 extern "C" __declspec(dllexport) bool __stdcall HNDMakeCall(char* number);

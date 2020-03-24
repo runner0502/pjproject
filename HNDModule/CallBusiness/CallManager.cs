@@ -90,7 +90,20 @@ namespace ClientDemo.CallBusiness
                                     session.Media.Audio.Rtp_local_ip = result.ipAddr;
                                     session.Media.Audio.Rtp_local_port = result.localPort.ToString();
                                    // CurrentCCSession = session;
-                                    return session;//此时已经规定本Session的本地端口
+                                    //return session;//此时已经规定本Session的本地端口
+                                }
+                                else
+                                {
+                                    return null;
+                                }
+
+                                session.VoicePrtRecvSip = MediaManager.GetInstance().GetVoicePtrRecvBycmdGuid(session.LocalIp, cmdGuid);
+                                IntPtr ptrSip = MediaManager.MediaTerm_GetHndPara(session.VoicePrtRecvSip);
+                                ClientDemo.PUCApiAdapter.mediaPlgTermHndInfo result1 = (ClientDemo.PUCApiAdapter.mediaPlgTermHndInfo)Marshal.PtrToStructure(ptr, typeof(ClientDemo.PUCApiAdapter.mediaPlgTermHndInfo));
+                                if (result.localPort != 0)
+                                {
+                                    session.VoiceRecvSipPort = result1.localPort;
+                                    return session;
                                 }
                                 else
                                 {

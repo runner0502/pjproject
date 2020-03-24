@@ -5,6 +5,7 @@
 #include "HNDWrap.h"
 #include "HNDWrapInternal.h"
 
+void OnOnIncomingCallEvent(System::String ^called, System::String ^caller);
 void OnOnDataback(System::String ^obj);
 void *testnative122(int i)
 {
@@ -12,6 +13,7 @@ void *testnative122(int i)
 }
 
 onDataCallback g_onDataCallback;
+onIncomingCallback g_onIncomingCallback;
 
 using namespace HNDWrap;
 using namespace HNDModule;
@@ -33,13 +35,19 @@ extern "C" __declspec(dllexport) int __stdcall testcx(int i)
 
 extern "C" __declspec(dllexport) void __stdcall setDataCallback(onDataCallback cb)
 {
-	g_onDataCallback = cb;
-	
+	g_onDataCallback = cb;	
 }
+
+extern "C" __declspec(dllexport) void __stdcall setIncomingCallEvent(onIncomingCallback cb)
+{
+	g_onIncomingCallback = cb;
+}
+
 
 extern "C" __declspec(dllexport) bool __stdcall HNDInit()
 {
 	ClientDemo::BusinessCenter::Instance->OnDataback += gcnew System::Action<System::String ^>(&OnOnDataback);
+	ClientDemo::BusinessCenter::Instance->OnIncomingCallEvent += gcnew ClientDemo::OnIncomingCall(&OnOnIncomingCallEvent);
 	Client::GetInstance()->Init();
 	Client::GetInstance()->Login();
 	return true;
@@ -78,4 +86,12 @@ void OnOnDataback(System::String ^obj)
 		g_onDataCallback(para1d);
 	}
 	
+}
+
+void OnOnIncomingCallEvent(System::String ^called, System::String ^caller)
+{
+	if (g_onIncomingCallback != nullptr)
+	{
+		g_onIncomingCallback("called", "caller");
+	}
 }

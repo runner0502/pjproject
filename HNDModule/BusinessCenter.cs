@@ -23,6 +23,8 @@ using Hytera.I18N;
 
 namespace ClientDemo
 {
+
+    public delegate void OnIncomingCall( string called, string caller );
     public class BusinessCenter
     {
         public bool Islogin = false;
@@ -30,6 +32,8 @@ namespace ClientDemo
         public static BusinessCenter _pBusinessCenter = null;
         static ClientDemo.PUCApiAdapter.InitPUCAPIData PucApiParam = new ClientDemo.PUCApiAdapter.InitPUCAPIData();
         static event ClientDemo.PUCApiAdapter.PUCCallbackEventHandler InitializeCallbackEvent;
+
+        public event OnIncomingCall OnIncomingCallEvent;
         public event Action<string> OnDataback;
 
         public event Action<string> showDialog;
@@ -157,6 +161,7 @@ namespace ClientDemo
         }
         public bool login(paramclass pc)
         {
+            _loginPC = pc;
             //StartVOIP();
 
             bool result = true;
@@ -735,9 +740,12 @@ namespace ClientDemo
         public void demand(string str, string puc_id, System.Windows.Controls.TextBox txtMessage)
         {
             string xml = "<hytera><product_name>PUC</product_name><version>10</version><cmd_name>cc_tx_demand</cmd_name><cmd_guid>"+str+"</cmd_guid><puc_id>"+puc_id+"</puc_id><sap_type>"+ saptype+ "</sap_type><sap_guid>"+ sapguid +"</sap_guid></hytera>";
-            txtMessage.Text += "\n抢占话权 send xml：\n";
-            txtMessage.Text += FormatXml(xml);
-            txtMessage.ScrollToEnd();
+            if (txtMessage != null)
+            {
+                txtMessage.Text += "\n抢占话权 send xml：\n";
+                txtMessage.Text += FormatXml(xml);
+                txtMessage.ScrollToEnd();
+            }
             IntPtr xmlPtr = Marshal.StringToHGlobalUni(xml);
             PUCApiAdapter.PUCAPI_ProcessRequest(xmlPtr);
         }
@@ -1110,15 +1118,16 @@ namespace ClientDemo
                     {
                         if (cc.CallMode == GlobalCommandName.CallMode.Audio || cc.CallMode == GlobalCommandName.CallMode.AudioAndVideo)
                         {
-                            if (cc.VoicePtrLinkPlay > 0)
-                                MediaManager.GetInstance().StopLinkByPtrLink(cc.VoicePtrLinkPlay);
-                            cc.VoicePtrPlay = MediaManager.GetInstance().GetAudioPlayPtr();//播放语音
-                            if (cc.VoiceSendSipPort > 0)
-                            {
-                                cc.VoicePtrSendSip = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, "20.0.0.105", cc.VoiceSendSipPort, 2);//发送语音
-                                cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrSendSip);//链接语音  接收-->播放
-                                //cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrPlay);//链接语音  接收-->播放
-                            }
+                            //if (cc.VoicePtrLinkPlay > 0)
+                            //    MediaManager.GetInstance().StopLinkByPtrLink(cc.VoicePtrLinkPlay);
+                            //cc.VoicePtrPlay = MediaManager.GetInstance().GetAudioPlayPtr();//播放语音
+
+                            //if (cc.VoiceSendSipPort > 0)
+                            //{
+                            //    cc.VoicePtrSendSip = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, "20.0.0.99", cc.VoiceSendSipPort, 2);//发送语音
+                            //    cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrSendSip);//链接语音  接收-->播放
+                            //    //cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrPlay);//链接语音  接收-->播放
+                            //}
                             //cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrPlay);//链接语音  接收-->播放
                         }
                         if (cc.CallMode == GlobalCommandName.CallMode.video || cc.CallMode == GlobalCommandName.CallMode.AudioAndVideo)
@@ -1131,6 +1140,11 @@ namespace ClientDemo
                     }
                     cc.VoicePtrSend = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, VoicedestIp, VoicedestPort, 2);//发送语音
                     cc.VideoPtrSend = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, VideodestIp, VideodestPort, 1);//发送视频
+
+
+                    MediaManager.GetInstance().StartLinkByPtr(cc.VoicePrtRecvSip, cc.VoicePtrSend);
+                    demand(cmdguid, _loginPC.PUC_ID , null);
+
 
                     if (cc.IsDuplex)
                     {
@@ -1264,9 +1278,19 @@ namespace ClientDemo
                 //txtMessage.ScrollToEnd();
                 IntPtr xmlPtr = Marshal.StringToHGlobalUni(sendXML);
                 CallManager.GetInstance().CCSession.Add(cmd_guid, session);//添加到呼叫管理集合中，cc_connected_evt 会带有对端port信息，到时再进行Send句柄的申请与link
+                cmdguid = cmd_guid;
                 PUCApiAdapter.PUCAPI_ProcessRequest(xmlPtr);
 
+                var caller = xml.ChildNodes[0].SelectSingleNode("caller").SelectSingleNode("number").InnerText;
+                var called = xml.ChildNodes[0].SelectSingleNode("called").SelectSingleNode("number").InnerText;
+                if (OnIncomingCallEvent != null)
+                {
+                    OnIncomingCallEvent(called, caller);
+                }
             }
+
+           
+
 
             if (OnDataback != null)
                 OnDataback(pXmlData22);
@@ -1362,6 +1386,8 @@ namespace ClientDemo
         //默认密钥向量
         private static byte[] _keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
         private static string _encryptKey = "HytBSoft";
+        private paramclass _loginPC;
+
         public static string EncryptDES(string encryptString)
         {
             try
