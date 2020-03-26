@@ -351,5 +351,13 @@ namespace HNDModule
                   session.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(session.VoicePtrRecv, session.VoicePtrSendSip);//链接语音  接收-->播放
             //}
         }
+
+        public void InitConfig()
+        {
+            DBModule.Class1 db = new DBModule.Class1();
+            db.InitConfig();
+        }
+
+
     }
 }

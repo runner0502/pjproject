@@ -12,13 +12,10 @@ namespace DBModule
     using System;
     using System.Collections.Generic;
     
-    public partial class hnd_device
+    public partial class hnd_params
     {
         public long ID { get; set; }
-        public string deviceId { get; set; }
-        public string Alias { get; set; }
-        public string guid { get; set; }
-        public string numberType { get; set; }
-        public string systemId { get; set; }
+        public string TheKey { get; set; }
+        public string TheValue { get; set; }
     }
 }

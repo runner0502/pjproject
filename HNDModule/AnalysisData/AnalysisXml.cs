@@ -184,6 +184,16 @@ namespace ClientDemo.AnalysisData
             }
         }
 
+        private void UpdateDeviceDB(DeviceEntity device)
+        {
+            DBModule.hnd_device deviceDB = new DBModule.hnd_device
+            {
+                deviceId = device.guid,
+                Alias = device.device_alias
+            };
+
+        }
+
 
         public void AnalysisSystemListXML(string systemListXML)
         {

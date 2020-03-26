@@ -1431,6 +1431,7 @@ namespace ClientDemo
             return ptrSend;
         }
 
+        int _initLocalport = 6677;
 
         public int GetVoicePtrRecvBycmdGuid(string localIp, string cmdGuid)
         {

@@ -26,5 +26,6 @@ namespace DBModule
         }
     
         public virtual DbSet<hnd_device> hnd_device { get; set; }
+        public virtual DbSet<hnd_params> hnd_params { get; set; }
     }
 }

@@ -1430,6 +1430,7 @@ namespace ClientDemo
         {
             //BusinessCenter.Instance.organization_list_request(txtPUC_ID.Text.Trim());
             BusinessCenter.Instance.device_list_request(txtPUC_ID.Text.Trim());
+            //_client.InitConfig();
         }
     }
 }
