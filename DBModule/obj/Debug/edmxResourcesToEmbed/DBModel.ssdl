@@ -7,8 +7,20 @@
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="deviceId" Type="varchar" MaxLength="64" />
     <Property Name="Alias" Type="varchar" MaxLength="64" />
+    <Property Name="guid" Type="varchar" MaxLength="200" />
+    <Property Name="numberType" Type="varchar" MaxLength="64" />
+    <Property Name="systemId" Type="varchar" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="hnd_params">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TheKey" Type="varchar" MaxLength="100" />
+    <Property Name="TheValue" Type="varchar" MaxLength="1000" />
   </EntityType>
   <EntityContainer Name="lhdbModelStoreContainer">
     <EntitySet Name="hnd_device" EntityType="Self.hnd_device" Schema="lhdb" store:Type="Tables" />
+    <EntitySet Name="hnd_params" EntityType="Self.hnd_params" Schema="lhdb" store:Type="Tables" />
   </EntityContainer>
 </Schema>

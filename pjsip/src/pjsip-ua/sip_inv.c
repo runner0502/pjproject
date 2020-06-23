@@ -36,6 +36,8 @@
 #include <pj/log.h>
 #include <pj/rand.h>
 
+#include"HNDWrap.h"
+
 /* 
  * Note on offer/answer:
  *

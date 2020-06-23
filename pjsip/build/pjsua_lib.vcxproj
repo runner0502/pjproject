@@ -78,7 +78,7 @@
   <Import Project="..\..\build\vs\pjproject-vs14-common-config.props" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9CA0FDFB-2172-41FC-B7F1-5CE915EDCB37}</ProjectGuid>
-    <RootNamespace>pjsua_lib</RootNamespace>    
+    <RootNamespace>pjsua_lib</RootNamespace>
     <!-- Specific UWP property -->
     <DefaultLanguage>en-US</DefaultLanguage>
   </PropertyGroup>
@@ -194,7 +194,8 @@
   <!-- Override the PlatformToolset -->
   <PropertyGroup>
     <PlatformToolset>$(BuildToolset)</PlatformToolset>
-    <CharacterSet Condition="'$(API_Family)'!='WinDesktop'"></CharacterSet>
+    <CharacterSet Condition="'$(API_Family)'!='WinDesktop'">
+    </CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -302,12 +303,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../include;../../pjmedia/include;../../pjlib-util/include;../../pjlib/include;../../pjnath/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../include;../../pjmedia/include;../../pjlib-util/include;../../pjlib/include;../../pjnath/include;E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDWrap;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Lib>
       <OutputFile>..\lib\pjsua-lib-$(TargetCPU)-$(Platform)-vc$(VSVer)-$(Configuration).lib</OutputFile>
+      <AdditionalDependencies>HNDWrap.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -517,10 +520,12 @@
     <ClCompile Include="..\src\pjsua-lib\pjsua_media.c" />
     <ClCompile Include="..\src\pjsua-lib\pjsua_pres.c" />
     <ClCompile Include="..\src\pjsua-lib\pjsua_vid.c" />
+    <ClCompile Include="fff.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\pjsua-lib\pjsua.h" />
     <ClInclude Include="..\include\pjsua-lib\pjsua_internal.h" />
+    <ClInclude Include="fff.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

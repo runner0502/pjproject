@@ -4,8 +4,20 @@
     <EntitySetMapping Name="hnd_device">
       <EntityTypeMapping TypeName="lhdbModel.hnd_device">
         <MappingFragment StoreEntitySet="hnd_device">
+          <ScalarProperty Name="systemId" ColumnName="systemId" />
+          <ScalarProperty Name="numberType" ColumnName="numberType" />
+          <ScalarProperty Name="guid" ColumnName="guid" />
           <ScalarProperty Name="Alias" ColumnName="Alias" />
           <ScalarProperty Name="deviceId" ColumnName="deviceId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hnd_params">
+      <EntityTypeMapping TypeName="lhdbModel.hnd_params">
+        <MappingFragment StoreEntitySet="hnd_params">
+          <ScalarProperty Name="TheValue" ColumnName="TheValue" />
+          <ScalarProperty Name="TheKey" ColumnName="TheKey" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

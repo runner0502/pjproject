@@ -69,6 +69,7 @@ namespace HNDModule
 
         private void Instance_OnIncomingCallEvent(string called, string caller)
         {
+            cmdguid = BusinessCenter.Instance.cmdguid;
             if (OnIncomingCallEvent != null)
             {
                 OnIncomingCallEvent(called, caller);
@@ -347,8 +348,9 @@ namespace HNDModule
                 if (session.VoicePtrLinkPlay > 0)
                     MediaManager.GetInstance().StopLinkByPtrLink(session.VoicePtrLinkPlay);
                 //cc.VoicePtrPlay = MediaManager.GetInstance().GetAudioPlayPtr();//播放语音
-                  session.VoicePtrSendSip = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmdguid, "20.0.0.99", "20.0.0.99", session.VoiceSendSipPort, 2);//发送语音
-                  session.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(session.VoicePtrRecv, session.VoicePtrSendSip);//链接语音  接收-->播放
+
+                  //session.VoicePtrSendSip = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmdguid, "20.0.0.99", "20.0.0.102", session.VoiceSendSipPort, 2);//发送语音
+                  //session.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(session.VoicePtrRecv, session.VoicePtrSendSip);//链接语音  接收-->播放
             //}
         }
 

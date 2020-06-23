@@ -1365,7 +1365,8 @@ namespace ClientDemo
                             msc.destPort = destPort;
                             msc.localSsrc = 0;
                             msc.sendMediaType = sendMediaType;
-                            msc.bindRecvChannelId = cc != null ? cc.VoicePtrRecv : 0;
+                            //msc.bindRecvChannelId = cc != null ? cc.VoicePrtRecvSip : 0;
+                            msc.bindRecvChannelId = 0;
                             msc.reserved = 0;
                             IntPtr ptr = MemoryControl.StructToIntPtr(msc);
                             ptrSend = MediaTerm_StartSend(ptr);

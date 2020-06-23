@@ -1044,6 +1044,13 @@ namespace ClientDemo
             }
         }
 
+        private void DemandCallback(  )
+        {
+            Thread.Sleep(3000);
+            demand(cmdguid, _loginPC.PUC_ID, null);
+
+        }
+
         /// <summary>
         /// 协议返回接口
         /// </summary>
@@ -1130,52 +1137,61 @@ namespace ClientDemo
                             //}
                             //cc.VoicePtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePtrRecv, cc.VoicePtrPlay);//链接语音  接收-->播放
                         }
-                        if (cc.CallMode == GlobalCommandName.CallMode.video || cc.CallMode == GlobalCommandName.CallMode.AudioAndVideo)
-                        {
-                            if (cc.VideoPtrLinkPlay > 0)
-                                MediaManager.GetInstance().StopLinkByPtrLink(cc.VideoPtrLinkLocalPlay);
-                            cc.VideoPtrPlay = MediaManager.GetInstance().GetVedioPlayPtr(cc.pictrueboxHandle);//播放视频
-                            cc.VideoPtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VideoPtrRecv, cc.VideoPtrPlay);//链接视频  接收-->播放
-                        }
+                        //if (cc.CallMode == GlobalCommandName.CallMode.video || cc.CallMode == GlobalCommandName.CallMode.AudioAndVideo)
+                        //{
+                        //    if (cc.VideoPtrLinkPlay > 0)
+                        //        MediaManager.GetInstance().StopLinkByPtrLink(cc.VideoPtrLinkLocalPlay);
+                        //    cc.VideoPtrPlay = MediaManager.GetInstance().GetVedioPlayPtr(cc.pictrueboxHandle);//播放视频
+                        //    cc.VideoPtrLinkPlay = MediaManager.GetInstance().StartLinkByPtr(cc.VideoPtrRecv, cc.VideoPtrPlay);//链接视频  接收-->播放
+                        //}
                     }
                     cc.VoicePtrSend = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, VoicedestIp, VoicedestPort, 2);//发送语音
-                    cc.VideoPtrSend = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, VideodestIp, VideodestPort, 1);//发送视频
+                    //cc.VideoPtrSend = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, VideodestIp, VideodestPort, 1);//发送视频
 
 
-                    MediaManager.GetInstance().StartLinkByPtr(cc.VoicePrtRecvSip, cc.VoicePtrSend);
-                    demand(cmdguid, _loginPC.PUC_ID , null);
+                    cc.VoicePtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(cc.VoicePrtRecvSip, cc.VoicePtrSend);
+
+                    //if (MediaManager.resultAudioStartCap < 1)
+                    //    MediaManager.GetInstance().StartCapAudio();
+                    ////if (cc.VoicePtrLinkSend < 1)
+                    ////{
+                    //cc.VoicePtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(MediaManager.resultAudioStartCap, cc.VoicePtrSend);//链接语音 采集-->发送  
+                    ////}
+
+                    Thread thread1 = new Thread(new ThreadStart(DemandCallback));
+                    thread1.Start();
 
 
-                    if (cc.IsDuplex)
-                    {
+                    //if (cc.IsDuplex)
+                    //{
 
-                        if(MediaManager.resultAudioStartCap<1)
-                            MediaManager.GetInstance().StartCapAudio();
-                        if (cc.VoicePtrLinkSend < 1)
-                        {
-                            cc.VoicePtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(MediaManager.resultAudioStartCap, cc.VoicePtrSend);//链接语音 采集-->发送  
-                        }
+                    //    if(MediaManager.resultAudioStartCap<1)
+                    //        MediaManager.GetInstance().StartCapAudio();
+                    //    if (cc.VoicePtrLinkSend < 1)
+                    //    {
+                    //        cc.VoicePtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(MediaManager.resultAudioStartCap, cc.VoicePtrSend);//链接语音 采集-->发送  
+                    //    }
 
                       
-                         if(MediaManager.resultVideoStartCap<1)
-                            MediaManager.GetInstance().StartCapVideo();
-                         if (cc.VideoPtrLinkSend < 1)
-                         {
-                             cc.VideoPtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(MediaManager.resultVideoStartCap, cc.VideoPtrSend);//链接视频 采集-->发送   
-                         }
-                    }
+                    //     if(MediaManager.resultVideoStartCap<1)
+                    //        MediaManager.GetInstance().StartCapVideo();
+                    //     if (cc.VideoPtrLinkSend < 1)
+                    //     {
+                    //         cc.VideoPtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(MediaManager.resultVideoStartCap, cc.VideoPtrSend);//链接视频 采集-->发送   
+                    //     }
+                    //}
 
-                    if (transfercmdguid == cc.CallID)
-                    {
-                        if (cc.VideoPtrSend < 1)
-                        {
-                            cc.VideoPtrSend = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, VideodestIp, VideodestPort, 1);//发送视频
-                        }
-                        if (cmdguid != null)
-                        {
-                            cc.VideoPtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(CallManager.GetInstance().CCSession[cmdguid].VideoPtrRecv, cc.VideoPtrSend);//链接视频 采集-->发送 
-                        }
-                    }
+                    //if (transfercmdguid == cc.CallID)
+                    //{
+                    //    if (cc.VideoPtrSend < 1)
+                    //    {
+                    //        cc.VideoPtrSend = MediaManager.GetInstance().GetPtrSendBycmdGuid(cmd_guid, configpc.LocalSipIP, VideodestIp, VideodestPort, 1);//发送视频
+                    //    }
+                    //    if (cmdguid != null)
+                    //    {
+                    //        cc.VideoPtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(CallManager.GetInstance().CCSession[cmdguid].VideoPtrRecv, cc.VideoPtrSend);//链接视频 采集-->发送 
+                    //    }
+                    //}
                     /*
                      *对于demo，一路呼叫接通，直接开启流的发送，不根据话权的更替做变化。
                      *由PUCServer端根据对应的sip来决策流的转发与接收与否，建议正常版本不要这么做 
@@ -1226,18 +1242,18 @@ namespace ClientDemo
                     {
                         if (!cc.IsDuplex)
                         {
-                            if (MediaManager.resultAudioStartCap < 1)
-                                MediaManager.GetInstance().StartCapAudio();
-                            cc.VoicePtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(MediaManager.resultAudioStartCap, cc.VoicePtrSend);//链接语音 采集-->发送  
+                        //    if (MediaManager.resultAudioStartCap < 1)
+                        //        MediaManager.GetInstance().StartCapAudio();
+                        //    cc.VoicePtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(MediaManager.resultAudioStartCap, cc.VoicePtrSend);//链接语音 采集-->发送  
                         }
                     }
 
-                    if (MediaManager.resultVideoStartCap < 1)
-                        MediaManager.GetInstance().StartCapVideo();
-                    if (cc.VideoPtrLinkSend < 1 && cc.VideoPtrSend > 0)
-                    {
-                        cc.VideoPtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(MediaManager.resultVideoStartCap, cc.VideoPtrSend);//链接视频 采集-->发送   
-                    }
+                    //if (MediaManager.resultVideoStartCap < 1)
+                    //    MediaManager.GetInstance().StartCapVideo();
+                    //if (cc.VideoPtrLinkSend < 1 && cc.VideoPtrSend > 0)
+                    //{
+                    //    cc.VideoPtrLinkSend = MediaManager.GetInstance().StartLinkByPtr(MediaManager.resultVideoStartCap, cc.VideoPtrSend);//链接视频 采集-->发送   
+                    //}
 
                 }
             }
@@ -1279,6 +1295,7 @@ namespace ClientDemo
                 IntPtr xmlPtr = Marshal.StringToHGlobalUni(sendXML);
                 CallManager.GetInstance().CCSession.Add(cmd_guid, session);//添加到呼叫管理集合中，cc_connected_evt 会带有对端port信息，到时再进行Send句柄的申请与link
                 cmdguid = cmd_guid;
+               
                 PUCApiAdapter.PUCAPI_ProcessRequest(xmlPtr);
 
                 var caller = xml.ChildNodes[0].SelectSingleNode("caller").SelectSingleNode("number").InnerText;

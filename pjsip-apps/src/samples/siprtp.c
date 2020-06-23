@@ -283,12 +283,14 @@ static pjsip_module mod_siprtp =
 /* Codec constants */
 struct codec audio_codecs[] = 
 {
-	{ 8,  "PCMA", 8000, 64000, 20, "G.711 ALaw" },    
+	{ 8,  "PCMA", 8000, 64000, 60, "G.711 ALaw" },    
     { 3,  "GSM",  8000, 13200, 20, "GSM" },
     { 4,  "G723", 8000, 6400,  30, "G.723.1" },
 	{ 0,  "PCMU", 8000, 64000, 20, "G.711 ULaw" },
     { 18, "G729", 8000, 8000,  20, "G.729" },
 };
+
+#define AF		pj_AF_INET() /* Change to pj_AF_INET6() for IPv6.
 
 
 /*
@@ -318,6 +320,8 @@ static pj_status_t init_sip()
     /* Add UDP transport. */
     {
 	pj_sockaddr_in addr;
+	//pj_sockaddr addr;
+
 	pjsip_host_port addrname;
 	pjsip_transport *tp;
 
@@ -326,6 +330,8 @@ static pj_status_t init_sip()
 	addr.sin_addr.s_addr = 0;
 	addr.sin_port = pj_htons((pj_uint16_t)app.sip_port);
 
+
+
 	if (app.local_addr.slen) {
 
 	    addrname.host = app.local_addr;
@@ -333,6 +339,10 @@ static pj_status_t init_sip()
 
 	    status = pj_sockaddr_in_init(&addr, &app.local_addr, 
 					 (pj_uint16_t)app.sip_port);
+
+
+		//pj_sockaddr_init(AF, &addr, NULL, (pj_uint16_t)app.sip_port);
+
 	    if (status != PJ_SUCCESS) {
 		app_perror(THIS_FILE, "Unable to resolve IP interface", status);
 		return status;
@@ -342,6 +352,11 @@ static pj_status_t init_sip()
 	status = pjsip_udp_transport_start( app.sip_endpt, &addr, 
 					    (app.local_addr.slen ? &addrname:NULL),
 					    1, &tp);
+
+	/*status = pjsip_udp_transport_start(app.sip_endpt, &addr.ipv4,
+		NULL,
+		1, &tp);
+*/
 	if (status != PJ_SUCCESS) {
 	    app_perror(THIS_FILE, "Unable to start UDP transport", status);
 	    return status;
@@ -613,7 +628,7 @@ static pj_status_t make_call(const pj_str_t *dst_uri)
 int isHNDIncomingThreadRegd = 0;
 void HNDIncomingCallback(char *called, char *caller)
 {
-	pj_str_t url = pj_str("sip:20.0.0.99:5077");
+	pj_str_t url = pj_str("sip:20.0.0.102:5077");
 
 	if (!isHNDIncomingThreadRegd)
 	{

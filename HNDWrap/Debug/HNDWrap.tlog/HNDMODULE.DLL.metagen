@@ -6,6 +6,8 @@ Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934
 	hash=None, flags=None
 Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
+Assembly DBModule, Version=1.0.*, Culture=固定语言(固定国家/地区): 
+	hash=None, flags=None
 Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
 Assembly PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35: 
@@ -30,8 +32,12 @@ Class HNDModule.Client: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     System.Collections.Generic.List`1[ClientDemo.GroupEntry] Categories 'get set' : 
     System.Collections.Generic.List`1[ClientDemo.DeviceEntry] Devicelist 'get set' : 
     System.Collections.Generic.List`1[ClientDemo.SapEntity] SapEntityList1 'get set' : 
+  Events:
+    ClientDemo.OnIncomingCall OnIncomingCallEvent: 
   Methods:
     GetInstance(): PrivateScope, Public, Static, HideBySig
+    add_OnIncomingCallEvent(OnIncomingCall): PrivateScope, Public, HideBySig, SpecialName
+    remove_OnIncomingCallEvent(OnIncomingCall): PrivateScope, Public, HideBySig, SpecialName
     Init(): PrivateScope, Public, HideBySig
     Login(): PrivateScope, Public, HideBySig
     Login(paramclass): PrivateScope, Public, HideBySig
@@ -54,6 +60,14 @@ Class HNDModule.Client: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     MakeCall(String): PrivateScope, Public, HideBySig
     GetLocalPort(): PrivateScope, Public, HideBySig
     SetRemoteSipPort(Int32): PrivateScope, Public, HideBySig
+    InitConfig(): PrivateScope, Public, HideBySig
+Class ClientDemo.OnIncomingCall: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(String, String): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(String, String, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
 Class ClientDemo.BusinessCenter: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
@@ -67,9 +81,12 @@ Class ClientDemo.BusinessCenter: AutoLayout, AnsiClass, Class, Public, BeforeFie
     System.String GUID 'get ' : 
     ClientDemo.BusinessCenter Instance 'get ' : 
   Events:
+    ClientDemo.OnIncomingCall OnIncomingCallEvent: 
     System.Action`1[System.String] OnDataback: 
     System.Action`1[System.String] showDialog: 
   Methods:
+    add_OnIncomingCallEvent(OnIncomingCall): PrivateScope, Public, HideBySig, SpecialName
+    remove_OnIncomingCallEvent(OnIncomingCall): PrivateScope, Public, HideBySig, SpecialName
     add_OnDataback(Action`1): PrivateScope, Public, HideBySig, SpecialName
     remove_OnDataback(Action`1): PrivateScope, Public, HideBySig, SpecialName
     add_showDialog(Action`1): PrivateScope, Public, HideBySig, SpecialName
@@ -1823,6 +1840,8 @@ Class ClientDemo.CallBusiness.CC: AutoLayout, AnsiClass, Class, Public, BeforeFi
     Int32 VoicePtrRecv 'get set' : 
     Int32 VoicePtrSendSip 'get set' : 
     Int32 VoiceSendSipPort 'get set' : 
+    Int32 VoiceRecvSipPort 'get set' : 
+    Int32 VoicePrtRecvSip 'get set' : 
     Int32 VoicePtrPlay 'get set' : 
     Int32 VoicePtrSend 'get set' : 
     Int32 VoicePtrLinkSend 'get set' : 
@@ -1856,6 +1875,10 @@ Class ClientDemo.CallBusiness.CC: AutoLayout, AnsiClass, Class, Public, BeforeFi
     set_VoicePtrSendSip(Int32): PrivateScope, Public, HideBySig, SpecialName
     get_VoiceSendSipPort(): PrivateScope, Public, HideBySig, SpecialName
     set_VoiceSendSipPort(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VoiceRecvSipPort(): PrivateScope, Public, HideBySig, SpecialName
+    set_VoiceRecvSipPort(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VoicePrtRecvSip(): PrivateScope, Public, HideBySig, SpecialName
+    set_VoicePrtRecvSip(Int32): PrivateScope, Public, HideBySig, SpecialName
     get_VoicePtrPlay(): PrivateScope, Public, HideBySig, SpecialName
     set_VoicePtrPlay(Int32): PrivateScope, Public, HideBySig, SpecialName
     get_VoicePtrSend(): PrivateScope, Public, HideBySig, SpecialName

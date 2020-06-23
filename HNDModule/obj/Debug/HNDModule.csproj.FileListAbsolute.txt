@@ -12,3 +12,7 @@ E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\Ren
 E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\Google.Protobuf.xml
 E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\Renci.SshNet.xml
 E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\obj\Debug\HNDModule.csprojResolveAssemblyReference.cache
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\DBModule.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\EntityFramework.dll
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\DBModule.pdb
+E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\HNDModule\bin\Debug\EntityFramework.xml

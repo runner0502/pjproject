@@ -23,6 +23,8 @@
 #include <algorithm>
 #include "util.hpp"
 
+#include "HNDWrap.h"
+
 using namespace pj;
 using namespace std;
 

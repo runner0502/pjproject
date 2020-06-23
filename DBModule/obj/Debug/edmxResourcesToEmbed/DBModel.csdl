@@ -2,6 +2,7 @@
 <Schema Namespace="lhdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="lhdbEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="hnd_device" EntityType="lhdbModel.hnd_device" />
+    <EntitySet Name="hnd_params" EntityType="lhdbModel.hnd_params" />
   </EntityContainer>
   <EntityType Name="hnd_device">
     <Key>
@@ -10,5 +11,16 @@
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="deviceId" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="Alias" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="guid" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="numberType" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="systemId" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="hnd_params">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TheKey" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TheValue" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

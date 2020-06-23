@@ -11,4 +11,3 @@ E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\MySq
 E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\bin\Debug\MySql.Data.Entity.EF6.xml
 E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\obj\Debug\DBModule.dll
 E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\obj\Debug\DBModule.pdb
-E:\Users\ANGELCOMM\Documents\GitHub\runner0502\pjproject\DBModule\obj\Debug\DBModule.csprojResolveAssemblyReference.cache

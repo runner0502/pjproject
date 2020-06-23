@@ -38,12 +38,18 @@
     <ClCompile Include="..\src\pjsua-lib\pjsua_vid.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\pjsua-lib\pjsua.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\pjsua-lib\pjsua_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
