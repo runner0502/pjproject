@@ -452,9 +452,10 @@ static void get_media_port(pj_cli_dyn_choice_param *param)
 
     for (i=0; i<count; ++i) {
 	char slot_id[8];
-	char desc[256];
+	char desc[512];
 	char txlist[256];
 	unsigned j;
+	int len;
 	pjsua_conf_port_info info;
 
 	pjsua_conf_get_port_info(id[i], &info);
@@ -470,7 +471,7 @@ static void get_media_port(pj_cli_dyn_choice_param *param)
 	    pj_ansi_strcat(txlist, s);
 	}
 
-	pj_ansi_snprintf(desc,
+	len = pj_ansi_snprintf(desc,
 	       sizeof(desc),
 	       "[%2dKHz/%dms/%d] %20.*s  transmitting to: %s",
 	       info.clock_rate/1000,
@@ -479,6 +480,7 @@ static void get_media_port(pj_cli_dyn_choice_param *param)
 	       (int)info.name.slen,
 	       info.name.ptr,
 	       txlist);
+	PJ_CHECK_TRUNC_STR(len, desc, sizeof(desc));
 
 	pj_strdup2(param->pool, &param->choice[param->cnt].desc, desc);
 	if (++param->cnt >= param->max_cnt)
@@ -817,7 +819,7 @@ static pj_status_t cmd_del_account(pj_cli_cmd_val *cval)
     char out_str[64];
     unsigned str_len;
 
-    int i = my_atoi(cval->argv[1].ptr);
+    int i = my_atoi2(&cval->argv[1]);
 
     if (!pjsua_acc_is_valid(i)) {
 	pj_ansi_snprintf(out_str, sizeof(out_str),
@@ -858,7 +860,7 @@ static pj_status_t cmd_unreg_account()
 /* Select account to be used for sending outgoing request */
 static pj_status_t cmd_next_account(pj_cli_cmd_val *cval)
 {
-    int i = my_atoi(cval->argv[1].ptr);
+    int i = my_atoi2(&cval->argv[1]);
     if (pjsua_acc_is_valid(i)) {
 	pjsua_acc_set_default(i);
 	PJ_LOG(3,(THIS_FILE, "Current account changed to %d", i));
@@ -986,7 +988,7 @@ static pj_status_t cmd_add_buddy(pj_cli_cmd_val *cval)
 /* Delete buddy */
 static pj_status_t cmd_del_buddy(pj_cli_cmd_val *cval)
 {
-    int i = my_atoi(cval->argv[1].ptr) - 1;
+    int i = my_atoi2(&cval->argv[1]) - 1;
     char out_str[80];
 
     if (!pjsua_buddy_is_valid(i)) {
@@ -1796,8 +1798,6 @@ static pj_status_t cmd_transfer_replace_call(pj_cli_cmd_val *cval)
 	pj_str_t STR_FALSE = { "false", 5 };
 	pjsua_call_id ids[PJSUA_MAX_CALLS];
 	pjsua_msg_data msg_data_;
-	char buf[8] = {0};
-	pj_str_t tmp = pj_str(buf);
 	unsigned count;
 	static const pj_str_t err_invalid_num =
 				    {"Invalid destination call number\n", 32 };
@@ -1813,8 +1813,7 @@ static pj_status_t cmd_transfer_replace_call(pj_cli_cmd_val *cval)
 	    return PJ_SUCCESS;
 	}
 
-	pj_strncpy_with_null(&tmp, &cval->argv[1], sizeof(buf));
-	dst_call = my_atoi(tmp.ptr);
+	dst_call = my_atoi2(&cval->argv[1]);
 
 	/* Check if call is still there. */
 	if (call != current_call) {

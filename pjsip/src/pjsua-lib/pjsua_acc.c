@@ -460,7 +460,8 @@ PJ_DEF(pj_status_t) pjsua_acc_add( const pjsua_acc_config *cfg,
     if (acc->pool)
 	pj_pool_reset(acc->pool);
     else
-	acc->pool = pjsua_pool_create("acc%p", 512, 256);
+	acc->pool = pjsua_pool_create("acc%p", PJSUA_POOL_LEN_ACC,
+                                  PJSUA_POOL_INC_ACC);
 
     /* Copy config */
     pjsua_acc_config_dup(acc->pool, &pjsua_var.acc[id].cfg, cfg);
@@ -2288,16 +2289,37 @@ static void regc_cb(struct pjsip_regc_cbparam *param)
      * Print registration status.
      */
     if (param->status!=PJ_SUCCESS) {
+    	pj_status_t status;
+
 	pjsua_perror(THIS_FILE, "SIP registration error", 
 		     param->status);
-	pjsip_regc_destroy(acc->regc);
-	acc->regc = NULL;
-	acc->contact.slen = 0;
-	acc->reg_mapped_addr.slen = 0;
-	acc->rfc5626_status = OUTBOUND_UNKNOWN;
+
+	if (param->status == PJSIP_EBUSY) {
+	    pj_log_pop_indent();
+            PJSUA_UNLOCK();
+	    return;
+	}
+
+	/* This callback is called without holding the registration's lock,
+	 * so there can be a race condition with another registration
+	 * process. Therefore, we must not forcefully try to destroy
+	 * the registration here.
+	 */
+	status = pjsip_regc_destroy2(acc->regc, PJ_FALSE);
+	if (status == PJ_SUCCESS) {
+	    acc->regc = NULL;
+	    acc->contact.slen = 0;
+	    acc->reg_mapped_addr.slen = 0;
+	    acc->rfc5626_status = OUTBOUND_UNKNOWN;
 	
-	/* Stop keep-alive timer if any. */
-	update_keep_alive(acc, PJ_FALSE, NULL);
+	    /* Stop keep-alive timer if any. */
+	    update_keep_alive(acc, PJ_FALSE, NULL);
+	} else {
+	    /* Another registration is in progress. */
+	    pj_assert(status == PJ_EBUSY);
+	    pjsua_perror(THIS_FILE, "Deleting registration failed", 
+		     	 status);	    
+	}
 
     } else if (param->code < 0 || param->code >= 300) {
 	PJ_LOG(2, (THIS_FILE, "SIP registration failed, status=%d (%.*s)", 
@@ -2356,14 +2378,26 @@ static void regc_cb(struct pjsip_regc_cbparam *param)
 	    /* Check and update Service-Route header */
 	    update_service_route(acc, param->rdata);
 
-	    PJ_LOG(3, (THIS_FILE, 
-		       "%s: registration success, status=%d (%.*s), "
-		       "will re-register in %d seconds", 
-		       pjsua_var.acc[acc->index].cfg.id.ptr,
-		       param->code,
-		       (int)param->reason.slen, param->reason.ptr,
-		       param->expiration));
+#if         PJSUA_REG_AUTO_REG_REFRESH
 
+            PJ_LOG(3, (THIS_FILE,
+                        "%s: registration success, status=%d (%.*s), "
+                        "will re-register in %d seconds",
+                        pjsua_var.acc[acc->index].cfg.id.ptr,
+                        param->code,
+                        (int)param->reason.slen, param->reason.ptr,
+                        param->expiration));
+
+#else
+
+            PJ_LOG(3, (THIS_FILE,
+                        "%s: registration success, status=%d (%.*s), "
+                        "auto re-register disabled",
+                        pjsua_var.acc[acc->index].cfg.id.ptr,
+                        param->code,
+                        (int)param->reason.slen, param->reason.ptr));
+
+#endif
 	    /* Start keep-alive timer if necessary. */
 	    update_keep_alive(acc, PJ_TRUE, param);
 
@@ -2724,7 +2758,8 @@ PJ_DEF(pj_status_t) pjsua_acc_set_registration( pjsua_acc_id acc_id,
 	    goto on_return;
 	}
 
-	status = pjsip_regc_register(pjsua_var.acc[acc_id].regc, 1, 
+	status = pjsip_regc_register(pjsua_var.acc[acc_id].regc,
+                                     PJSUA_REG_AUTO_REG_REFRESH,
 				     &tdata);
 
 	if (0 && status == PJ_SUCCESS && pjsua_var.acc[acc_id].cred_cnt) {
@@ -3346,7 +3381,7 @@ pj_status_t pjsua_acc_get_uac_addr(pjsua_acc_id acc_id,
     	for (i = 0; i < sizeof(pjsua_var.tpdata); i++) {
     	    if (tfla2_prm.ret_tp==(const void *)pjsua_var.tpdata[i].data.tp) {
     	    	if (pjsua_var.tpdata[i].has_bound_addr) {
-		    pj_strdup(acc->pool, &addr->host,
+		    pj_strdup(pool, &addr->host,
 		    	      &pjsua_var.tpdata[i].data.tp->local_name.host);
 	    	    addr->port = (pj_uint16_t)
 	    	    		 pjsua_var.tpdata[i].data.tp->local_name.port;
@@ -3784,6 +3819,42 @@ static void auto_rereg_timer_cb(pj_timer_heap_t *th, pj_timer_entry *te)
 
     /* Start re-registration */
     acc->auto_rereg.attempt_cnt++;
+
+    /* Generate new contact as the current contact may use a disconnected
+     * transport. Only do this when outbound is not active and contact is not
+     * rewritten (where the contact address may really be used by server to
+     * contact the UA).
+     */
+    if (acc->rfc5626_status != OUTBOUND_ACTIVE && !acc->contact_rewritten) {
+	pj_str_t tmp_contact;
+	pj_pool_t *pool;
+
+	pool = pjsua_pool_create("tmpregc", 512, 512);
+
+	status = pjsua_acc_create_uac_contact(pool, &tmp_contact, acc->index,
+					      &acc->cfg.reg_uri);
+	if (status != PJ_SUCCESS) {
+	    pjsua_perror(THIS_FILE,
+			 "Unable to generate suitable Contact header"
+			 " for re-registration", status);
+	    pj_pool_release(pool);
+	    schedule_reregistration(acc);
+	    goto on_return;
+	}
+
+	if (pj_strcmp(&tmp_contact, &acc->contact)) {
+	    if (acc->contact.slen < tmp_contact.slen) {
+		pj_strdup_with_null(acc->pool, &acc->contact, &tmp_contact);
+	    } else {
+		pj_strcpy(&acc->contact, &tmp_contact);
+	    }
+	    update_regc_contact(acc);
+	    if (acc->regc)
+		pjsip_regc_update_contact(acc->regc, 1, &acc->reg_contact);
+	}
+	pj_pool_release(pool);
+    }
+
     status = pjsua_acc_set_registration(acc->index, PJ_TRUE);
     if (status != PJ_SUCCESS)
 	schedule_reregistration(acc);
@@ -3909,6 +3980,10 @@ void pjsua_acc_on_tp_state_changed(pjsip_transport *tp,
 	if (acc->via_tp == (void*)tp) {
 	    pj_bzero(&acc->via_addr, sizeof(acc->via_addr));
 	    acc->via_tp = NULL;
+
+	    /* Also reset regc's Via addr */
+	    if (acc->regc)
+		pjsip_regc_set_via_sent_by(acc->regc, NULL, NULL);
 	}
 
 	/* Release transport immediately if regc is using it

@@ -1475,10 +1475,25 @@ static pj_status_t create_audio_unit(AudioComponent io_comp,
     if (dir & PJMEDIA_DIR_PLAYBACK) {
 	AURenderCallbackStruct output_cb;
 	AudioStreamBasicDescription streamFormat = strm->streamFormat;
+	BOOL isMacCatalystApp = false;
+
+#ifdef __IPHONE_13_0
+	if (@available(iOS 13.0, *)) {
+            /* According to Apple's doc, the property isMacCatalystApp is true
+	     * when the process is:
+             * - A Mac app built with Mac Catalyst, or an iOS app running on Apple silicon.
+             * - Running on a Mac.
+             */
+            isMacCatalystApp = [NSProcessInfo processInfo].isMacCatalystApp;
+	}
+#endif
 
 	/* Set the stream format */
-#if COREAUDIO_MAC
-   	if (strm->param.ec_enabled) {
+   	if (strm->param.ec_enabled
+#if !COREAUDIO_MAC
+	    && isMacCatalystApp
+#endif   	
+   	) {
    	    /* When using VPIO on Mac, we need to use float data. Using
    	     * signed integer will generate no errors, but strangely,
    	     * no sound will be played.
@@ -1491,7 +1506,7 @@ static pj_status_t create_audio_unit(AudioComponent io_comp,
     	    streamFormat.mBytesPerPacket   = streamFormat.mBytesPerFrame *
 					     streamFormat.mFramesPerPacket;
 	}
-#endif
+
 	ostatus = AudioUnitSetProperty(*io_unit,
 	                               kAudioUnitProperty_StreamFormat,
 	                               kAudioUnitScope_Input,

@@ -304,7 +304,6 @@ PJ_DEF(pj_status_t) pjmedia_sdp_neg_modify_local_offer2(
 {
     pjmedia_sdp_session *new_offer;
     pjmedia_sdp_session *old_offer;
-    char media_used[PJMEDIA_MAX_SDP_MEDIA];
     unsigned oi; /* old offer media index */
     pj_status_t status;
 
@@ -323,8 +322,19 @@ PJ_DEF(pj_status_t) pjmedia_sdp_neg_modify_local_offer2(
     /* Change state to STATE_LOCAL_OFFER */
     neg->state = PJMEDIA_SDP_NEG_STATE_LOCAL_OFFER;
 
+    /* When there is no active local SDP in state PJMEDIA_SDP_NEG_STATE_DONE,
+     * it means that the previous initial SDP nego must have been failed,
+     * so we'll just set the local SDP offer here.
+     */
+    if (!neg->active_local_sdp) {
+	neg->initial_sdp_tmp = NULL;
+	neg->initial_sdp = pjmedia_sdp_session_clone(pool, local);
+	neg->neg_local_sdp = pjmedia_sdp_session_clone(pool, local);
+
+	return PJ_SUCCESS;
+    }
+
     /* Init vars */
-    pj_bzero(media_used, sizeof(media_used));
     old_offer = neg->active_local_sdp;
     new_offer = pjmedia_sdp_session_clone(pool, local);
 
@@ -447,7 +457,18 @@ PJ_DEF(pj_status_t) pjmedia_sdp_neg_send_local_offer( pj_pool_t *pool,
 	neg->state = PJMEDIA_SDP_NEG_STATE_LOCAL_OFFER;
 	neg->neg_local_sdp = pjmedia_sdp_session_clone(pool, 
 						       neg->active_local_sdp);
-	*offer = neg->active_local_sdp;
+
+#if PJMEDIA_SDP_NEG_COMPARE_BEFORE_INC_VERSION
+    	if (pjmedia_sdp_session_cmp(neg->neg_local_sdp, 
+    				    neg->initial_sdp, 0) != PJ_SUCCESS)
+    	{
+	    neg->neg_local_sdp->origin.version++;
+    	}    
+#else
+    	neg->neg_local_sdp->origin.version++;
+#endif
+
+	*offer = neg->neg_local_sdp;
 
     } else {
 	/* We assume that we're in STATE_LOCAL_OFFER.
@@ -906,7 +927,7 @@ static pj_status_t process_m_answer( pj_pool_t *pool,
  * after receiving remote answer.
  */
 static pj_status_t process_answer(pj_pool_t *pool,
-				  pjmedia_sdp_session *offer,
+				  pjmedia_sdp_session *local_offer,
 				  pjmedia_sdp_session *answer,
 				  pj_bool_t allow_asym,
 				  pjmedia_sdp_session **p_active)
@@ -914,10 +935,14 @@ static pj_status_t process_answer(pj_pool_t *pool,
     unsigned omi = 0; /* Offer media index */
     unsigned ami = 0; /* Answer media index */
     pj_bool_t has_active = PJ_FALSE;
+    pjmedia_sdp_session *offer;
     pj_status_t status;
 
     /* Check arguments. */
-    PJ_ASSERT_RETURN(pool && offer && answer && p_active, PJ_EINVAL);
+    PJ_ASSERT_RETURN(pool && local_offer && answer && p_active, PJ_EINVAL);
+
+    /* Duplicate local offer SDP. */
+    offer = pjmedia_sdp_session_clone(pool, local_offer);
 
     /* Check that media count match between offer and answer */
     // Ticket #527, different media count is allowed for more interoperability,
@@ -1071,6 +1096,7 @@ static pj_status_t match_offer(pj_pool_t *pool,
     pjmedia_sdp_media *answer;
     const pjmedia_sdp_media *master, *slave;
     unsigned nclockrate = 0, clockrate[PJMEDIA_MAX_SDP_FMT];
+    unsigned ntel_clockrate = 0, tel_clockrate[PJMEDIA_MAX_SDP_FMT];
 
     /* If offer has zero port, just clone the offer */
     if (offer->desc.port == 0) {
@@ -1224,6 +1250,18 @@ static pj_status_t match_offer(pj_pool_t *pool,
 				if (k == nclockrate)
 				    clockrate[nclockrate++] = or_.clock_rate;
 			    } else {
+			    	unsigned k;
+
+				/* Keep track of tel-event clock rate,
+				 * to prevent duplicate.
+				 */
+				for (k=0; k<ntel_clockrate; ++k)
+				    if (tel_clockrate[k] == or_.clock_rate)
+					break;
+				if (k < ntel_clockrate)
+				    continue;
+				
+				tel_clockrate[ntel_clockrate++] = or_.clock_rate;
 				found_matching_telephone_event = 1;
 			    }
 

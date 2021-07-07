@@ -54,14 +54,14 @@ doc:
 		    exit 1; \
 		fi; \
 	done
-	
+
 LIBS = 	pjlib/lib/libpj-$(TARGET_NAME).a \
 	pjlib-util/lib/libpjlib-util-$(TARGET_NAME).a \
 	pjnath/lib/libpjnath-$(TARGET_NAME).a \
 	pjmedia/lib/libpjmedia-$(TARGET_NAME).a \
 	pjmedia/lib/libpjmedia-audiodev-$(TARGET_NAME).a \
 	pjmedia/lib/libpjmedia-codec-$(TARGET_NAME).a \
-    	pjsip/lib/libpjsip-$(TARGET_NAME).a \
+	pjsip/lib/libpjsip-$(TARGET_NAME).a \
 	pjsip/lib/libpjsip-ua-$(TARGET_NAME).a \
 	pjsip/lib/libpjsip-simple-$(TARGET_NAME).a \
 	pjsip/lib/libpjsua-$(TARGET_NAME).a
@@ -121,8 +121,11 @@ cmp_wav:
 
 install:
 	mkdir -p $(DESTDIR)$(libdir)/
-#	cp -af $(APP_LIB_FILES) $(DESTDIR)$(libdir)/
-	cp -af $(APP_LIBXX_FILES) $(DESTDIR)$(libdir)/
+	if [ "$(PJ_EXCLUDE_PJSUA2)x" = "x" ] ; then \
+	    cp -af $(APP_LIBXX_FILES) $(DESTDIR)$(libdir)/; \
+	else \
+	    cp -af $(APP_LIB_FILES) $(DESTDIR)$(libdir)/; \
+	fi
 	mkdir -p $(DESTDIR)$(includedir)/
 	for d in pjlib pjlib-util pjnath pjmedia pjsip; do \
 		cp -RLf $$d/include/* $(DESTDIR)$(includedir)/; \
@@ -132,10 +135,9 @@ install:
 		sed -e "s!@INCLUDEDIR@!$(includedir)!" | \
 		sed -e "s!@LIBDIR@!$(libdir)!" | \
 		sed -e "s/@PJ_VERSION@/$(PJ_VERSION)/" | \
-		sed -e "s!@PJ_LDLIBS@!!" | \
-		sed -e "s!@PJ_LDXXLIBS@!$(PJ_LDXXLIBS)!" | \
-		sed -e "s!@PJ_INSTALL_CFLAGS@!!" | \
-		sed -e "s!@PJ_INSTALL_CXXFLAGS@!$(PJ_INSTALL_CXXFLAGS)!" > $(DESTDIR)/$(libdir)/pkgconfig/libpjproject.pc
+		sed -e "s!@PJ_INSTALL_LDFLAGS@!$(PJ_INSTALL_LDFLAGS)!" | \
+		sed -e "s!@PJ_INSTALL_LDFLAGS_PRIVATE@!$(PJ_INSTALL_LDFLAGS_PRIVATE)!" | \
+		sed -e "s!@PJ_INSTALL_CFLAGS@!$(PJ_INSTALL_CFLAGS)!" > $(DESTDIR)$(libdir)/pkgconfig/libpjproject.pc
 
 uninstall:
 	$(RM) $(DESTDIR)$(libdir)/pkgconfig/libpjproject.pc
@@ -146,5 +148,5 @@ uninstall:
 		done; \
 	done
 	rmdir $(DESTDIR)$(includedir) 2> /dev/null || true
-	$(RM) $(addprefix $(DESTDIR)$(libdir)/,$(notdir $(APP_LIB_FILES)))
+	$(RM) $(addprefix $(DESTDIR)$(libdir)/,$(notdir $(APP_LIBXX_FILES)))
 	rmdir $(DESTDIR)$(libdir) 2> /dev/null || true

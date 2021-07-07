@@ -140,9 +140,21 @@ class Expect(threading.Thread):
             fullcmd = G_EXE + " " + inst_param.arg + " --use-cli --no-cli-console --cli-telnet-port=%d" % (inst_param.telnet_port)
             self.trace("Popen " + fullcmd)
             self.proc = subprocess.Popen(fullcmd, shell=G_INUNIX)
-            self.telnet = telnetlib.Telnet('localhost', port=self.inst_param.telnet_port, timeout=60)
+            
+            # start telnet-ing to pjsua, raise exception if telnet fails after 5s
+            t0 = time.time()
+            while self.proc.poll() is None and self.telnet is None:
+                try:
+                    time.sleep(0.01)
+                    self.telnet = telnetlib.Telnet('127.0.0.1', port=self.inst_param.telnet_port, timeout=60)
+                except Exception as e:
+                    t1 = time.time()
+                    dur = int(t1 - t0)
+                    if dur > 5:
+                        raise inc.TestError(self.name + ": Timeout connecting to pjsua: " + repr(e))
+
             self.running = True
-            while self.proc.poll() == None:
+            while self.proc.poll() is None:
                 line = self.telnet.read_until('\n', 60)
                 if line == "" or const.DESTROYED in line:
                     break;
@@ -162,7 +174,7 @@ class Expect(threading.Thread):
             self.trace("Popen " + fullcmd)
             self.proc = subprocess.Popen(fullcmd, shell=G_INUNIX, bufsize=0, stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=False)
             self.running = True
-            while self.proc.poll() == None:
+            while self.proc.poll() is None:
                 line = self.proc.stdout.readline()
                 if line == "":
                     break;
@@ -184,7 +196,7 @@ class Expect(threading.Thread):
             self.proc.stdin.writelines(cmd + "\n")
             self.proc.stdin.flush()
         
-    def expect(self, pattern, raise_on_error=True, title=""):
+    def expect(self, pattern, raise_on_error=True, title="", timeout=15):
         # no prompt for telnet
         if self.use_telnet and pattern==const.PROMPT:
             return
@@ -209,7 +221,7 @@ class Expect(threading.Thread):
                         self.lock.release()
                         raise inc.TestError(self.name + ": " + line)
 
-            self.output = '\n'.join(lines[found_at+1:]) if found_at >= 0 else ""
+            self.output = '\n'.join(lines[found_at+1:])+"\n" if found_at >= 0 else ""
             self.lock.release()
             
             if found_at >= 0:
@@ -222,7 +234,7 @@ class Expect(threading.Thread):
             else:
                 t1 = time.time()
                 dur = int(t1 - t0)
-                if dur > 15:
+                if dur > timeout:
                     self.trace("Timed-out!")
                     if raise_on_error:
                         raise inc.TestError(self.name + " " + title + ": Timeout expecting pattern: \"" + pattern + "\"")
@@ -271,18 +283,18 @@ def handle_error(errmsg, t, close_processes = True):
             is_err = False
             try:
                 ret = p.expect(const.DESTROYED, False)
-                if not ret:
+                if ret is None:
                     is_err = True
             except:
                 is_err = True
-            if is_err:
+            if is_err and p.proc.poll() is None:
                 if sys.hexversion >= 0x02060000:
                     p.proc.terminate()
                 else:
                     p.wait()
             else:
                 p.wait()
-                
+
     print "Test completed with error: " + errmsg
     sys.exit(1)
 
@@ -331,8 +343,12 @@ for inst_param in script.test.inst_params:
                 continue
             break
     else:
+        t0 = time.time()
         while p.telnet is None:
             time.sleep(0.1)
+            dur = int(time.time() - t0)
+            if dur > 5:
+                handle_error("Timeout connecting to pjsua", script.test)
 
     # add running instance
     script.test.process.append(p)
@@ -341,6 +357,7 @@ for p in script.test.process:
     try:
         # Wait until registration completes
         if p.inst_param.have_reg:
+            p.send("rr")
             p.expect(p.inst_param.uri+".*registration success")
          # Synchronize stdout
         if not p.use_telnet:
@@ -364,7 +381,7 @@ if script.test.test_func != None:
 # Shutdown all instances
 for p in script.test.process:
     # Unregister if we have_reg to make sure that next tests
-    # won't wail
+    # won't fail
     if p.inst_param.have_reg:
         p.send("ru")
         p.expect(p.inst_param.uri+".*unregistration success")

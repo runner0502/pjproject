@@ -104,7 +104,7 @@ PJ_DEF(void) pjsua_config_default(pjsua_config *cfg)
 {
     pj_bzero(cfg, sizeof(*cfg));
 
-    cfg->max_calls = ((PJSUA_MAX_CALLS) < 4) ? (PJSUA_MAX_CALLS) : 4;
+    cfg->max_calls = PJSUA_MAX_CALLS;
     cfg->thread_cnt = PJSUA_SEPARATE_WORKER_FOR_TIMER? 2 : 1;
     cfg->nat_type_in_sdp = 1;
     cfg->stun_ignore_failure = PJ_TRUE;
@@ -365,6 +365,7 @@ PJ_DEF(void) pjsua_acc_config_default(pjsua_acc_config *cfg)
 			 PJSUA_REG_USE_ACC_PROXY;
 #if defined(PJMEDIA_STREAM_ENABLE_KA) && PJMEDIA_STREAM_ENABLE_KA!=0
     cfg->use_stream_ka = (PJMEDIA_STREAM_ENABLE_KA != 0);
+    pjmedia_stream_ka_config_default(&cfg->stream_ka_cfg);
 #endif
     pj_list_init(&cfg->reg_hdr_list);
     pj_list_init(&cfg->sub_hdr_list);
@@ -415,6 +416,7 @@ PJ_DEF(void) pjsua_media_config_default(pjsua_media_config *cfg)
     cfg->snd_rec_latency = PJMEDIA_SND_DEFAULT_REC_LATENCY;
     cfg->snd_play_latency = PJMEDIA_SND_DEFAULT_PLAY_LATENCY;
     cfg->jb_init = cfg->jb_min_pre = cfg->jb_max_pre = cfg->jb_max = -1;
+    cfg->jb_discard_algo = PJMEDIA_JB_DISCARD_PROGRESSIVE;
     cfg->snd_auto_close_time = 1;
 
     cfg->ice_max_host_cands = -1;
@@ -936,12 +938,13 @@ PJ_DEF(pj_status_t) pjsua_create(void)
     /* Init caching pool. */
     pj_caching_pool_init(&pjsua_var.cp, NULL, 0);
 
-    /* Create memory pool for application. */
-    pjsua_var.pool = pjsua_pool_create("pjsua", 1000, 1000);
-    if (pjsua_var.pool == NULL) {
+    /* Create memory pools for application and internal use. */
+    pjsua_var.pool = pjsua_pool_create("pjsua", PJSUA_POOL_LEN, PJSUA_POOL_INC);
+    pjsua_var.timer_pool = pjsua_pool_create("pjsua_timer", 500, 500);
+    if (pjsua_var.pool == NULL || pjsua_var.timer_pool == NULL) {
 	pj_log_pop_indent();
 	status = PJ_ENOMEM;
-	pjsua_perror(THIS_FILE, "Unable to create pjsua pool", status);
+	pjsua_perror(THIS_FILE, "Unable to create pjsua/timer pool", status);
 	pj_shutdown();
 	return status;
     }
@@ -969,8 +972,10 @@ PJ_DEF(pj_status_t) pjsua_create(void)
 	return status;
     }
 
-    /* Init timer entry list */
+    /* Init timer entry and event list */
+    pj_list_init(&pjsua_var.active_timer_list);
     pj_list_init(&pjsua_var.timer_list);
+    pj_list_init(&pjsua_var.event_list);
 
     /* Create timer mutex */
     status = pj_mutex_create_recursive(pjsua_var.pool, "pjsua_timer", 
@@ -2041,7 +2046,11 @@ PJ_DEF(pj_status_t) pjsua_destroy2(unsigned flags)
         pjsua_var.timer_mutex = NULL;
     }
 
-    /* Destroy pool and pool factory. */
+    /* Destroy pools and pool factory. */
+    if (pjsua_var.timer_pool) {
+	pj_pool_release(pjsua_var.timer_pool);
+	pjsua_var.timer_pool = NULL;
+    }
     if (pjsua_var.pool) {
 	pj_pool_release(pjsua_var.pool);
 	pjsua_var.pool = NULL;
@@ -2872,20 +2881,27 @@ PJ_DEF(pj_status_t) pjsua_transport_close( pjsua_transport_id id,
 
     tp_type = pjsua_var.tpdata[id].type & ~PJSIP_TRANSPORT_IPV6;
 
-    /* Note: destroy() may not work if there are objects still referencing
-     *	     the transport.
-     */
     if (force) {
-	switch (tp_type) {
+    	/* Forcefully closing transport is deprecated, since any pending
+    	 * transactions that are using the transport may not terminate
+    	 * properly and can even crash.
+    	 */
+	PJ_LOG(1, (THIS_FILE, "pjsua_transport_close(force=PJ_TRUE) is "
+			      "deprecated."));
+    	
+    	/* To minimize the effect to users, we shouldn't hard-deprecate this
+    	 * and let it continue as if force is false.
+    	 */
+    	// return PJ_EINVAL;
+    }
+
+    /* If force is not specified, transports will be closed at their
+     * convenient time.
+     */
+    switch (tp_type) {
 	case PJSIP_TRANSPORT_UDP:
 	    status = pjsip_transport_shutdown(pjsua_var.tpdata[id].data.tp);
-	    if (status  != PJ_SUCCESS)
-		return status;
-	    status = pjsip_transport_destroy(pjsua_var.tpdata[id].data.tp);
-	    if (status != PJ_SUCCESS)
-		return status;
 	    break;
-
 	case PJSIP_TRANSPORT_TLS:
 	case PJSIP_TRANSPORT_TCP:
 	    /* This will close the TCP listener, but existing TCP/TLS
@@ -2893,41 +2909,21 @@ PJ_DEF(pj_status_t) pjsua_transport_close( pjsua_transport_id id,
 	     */
 	    status = (*pjsua_var.tpdata[id].data.factory->destroy)
 			(pjsua_var.tpdata[id].data.factory);
-	    if (status != PJ_SUCCESS)
-		return status;
-
 	    break;
-
 	default:
 	    return PJ_EINVAL;
-	}
-	
-    } else {
-	/* If force is not specified, transports will be closed at their
-	 * convenient time. However this will leak PJSUA-API transport
-	 * descriptors as PJSUA-API wouldn't know when exactly the
-	 * transport is closed thus it can't cleanup PJSUA transport
-	 * descriptor.
-	 */
-	switch (tp_type) {
-	case PJSIP_TRANSPORT_UDP:
-	    return pjsip_transport_shutdown(pjsua_var.tpdata[id].data.tp);
-	case PJSIP_TRANSPORT_TLS:
-	case PJSIP_TRANSPORT_TCP:
-	    return (*pjsua_var.tpdata[id].data.factory->destroy)
-			(pjsua_var.tpdata[id].data.factory);
-	default:
-	    return PJ_EINVAL;
-	}
     }
 
-    /* Cleanup pjsua data when force is applied */
-    if (force) {
-	pjsua_var.tpdata[id].type = PJSIP_TRANSPORT_UNSPECIFIED;
-	pjsua_var.tpdata[id].data.ptr = NULL;
+    /* Cleanup pjsua data. We don't need to keep the transport
+     * descriptor, the transport will be destroyed later by the last user
+     * which decrements the transport's reference.
+     */
+    if (status == PJ_SUCCESS) {
+    	pjsua_var.tpdata[id].type = PJSIP_TRANSPORT_UNSPECIFIED;
+    	pjsua_var.tpdata[id].data.ptr = NULL;
     }
 
-    return PJ_SUCCESS;
+    return status;
 }
 
 
@@ -3301,12 +3297,13 @@ static void timer_cb( pj_timer_heap_t *th,
 
     PJ_UNUSED_ARG(th);
 
-    pj_mutex_lock(pjsua_var.timer_mutex);
-    pj_list_push_back(&pjsua_var.timer_list, tmr);
-    pj_mutex_unlock(pjsua_var.timer_mutex);
-
     if (cb)
         (*cb)(user_data);
+
+    pj_mutex_lock(pjsua_var.timer_mutex);
+    pj_list_erase(tmr);
+    pj_list_push_back(&pjsua_var.timer_list, tmr);
+    pj_mutex_unlock(pjsua_var.timer_mutex);
 }
 
 /*
@@ -3331,7 +3328,7 @@ PJ_DEF(pj_status_t) pjsua_schedule_timer2( void (*cb)(void *user_data),
     pj_mutex_lock(pjsua_var.timer_mutex);
 
     if (pj_list_empty(&pjsua_var.timer_list)) {
-        tmr = PJ_POOL_ALLOC_T(pjsua_var.pool, pjsua_timer_list);
+        tmr = PJ_POOL_ALLOC_T(pjsua_var.timer_pool, pjsua_timer_list);
     } else {
         tmr = pjsua_var.timer_list.next;
         pj_list_erase(tmr);
@@ -3348,7 +3345,9 @@ PJ_DEF(pj_status_t) pjsua_schedule_timer2( void (*cb)(void *user_data),
 #else
     status = pjsip_endpt_schedule_timer(pjsua_var.endpt, &tmr->entry, &delay);
 #endif
-    if (status != PJ_SUCCESS) {
+    if (status == PJ_SUCCESS) {
+    	pj_list_push_back(&pjsua_var.active_timer_list, tmr);
+    } else {
         pj_list_push_back(&pjsua_var.timer_list, tmr);
     }
 
@@ -3735,13 +3734,28 @@ static pj_status_t restart_listener(pjsua_transport_id id,
 
     switch (tp_info.type) {
     case PJSIP_TRANSPORT_UDP:
-    case PJSIP_TRANSPORT_UDP6:
+    case PJSIP_TRANSPORT_UDP6:    
+    {
+	unsigned num_locks = 0;
+
+	/* Release locks before restarting the transport, to avoid deadlock. */
+	while (PJSUA_LOCK_IS_LOCKED()) {
+    	    num_locks++;
+    	    PJSUA_UNLOCK();
+	}
+
 	status = pjsip_udp_transport_restart2(
 				       pjsua_var.tpdata[id].data.tp,
 				       PJSIP_UDP_TRANSPORT_DESTROY_SOCKET,
 				       PJ_INVALID_SOCKET,
 				       &bind_addr,
 				       NULL);
+
+	/* Re-acquire the locks. */
+	for (;num_locks > 0; num_locks--)
+    	    PJSUA_LOCK();
+
+    }
 	break;
 
 #if defined(PJSIP_HAS_TLS_TRANSPORT) && PJSIP_HAS_TLS_TRANSPORT!=0
@@ -3818,6 +3832,15 @@ static void restart_listener_cb(void *user_data)
 }
 
 
+static void ip_change_put_back_inv_config(void *user_data)
+{
+    PJ_UNUSED_ARG(user_data);
+
+    PJ_LOG(4,(THIS_FILE,"IP change stops ignoring request timeout"));
+    pjsip_cfg()->endpt.keep_inv_after_tsx_timeout = PJ_FALSE;
+}
+
+
 PJ_DEF(pj_status_t) pjsua_handle_ip_change(const pjsua_ip_change_param *param)
 {
     pj_status_t status = PJ_SUCCESS;
@@ -3836,6 +3859,21 @@ PJ_DEF(pj_status_t) pjsua_handle_ip_change(const pjsua_ip_change_param *param)
     }
 
     PJ_LOG(3, (THIS_FILE, "Start handling IP address change"));
+
+    /* Avoid call disconnection due to request timeout. Some requests may
+     * be in progress when network is changing, they may eventually get
+     * timed out and cause call disconnection.
+     */
+    if (!pjsip_cfg()->endpt.keep_inv_after_tsx_timeout) {
+	pjsip_cfg()->endpt.keep_inv_after_tsx_timeout = PJ_TRUE;
+
+	/* Put it back after some time (transaction timeout setting value) */
+	pjsua_schedule_timer2(&ip_change_put_back_inv_config, NULL,
+			      pjsip_cfg()->tsx.td);
+
+	PJ_LOG(4,(THIS_FILE,"IP change temporarily ignores request timeout"));
+    }
+
     if (param->restart_listener) {
 	PJSUA_LOCK();
 	/* Restart listener/transport, handle_ip_change_on_acc() will

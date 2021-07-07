@@ -732,7 +732,11 @@ PJ_DEF(pj_status_t) pjsip_tx_data_clone(const pjsip_tx_data *src,
     if (src->msg->body)
 	msg->body = pjsip_msg_body_clone(dst->pool, src->msg->body);
 
-    dst->is_pending = src->is_pending;
+    /* We shouldn't copy is_pending since it's src's internal state,
+     * indicating that it's currently being sent by the transport.
+     * While the cloned tdata is of course not.
+     */
+    //dst->is_pending = src->is_pending;
 
     PJ_LOG(5,(THIS_FILE,
 	     "Tx data %s cloned",
@@ -1067,6 +1071,19 @@ static void transport_idle_callback(pj_timer_heap_t *timer_heap,
 	return;
 
     entry->id = PJ_FALSE;
+
+    /* Set is_destroying flag under transport manager mutex to avoid
+     * race condition with pjsip_tpmgr_acquire_transport2().
+     */
+    pj_lock_acquire(tp->tpmgr->lock);
+    if (pj_atomic_get(tp->ref_cnt) == 0) {
+	tp->is_destroying = PJ_TRUE;
+    } else {
+	pj_lock_release(tp->tpmgr->lock);
+	return;
+    }
+    pj_lock_release(tp->tpmgr->lock);
+
     pjsip_transport_destroy(tp);
 }
 
@@ -1388,8 +1405,8 @@ PJ_DEF(pj_status_t) pjsip_transport_shutdown2(pjsip_transport *tp,
     mgr = tp->tpmgr;
     pj_lock_acquire(mgr->lock);
 
-    /* Do nothing if transport is being shutdown already */
-    if (tp->is_shutdown) {
+    /* Do nothing if transport is being shutdown/destroyed already */
+    if (tp->is_shutdown || tp->is_destroying) {
 	pj_lock_release(mgr->lock);
 	pj_lock_release(tp->lock);
 	return PJ_SUCCESS;
@@ -2252,6 +2269,13 @@ PJ_DEF(pj_status_t) pjsip_tpmgr_acquire_transport2(pjsip_tpmgr *mgr,
 	    return PJSIP_ETPNOTSUITABLE;
 	}
 
+	/* Make sure the transport is not being destroyed */
+	if (seltp->is_destroying) {
+	    pj_lock_release(mgr->lock);
+	    TRACE_((THIS_FILE,"Transport to be acquired is being destroyed"));
+	    return PJ_ENOTFOUND;
+	}
+
 	/* We could also verify that the destination address is reachable
 	 * from this transport (i.e. both are equal), but if application
 	 * has requested a specific transport to be used, assume that
@@ -2280,7 +2304,7 @@ PJ_DEF(pj_status_t) pjsip_tpmgr_acquire_transport2(pjsip_tpmgr *mgr,
 	int key_len;
 	pjsip_transport *tp_ref = NULL;
 	transport *tp_entry = NULL;
-
+	unsigned flag = pjsip_transport_get_flag_from_type(type);
 
 	/* If listener is specified, verify that the listener type matches
 	 * the destination type.
@@ -2307,8 +2331,23 @@ PJ_DEF(pj_status_t) pjsip_tpmgr_acquire_transport2(pjsip_tpmgr *mgr,
 	    if (tp_entry) {
 		transport *tp_iter = tp_entry;
 		do {
-		    /* Don't use transport being shutdown */
-		    if (!tp_iter->tp->is_shutdown) {
+		    /* Don't use transport being shutdown/destroyed */
+		    if (!tp_iter->tp->is_shutdown &&
+			!tp_iter->tp->is_destroying)
+		    {
+			if ((flag & PJSIP_TRANSPORT_SECURE) && tdata) {
+			    /* For secure transport, make sure tdata's
+			     * destination host matches the transport's
+			     * remote host.
+			     */
+			    if (pj_stricmp(&tdata->dest_info.name,
+				  	   &tp_iter->tp->remote_name.host))
+			    {
+			    	tp_iter = tp_iter->next;
+			    	continue;
+			    }
+			}
+
 			if (sel && sel->type == PJSIP_TPSELECTOR_LISTENER &&
 			    sel->u.listener)
 			{
@@ -2330,7 +2369,6 @@ PJ_DEF(pj_status_t) pjsip_tpmgr_acquire_transport2(pjsip_tpmgr *mgr,
 	if (tp_ref == NULL &&
 	    (!sel || sel->disable_connection_reuse == PJ_FALSE))
 	{
-	    unsigned flag = pjsip_transport_get_flag_from_type(type);
 	    const pj_sockaddr *remote_addr = (const pj_sockaddr*)remote;
 
 
@@ -2378,7 +2416,7 @@ PJ_DEF(pj_status_t) pjsip_tpmgr_acquire_transport2(pjsip_tpmgr *mgr,
 	    TRACE_((THIS_FILE, "Transport found but from different listener"));
 	}
 
-	if (tp_ref!=NULL && !tp_ref->is_shutdown) {
+	if (tp_ref!=NULL && !tp_ref->is_shutdown && !tp_ref->is_destroying) {
 	    /*
 	     * Transport found!
 	     */
@@ -2620,7 +2658,7 @@ PJ_DEF(pj_status_t) pjsip_transport_add_state_listener (
 
     PJ_ASSERT_RETURN(tp && cb && key, PJ_EINVAL);
 
-    if (tp->is_shutdown) {
+    if (tp->is_shutdown || tp->is_destroying) {
 	*key = NULL;
 	return PJ_EINVALIDOP;
     }

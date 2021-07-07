@@ -8,6 +8,32 @@ from inc_cfg import *
 # Load configuration
 cfg_file = imp.load_source("cfg_file", ARGS[1])
 
+# Trigger address switch for media flow between ua1 and ua2.
+# When the receiver uses STUN while both sides are actually in the same
+# private network, initial media packets may be sent to public IP address
+# as specified in the receiver SDP and those packets may not be delivered
+# if the NAT does not support hairpinning. This function will make both
+# sides to send some initial packets to trigger destination address switch
+# in media transport, so future packets will be delivered to the correct
+# address (private IP address).
+def hole_punch(ua1, ua2):
+    if ua1.use_telnet:
+        ua1.send("# 987")
+    else:
+        ua1.send("#")
+        ua1.expect("#")
+        ua1.send("987")
+
+    if ua2.use_telnet:
+        ua2.send("# 789")
+    else:
+        ua2.send("#")
+        ua2.expect("#")
+        ua2.send("789")
+
+    time.sleep(0.1)
+
+
 # Check media flow between ua1 and ua2
 def check_media(ua1, ua2):
     if ua1.use_telnet:
@@ -33,6 +59,15 @@ def test_func(t):
         time.sleep(1)
     if caller.inst_param.have_reg:
         time.sleep(1)
+        
+    # Check if ICE is used
+    use_ice = ("--use-ice" in caller.inst_param.arg) and ("--use-ice" in callee.inst_param.arg)
+
+    # Check if STUN is used (by either side)
+    use_stun = ("--stun-srv" in caller.inst_param.arg) or ("--stun-srv" in callee.inst_param.arg)
+
+    # Check if DTLS-SRTP is used
+    use_dtls_srtp = "--srtp-keying=1" in caller.inst_param.arg
 
     # Caller making call
     if caller.use_telnet:
@@ -75,9 +110,27 @@ def test_func(t):
     ##time.sleep(0.1)
     caller.sync_stdout()
     callee.sync_stdout()
+    
+    # Wait ICE nego before checking media
+    if use_ice:
+        # Unfortunately ICE nego may race with STATE_CONFIRMED (esp. on callee side), so let's just sleep
+        #caller.expect("ICE negotiation success")
+        #callee.expect("ICE negotiation success")
+        # Additional wait for ICE updating address (via UPDATE/re-INVITE)
+        time.sleep(0.5)
+
+    # Wait DTLS-SRTP nego before checking media
+    if use_dtls_srtp:
+        # Unfortunately DTLS-SRTP nego may race with STATE_CONFIRMED, so let's just sleep
+        #caller.expect("SRTP started, keying=DTLS-SRTP")
+        #callee.expect("SRTP started, keying=DTLS-SRTP")
+        time.sleep(0.5)
+
+    # Trigger address switch before checking media
+    if use_stun and not use_ice:
+        hole_punch(caller, callee)
 
     # Test that media is okay
-    ##time.sleep(0.3)
     check_media(caller, callee)
     check_media(callee, caller)
 
@@ -109,6 +162,10 @@ def test_func(t):
     # Synchronize stdout
     caller.sync_stdout()
     callee.sync_stdout()
+
+    # Trigger address switch before checking media
+    if use_stun and not use_ice:
+        hole_punch(caller, callee)
 
     # Test that media is okay
     check_media(caller, callee)
@@ -147,6 +204,10 @@ def test_func(t):
     caller.sync_stdout()
     callee.sync_stdout()
 
+    # Trigger address switch before checking media
+    if use_stun and not use_ice:
+        hole_punch(caller, callee)
+
     # Test that media is okay
     # Wait for some time for ICE negotiation
     ##time.sleep(0.6)
@@ -170,6 +231,10 @@ def test_func(t):
     caller.sync_stdout()
     callee.sync_stdout()
 
+    # Trigger address switch before checking media
+    if use_stun and not use_ice:
+        hole_punch(caller, callee)
+
     # Test that media is okay
     ##time.sleep(0.1)
     check_media(caller, callee)
@@ -189,6 +254,10 @@ def test_func(t):
     caller.sync_stdout()
     callee.sync_stdout()
 
+    # Trigger address switch before checking media
+    if use_stun and not use_ice:
+        hole_punch(caller, callee)
+
     # Test that media is okay
     ##time.sleep(0.1)
     check_media(caller, callee)
@@ -203,7 +272,11 @@ def test_func(t):
     # In caller we only enable PCMU, in callee we only enable PCMA
     if caller.use_telnet:
         caller.send("Cp * 0")
+        caller.send("Cp")
+        caller.expect("PCMU/8000.* prio: 0")
         caller.send("Cp PCMU 120")
+        caller.send("Cp")
+        caller.expect("PCMU/8000.* prio: 120")
     else:
         caller.send("Cp")
         caller.expect("Enter codec")
@@ -214,7 +287,11 @@ def test_func(t):
 
     if callee.use_telnet:
         callee.send("Cp * 0")
+        callee.send("Cp")
+        callee.expect("PCMA/8000.* prio: 0")
         callee.send("Cp PCMA 120")
+        callee.send("Cp")
+        callee.expect("PCMA/8000.* prio: 120")
     else:
         callee.send("Cp")
         callee.expect("Enter codec")

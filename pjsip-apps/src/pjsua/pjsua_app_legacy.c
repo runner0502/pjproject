@@ -308,7 +308,7 @@ static void vid_show_help()
 
 static void vid_handle_menu(char *menuin)
 {
-    char *argv[8];
+    char *argv[8] = {NULL};
     int argc = 0;
 
     /* Tokenize */
@@ -1591,7 +1591,7 @@ static void ui_change_online_status()
 static void ui_conf_list()
 {
     unsigned i, count;
-    pjsua_conf_port_id id[PJSUA_MAX_CALLS];
+    pjsua_conf_port_id id[PJSUA_MAX_CONF_PORTS];
 
     printf("Conference ports:\n");
 

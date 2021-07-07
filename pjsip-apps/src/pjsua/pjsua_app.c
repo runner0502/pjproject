@@ -205,8 +205,11 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e)
 	    find_next_call();
 	}
 
-	/* Dump media state upon disconnected */
-	if (1) {
+	/* Dump media state upon disconnected.
+	 * Moved to on_stream_destroyed() since media has been deactivated
+	 * upon disconnection.
+	 */
+	if (0) {
 	    PJ_LOG(5,(THIS_FILE, 
 		      "Call %d disconnected, dumping media stats..", 
 		      call_id));
@@ -268,6 +271,22 @@ static void on_call_state(pjsua_call_id call_id, pjsip_event *e)
 	if (current_call==PJSUA_INVALID_ID)
 	    current_call = call_id;
 
+    }
+}
+
+/*
+ * Handler when audio stream is destroyed.
+ */
+static void on_stream_destroyed(pjsua_call_id call_id,
+                                pjmedia_stream *strm,
+				unsigned stream_idx)
+{
+    PJ_UNUSED_ARG(strm);
+    if (1) {
+	PJ_LOG(5,(THIS_FILE, 
+		  "Call %d stream %d destroyed, dumping media stats..", 
+		  call_id, stream_idx));
+	log_call_dump(call_id);
     }
 }
 
@@ -822,9 +841,11 @@ static void on_transport_state(pjsip_transport *tp,
     case PJSIP_TP_STATE_DISCONNECTED:
 	{
 	    char buf[100];
+	    int len;
 
-	    snprintf(buf, sizeof(buf), "SIP %s transport is disconnected "
-		    "from %s", tp->type_name, host_port);
+	    len = pj_ansi_snprintf(buf, sizeof(buf), "SIP %s transport is "
+	    	      "disconnected from %s", tp->type_name, host_port);
+	    PJ_CHECK_TRUNC_STR(len, buf, sizeof(buf));
 	    pjsua_perror(THIS_FILE, buf, info->status);
 	}
 	break;
@@ -1315,6 +1336,7 @@ int stdout_refresh_proc(void *arg)
     return 0;
 }
 
+
 static pj_status_t app_init(void)
 {
     pjsua_transport_id transport_id = -1;
@@ -1349,6 +1371,7 @@ static pj_status_t app_init(void)
 
     /* Initialize application callbacks */
     app_config.cfg.cb.on_call_state = &on_call_state;
+    app_config.cfg.cb.on_stream_destroyed = &on_stream_destroyed;
     app_config.cfg.cb.on_call_media_state = &on_call_media_state;
     app_config.cfg.cb.on_incoming_call = &on_incoming_call;
     app_config.cfg.cb.on_dtmf_digit2 = &call_on_dtmf_callback2;

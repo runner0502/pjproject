@@ -4,6 +4,7 @@ import sys
 import time
 import re
 import shutil
+import platform
 
 PYTHON = os.path.basename(sys.executable)
 
@@ -28,8 +29,6 @@ excluded_tests = [
     "scripts-media-playrec/100_resample_lf_11",      # related to clock-rate 11 kHz problem
     "pesq",                                          # temporarily disabling all pesq related test due to unreliability
     # TODO check all tests below for false negatives
-    "pjmedia-test",
-    "pjsip-test",
     "call_305_ice_comp_1_2",
     "scripts-sendto/155_err_sdp_bad_syntax",
     "transfer-attended",
@@ -45,6 +44,11 @@ excluded_tests = [
     "uas-register-ip-change",
     "uas-timer-update"
 ]
+
+# Exclude scripts-sipp/uac-reinvite-bad-via-branch on MacOS due to unreliable result
+if platform.system()=='Darwin':
+    excluded_tests.append("scripts-sipp/uac-reinvite-bad-via-branch")
+
 
 # Add basic tests
 for f in os.listdir("scripts-run"):
@@ -82,7 +86,7 @@ for f in os.listdir("scripts-sipp"):
 
 resume_script=""
 shell_cmd=""
-with_log=False
+with_log=True
 
 # Parse arguments
 sys.argv.pop(0)
@@ -105,8 +109,9 @@ while len(sys.argv):
         print "    Run the tests with the specified SHELL cmd. This can also be"
         print "    used to run the test with ccdash. Example:"
         print "    --shell '/bin/sh -c'"
-        print "  --logs"
-        print "    Generate log files, the log files will be put in 'logs' dir."
+        print "  --no-log"
+        print "    Do not generate log files. By default log files will be generated"
+        print "    and put in 'logs' dir."
         print ""
         print "  run.py-OPTIONS are applicable here"
         sys.exit(0)
@@ -154,9 +159,9 @@ while len(sys.argv):
             sys.argv.pop(0)
             sys.stderr.write("Error: argument value required")
             sys.exit(1)        	
-    elif sys.argv[0] == '--logs':
+    elif sys.argv[0] == '--no-log':
         sys.argv.pop(0)
-        with_log=True
+        with_log=False
     else:
         # should be run.py options
         break
@@ -185,7 +190,7 @@ for t in tests:
     if shell_cmd:
         cmdline = "%s '%s'" % (shell_cmd, cmdline)
     t0 = time.time()
-    msg = "Running %d/%d: %s..." % (tests_cnt+1, total_cnt, cmdline)
+    msg = "Running %3d/%d: %s..." % (tests_cnt+1, total_cnt, cmdline)
     sys.stdout.write(msg)
     sys.stdout.flush()
     if with_log:
@@ -202,7 +207,9 @@ for t in tests:
         dur = int(t1 - t0)
         print " failed!! [" + str(dur) + "s]"
         if with_log:
-            print "Please check '" + logname + "' for the test log."
+            lines = open(logname, "r").readlines()
+            print ''.join(lines)
+            print "Log file: '" + logname + "'."
         fails_cnt += 1
     else:
         dur = int(t1 - t0)
@@ -214,3 +221,4 @@ if fails_cnt == 0:
 else:
     print str(tests_cnt) + " tests completed, " +  str(fails_cnt) + " test(s) failed"
 
+sys.exit(fails_cnt)

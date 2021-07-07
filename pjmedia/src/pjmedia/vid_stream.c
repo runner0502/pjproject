@@ -164,6 +164,14 @@ struct pjmedia_vid_stream
 						    enabled?		    */
     pj_timestamp	     last_frm_ts_sent; /**< Timestamp of last sending
 					            packet		    */
+    unsigned	             start_ka_count;   /**< The number of keep-alive
+                                                    to be sent after it is
+                                                    created                 */
+    unsigned	             start_ka_interval;/**< The keepalive sending
+                                                    interval after the stream
+                                                    is created              */
+    pj_timestamp	     last_start_ka_tx; /**< Timestamp of the last
+                                                    keepalive sent          */
 #endif
 
 #if TRACE_JB
@@ -523,7 +531,7 @@ static void send_keep_alive_packet(pjmedia_vid_stream *stream)
 			       pkt_len);
 
     /* Send RTCP */
-    send_rtcp(stream, PJ_TRUE, PJ_FALSE);
+    send_rtcp(stream, PJ_TRUE, PJ_FALSE, PJ_FALSE, PJ_FALSE);
 
     /* Update stats in case the stream is paused */
     stream->rtcp.stat.rtp_tx_last_seq = pj_ntohs(stream->enc->rtp.out_hdr.seq);
@@ -1052,27 +1060,40 @@ static pj_status_t put_frame(pjmedia_port *port,
      */
     if (stream->use_ka)
     {
-	pj_uint32_t dtx_duration;
+        pj_uint32_t dtx_duration, ka_interval;
 
-	dtx_duration = pj_timestamp_diff32(&stream->last_frm_ts_sent,
-					   &frame->timestamp);
+        dtx_duration = pj_timestamp_diff32(&stream->last_frm_ts_sent,
+                                           &frame->timestamp);
+        if (stream->start_ka_count) {
+            ka_interval = stream->start_ka_interval *
+                                     stream->info.codec_info.clock_rate / 1000;
+        }  else {
+            ka_interval = PJMEDIA_STREAM_KA_INTERVAL *
+                                            stream->info.codec_info.clock_rate;
+        }
+        if (dtx_duration > ka_interval) {
+            send_keep_alive_packet(stream);
+            stream->last_frm_ts_sent = frame->timestamp;
 
-        if (dtx_duration >
-	    PJMEDIA_STREAM_KA_INTERVAL * stream->info.codec_info.clock_rate)
-	{
-	    send_keep_alive_packet(stream);
-	    stream->last_frm_ts_sent = frame->timestamp;
-	}
+            if (stream->start_ka_count)
+                stream->start_ka_count--;
+        }
     }
 #endif
-
-    /* Don't do anything if stream is paused */
-    if (channel->paused) {
-	return PJ_SUCCESS;
-    }
-
     /* Get frame length in timestamp unit */
     rtp_ts_len = stream->frame_ts_len;
+
+    /* Don't do anything if stream is paused, except updating RTP timestamp */
+    if (channel->paused) {
+	/* Update RTP session's timestamp. */
+	status = pjmedia_rtp_encode_rtp( &channel->rtp, 0, 0, 0, rtp_ts_len,
+					 NULL, NULL);
+
+        /* Update RTCP stats with last RTP timestamp. */
+	stream->rtcp.stat.rtp_tx_last_ts =
+                                        pj_ntohl(channel->rtp.out_hdr.ts);
+	return PJ_SUCCESS;
+    }
 
     /* Empty video frame? Just update RTP timestamp for now */
     if (frame->type==PJMEDIA_FRAME_TYPE_VIDEO && frame->size==0) {
@@ -1280,6 +1301,7 @@ static pj_status_t decode_frame(pjmedia_vid_stream *stream,
 {
     pjmedia_vid_channel *channel = stream->dec;
     pj_uint32_t last_ts = 0, frm_ts = 0;
+    pj_bool_t last_ts_inited = PJ_FALSE;
     int frm_first_seq = 0, frm_last_seq = 0;
     pj_bool_t got_frame = PJ_FALSE;
     unsigned cnt, frm_pkt_cnt = 0, frm_cnt = 0;
@@ -1299,18 +1321,19 @@ static pj_status_t decode_frame(pjmedia_vid_stream *stream,
 	pjmedia_jbuf_peek_frame(stream->jb, cnt, NULL, NULL,
 				&ptype, NULL, &ts, &seq);
 	if (ptype == PJMEDIA_JB_NORMAL_FRAME) {
-	    if (stream->last_dec_ts ==  ts) {
+	    if (stream->last_dec_ts == ts) {
 		/* Remove any late packet (the frame has been decoded) */
 		pjmedia_jbuf_remove_frame(stream->jb, 1);
 		continue;
 	    }
 
-	    if (last_ts == 0) {
+	    if (!last_ts_inited) {
 		last_ts = ts;
 
 		/* Init timestamp and first seq of the first frame */
 		frm_ts = ts;
 		frm_first_seq = seq;
+		last_ts_inited = PJ_TRUE;
 	    }
 	    if (ts != last_ts) {
 		last_ts = ts;
@@ -1527,7 +1550,8 @@ static pj_status_t get_frame(pjmedia_port *port,
 			stream->dec : stream->enc,
 		       "changed");
 
-	pjmedia_event_publish(NULL, port, &stream->fmt_event, 0);
+	pjmedia_event_publish(NULL, port, &stream->fmt_event,
+			      PJMEDIA_EVENT_PUBLISH_POST_EVENT);
 
 	stream->fmt_event.type = PJMEDIA_EVENT_NONE;
     }
@@ -1764,6 +1788,8 @@ PJ_DEF(pj_status_t) pjmedia_vid_stream_create(
 
 #if defined(PJMEDIA_STREAM_ENABLE_KA) && PJMEDIA_STREAM_ENABLE_KA!=0
     stream->use_ka = info->use_ka;
+    stream->start_ka_count = info->ka_cfg.start_count;
+    stream->start_ka_interval = info->ka_cfg.start_interval;
 #endif
     stream->num_keyframe = info->sk_cfg.count;
 

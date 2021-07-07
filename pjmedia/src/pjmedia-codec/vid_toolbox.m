@@ -61,6 +61,8 @@
 /* Maximum duration from one key frame to the next (in seconds). */
 #define KEYFRAME_INTERVAL	5
 
+/* vidtoolbox H264 default PT */
+#define VT_H264_PT		PJMEDIA_RTP_PT_H264_RSV1
 /*
  * Factory operations.
  */
@@ -167,6 +169,7 @@ typedef struct vtool_codec_data
     pj_uint8_t			*dec_buf;
     unsigned			 dec_buf_size;
     CMFormatDescriptionRef	 dec_format;
+    OSStatus             dec_status;
 
     unsigned			 dec_sps_size;
     unsigned			 dec_pps_size;
@@ -180,6 +183,7 @@ typedef struct vtool_codec_data
 /* Prototypes */
 static OSStatus create_decoder(struct vtool_codec_data *vtool_data);
 
+#if TARGET_OS_IPHONE
 static void dispatch_sync_on_main_queue(void (^block)(void))
 {
     if ([NSThread isMainThread]) {
@@ -188,6 +192,7 @@ static void dispatch_sync_on_main_queue(void (^block)(void))
         dispatch_sync(dispatch_get_main_queue(), block);
     }
 }
+#endif
 
 PJ_DEF(pj_status_t) pjmedia_codec_vid_toolbox_init(pjmedia_vid_codec_mgr *mgr,
                                                    pj_pool_factory *pf)
@@ -265,7 +270,7 @@ static pj_status_t vtool_test_alloc(pjmedia_vid_codec_factory *factory,
     PJ_ASSERT_RETURN(factory == &vtool_factory.base, PJ_EINVAL);
 
     if (info->fmt_id == PJMEDIA_FORMAT_H264 &&
-	info->pt != 0)
+	info->pt == VT_H264_PT)
     {
 	return PJ_SUCCESS;
     }
@@ -321,7 +326,7 @@ static pj_status_t vtool_enum_info(pjmedia_vid_codec_factory *factory,
 
     *count = 1;
     info->fmt_id = PJMEDIA_FORMAT_H264;
-    info->pt = PJMEDIA_RTP_PT_H264;
+    info->pt = VT_H264_PT;
     info->encoding_name = pj_str((char*)"H264");
     info->encoding_desc = pj_str((char*)"Video Toolbox codec");
     info->clock_rate = 90000;
@@ -1018,10 +1023,10 @@ static void decode_cb(void *decompressionOutputRefCon,
     /* This callback can be called from another, unregistered thread.
      * So do not call pjlib functions here.
      */
-
-    if (status != noErr) return;
-
     vtool_data = (struct vtool_codec_data *)decompressionOutputRefCon;
+    vtool_data->dec_status = status;
+    if (vtool_data->dec_status != noErr)
+        return;
 
     CVPixelBufferLockBaseAddress(imageBuffer,0);
     
@@ -1315,10 +1320,13 @@ static pj_status_t vtool_codec_decode(pjmedia_vid_codec *codec,
 		    }
 		}
 
-		if (ret != noErr) {
+		if ((ret != noErr) || (vtool_data->dec_status != noErr)) {
+            char *ret_err = (ret != noErr)?"decode err":"cb err";
+            OSStatus err_code = (ret != noErr)?ret:vtool_data->dec_status;
+
 		    PJ_LOG(5,(THIS_FILE, "Failed to decode frame %d of size "
-		    			 "%d: %d", nalu_type, frm_size,
-		    			 ret));
+                                 "%d %s:%d", nalu_type, frm_size, ret_err,
+                                 err_code));
 		} else {
     		    has_frame = PJ_TRUE;
     		    output->type = PJMEDIA_FRAME_TYPE_VIDEO;

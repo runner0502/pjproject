@@ -351,6 +351,7 @@ void MediaConfig::fromPj(const pjsua_media_config &mc)
     this->jbMinPre = mc.jb_min_pre;
     this->jbMaxPre = mc.jb_max_pre;
     this->jbMax = mc.jb_max;
+    this->jbDiscardAlgo = mc.jb_discard_algo;
     this->sndAutoCloseTime = mc.snd_auto_close_time;
     this->vidPreviewEnableNative = PJ2BOOL(mc.vid_preview_enable_native);
 }
@@ -382,6 +383,7 @@ pjsua_media_config MediaConfig::toPj() const
     mcfg.jb_min_pre = this->jbMinPre;
     mcfg.jb_max_pre = this->jbMaxPre;
     mcfg.jb_max = this->jbMax;
+    mcfg.jb_discard_algo = this->jbDiscardAlgo;
     mcfg.snd_auto_close_time = this->sndAutoCloseTime;
     mcfg.vid_preview_enable_native = this->vidPreviewEnableNative;
 
@@ -413,6 +415,7 @@ void MediaConfig::readObject(const ContainerNode &node) PJSUA2_THROW(Error)
     NODE_READ_INT     ( this_node, jbMinPre);
     NODE_READ_INT     ( this_node, jbMaxPre);
     NODE_READ_INT     ( this_node, jbMax);
+    NODE_READ_NUM_T   ( this_node, pjmedia_jb_discard_algo, jbDiscardAlgo);
     NODE_READ_INT     ( this_node, sndAutoCloseTime);
     NODE_READ_BOOL    ( this_node, vidPreviewEnableNative);
 }
@@ -442,6 +445,7 @@ void MediaConfig::writeObject(ContainerNode &node) const PJSUA2_THROW(Error)
     NODE_WRITE_INT     ( this_node, jbMinPre);
     NODE_WRITE_INT     ( this_node, jbMaxPre);
     NODE_WRITE_INT     ( this_node, jbMax);
+    NODE_WRITE_NUM_T   ( this_node, pjmedia_jb_discard_algo, jbDiscardAlgo);
     NODE_WRITE_INT     ( this_node, sndAutoCloseTime);
     NODE_WRITE_BOOL    ( this_node, vidPreviewEnableNative);
 }
@@ -1096,6 +1100,45 @@ void Endpoint::on_call_sdp_created(pjsua_call_id call_id,
     }
 }
 
+void Endpoint::on_stream_precreate(pjsua_call_id call_id,
+                                   pjsua_on_stream_precreate_param *param)
+{
+    Call *call = Call::lookup(call_id);
+    if (!call) {
+        return;
+    }
+
+    OnStreamPreCreateParam prm;
+    prm.streamIdx = param->stream_idx;
+    prm.streamInfo.fromPj(param->stream_info);
+
+    call->onStreamPreCreate(prm);
+
+    /* Copy back only the fields which are allowed to be changed. */
+    if (param->stream_info.type == PJMEDIA_TYPE_AUDIO) {
+	param->stream_info.info.aud.jb_init = prm.streamInfo.jbInit;
+	param->stream_info.info.aud.jb_min_pre = prm.streamInfo.jbMinPre;
+	param->stream_info.info.aud.jb_max_pre = prm.streamInfo.jbMaxPre;
+	param->stream_info.info.aud.jb_max = prm.streamInfo.jbMax;
+	param->stream_info.info.aud.jb_discard_algo = prm.streamInfo.jbDiscardAlgo;
+#if defined(PJMEDIA_STREAM_ENABLE_KA) && (PJMEDIA_STREAM_ENABLE_KA != 0)
+	param->stream_info.info.aud.use_ka = prm.streamInfo.useKa;
+#endif
+	param->stream_info.info.aud.rtcp_sdes_bye_disabled = prm.streamInfo.rtcpSdesByeDisabled;
+    } else if (param->stream_info.type == PJMEDIA_TYPE_VIDEO) {
+	param->stream_info.info.vid.jb_init = prm.streamInfo.jbInit;
+	param->stream_info.info.vid.jb_min_pre = prm.streamInfo.jbMinPre;
+	param->stream_info.info.vid.jb_max_pre = prm.streamInfo.jbMaxPre;
+	param->stream_info.info.vid.jb_max = prm.streamInfo.jbMax;
+#if defined(PJMEDIA_STREAM_ENABLE_KA) && (PJMEDIA_STREAM_ENABLE_KA != 0)
+	param->stream_info.info.vid.use_ka = prm.streamInfo.useKa;
+#endif
+	param->stream_info.info.vid.rtcp_sdes_bye_disabled = prm.streamInfo.rtcpSdesByeDisabled;
+	param->stream_info.info.vid.codec_param->enc_fmt = prm.streamInfo.vidCodecParam.encFmt.toPj();
+
+    }
+}
+
 void Endpoint::on_stream_created2(pjsua_call_id call_id,
 				  pjsua_on_stream_created_param *param)
 {
@@ -1184,6 +1227,60 @@ void Endpoint::on_dtmf_digit2(pjsua_call_id call_id,
     job->prm.method = info->method;
     job->prm.duration = info->duration;
     
+    Endpoint::instance().utilAddPendingJob(job);
+}
+
+struct PendingOnDtmfEventCallback : public PendingJob
+{
+    int call_id;
+    OnDtmfEventParam prm;
+
+    virtual void execute(bool is_pending)
+    {
+        PJ_UNUSED_ARG(is_pending);
+
+        Call *call = Call::lookup(call_id);
+        if (!call)
+            return;
+
+        call->onDtmfEvent(prm);
+
+        /* If this event indicates a new DTMF digit, invoke onDtmfDigit
+         * as well.
+         * Note that the duration is pretty much useless in this context as it
+         * will most likely equal the ptime of one frame received via RTP in
+         * milliseconds. Since the application can't receive updates to the
+         * duration via this interface and the total duration of the event is
+         * not known yet, just indicate an unknown duration.
+         */
+        if (!(prm.flags & PJMEDIA_STREAM_DTMF_IS_UPDATE)) {
+            OnDtmfDigitParam prmBasic;
+            prmBasic.method = prm.method;
+            prmBasic.digit = prm.digit;
+            prmBasic.duration = PJSUA_UNKNOWN_DTMF_DURATION;
+            call->onDtmfDigit(prmBasic);
+        }
+    }
+};
+
+void Endpoint::on_dtmf_event(pjsua_call_id call_id,
+                             const pjsua_dtmf_event* event)
+{
+    Call *call = Call::lookup(call_id);
+    if (!call) {
+        return;
+    }
+
+    PendingOnDtmfEventCallback *job = new PendingOnDtmfEventCallback;
+    job->call_id = call_id;
+    char buf[10];
+    pj_ansi_sprintf(buf, "%c", event->digit);
+    job->prm.method = event->method;
+    job->prm.timestamp = event->timestamp;
+    job->prm.digit = string(buf);
+    job->prm.duration = event->duration;
+    job->prm.flags = event->flags;
+
     Endpoint::instance().utilAddPendingJob(job);
 }
 
@@ -1679,10 +1776,12 @@ void Endpoint::libInit(const EpConfig &prmEpConfig) PJSUA2_THROW(Error)
     ua_cfg.cb.on_call_tsx_state         = &Endpoint::on_call_tsx_state;
     ua_cfg.cb.on_call_media_state       = &Endpoint::on_call_media_state;
     ua_cfg.cb.on_call_sdp_created       = &Endpoint::on_call_sdp_created;
+    ua_cfg.cb.on_stream_precreate       = &Endpoint::on_stream_precreate;
     ua_cfg.cb.on_stream_created2        = &Endpoint::on_stream_created2;
     ua_cfg.cb.on_stream_destroyed       = &Endpoint::on_stream_destroyed;
     //ua_cfg.cb.on_dtmf_digit             = &Endpoint::on_dtmf_digit;
-    ua_cfg.cb.on_dtmf_digit2            = &Endpoint::on_dtmf_digit2;
+    //ua_cfg.cb.on_dtmf_digit2            = &Endpoint::on_dtmf_digit2;
+    ua_cfg.cb.on_dtmf_event             = &Endpoint::on_dtmf_event;
     ua_cfg.cb.on_call_transfer_request2 = &Endpoint::on_call_transfer_request2;
     ua_cfg.cb.on_call_transfer_status   = &Endpoint::on_call_transfer_status;
     ua_cfg.cb.on_call_replace_request2  = &Endpoint::on_call_replace_request2;
@@ -2238,7 +2337,7 @@ CodecOpusConfig Endpoint::getCodecOpusConfig() const PJSUA2_THROW(Error)
 void Endpoint::setCodecOpusConfig(const CodecOpusConfig &opus_cfg)
 				  PJSUA2_THROW(Error)
 {
-   const pj_str_t codec_id = {"opus", 4};
+   const pj_str_t codec_id = {(char *)"opus", 4};
    pjmedia_codec_param param;
    pjmedia_codec_opus_config new_opus_cfg;
 
